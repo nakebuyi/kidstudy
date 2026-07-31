@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Parent {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  children     Child[]
+  createdAt    DateTime @default(now())
+}
+
+model Child {
+  id            String           @id @default(uuid())
+  parentId      String
+  parent        Parent           @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  name          String
+  avatar        String           @default("👦")
+  points        Int              @default(0)
+  streak        Int              @default(0)
+  maxStreak     Int              @default(0)
+  totalCheckIns Int              @default(0)
+  pet           String           @default("{\"type\":\"cat\",\"name\":\"小咪\",\"level\":1,\"mood\":\"normal\"}")
+  createdAt     DateTime         @default(now())
+  learningRecords LearningRecord[]
+  checkInRecords   CheckInRecord[]
+}
+
+model LearningRecord {
+  id        String   @id @default(uuid())
+  childId   String
+  child     Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  charId    String
+  type      String
+  score     Int?
+  accuracy  Float?
+  duration  Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model CheckInRecord {
+  id           String   @id @default(uuid())
+  childId      String
+  child        Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  date         String
+  charId       String
+  completed    Boolean  @default(false)
+  pointsEarned Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@unique([childId, date])
+}
