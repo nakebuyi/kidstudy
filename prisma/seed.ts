@@ -2,7 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 import bcrypt from "bcryptjs";
 
-const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL ?? "file:./dev.db" });
+const adapter = new PrismaLibSql({
+  url: process.env.TURSO_DATABASE_URL ?? "file:./dev.db",
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
+
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
@@ -24,7 +28,10 @@ async function main() {
     },
   });
 
-  console.log(`Seeded parent: ${parent.username}`);
+  console.log(`✅ Seeded parent: ${parent.username} (password: 123456)`);
+
+  const child = await prisma.child.findFirst({ where: { parentId: parent.id } });
+  console.log(`✅ Seeded child: ${child?.name} (id: ${child?.id})`);
 }
 
 main()

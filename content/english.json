@@ -1,0 +1,22 @@
+[
+  { "id": "e1", "word": "apple", "chinese": "苹果", "category": "水果", "emoji": "🍎", "sentences": ["I like apples.", "This apple is red."], "level": 1, "order": 1 },
+  { "id": "e2", "word": "banana", "chinese": "香蕉", "category": "水果", "emoji": "🍌", "sentences": ["I eat a banana.", "Bananas are yellow."], "level": 1, "order": 2 },
+  { "id": "e3", "word": "cat", "chinese": "猫", "category": "动物", "emoji": "🐱", "sentences": ["The cat is cute.", "I have a cat."], "level": 1, "order": 3 },
+  { "id": "e4", "word": "dog", "chinese": "狗", "category": "动物", "emoji": "🐶", "sentences": ["The dog is big.", "I love dogs."], "level": 1, "order": 4 },
+  { "id": "e5", "word": "red", "chinese": "红色", "category": "颜色", "emoji": "🔴", "sentences": ["The apple is red.", "I like red."], "level": 1, "order": 5 },
+  { "id": "e6", "word": "blue", "chinese": "蓝色", "category": "颜色", "emoji": "🔵", "sentences": ["The sky is blue.", "I have a blue pen."], "level": 1, "order": 6 },
+  { "id": "e7", "word": "one", "chinese": "一", "category": "数字", "emoji": "1️⃣", "sentences": ["I have one apple.", "One plus one is two."], "level": 1, "order": 7 },
+  { "id": "e8", "word": "two", "chinese": "二", "category": "数字", "emoji": "2️⃣", "sentences": ["I have two hands.", "Two birds are singing."], "level": 1, "order": 8 },
+  { "id": "e9", "word": "eye", "chinese": "眼睛", "category": "身体", "emoji": "👁️", "sentences": ["I have two eyes.", "Open your eyes."], "level": 1, "order": 9 },
+  { "id": "e10", "word": "hand", "chinese": "手", "category": "身体", "emoji": "✋", "sentences": ["Wash your hands.", "I have two hands."], "level": 1, "order": 10 },
+  { "id": "e11", "word": "mom", "chinese": "妈妈", "category": "家庭", "emoji": "👩", "sentences": ["My mom loves me.", "Mom is cooking."], "level": 1, "order": 11 },
+  { "id": "e12", "word": "dad", "chinese": "爸爸", "category": "家庭", "emoji": "👨", "sentences": ["My dad is tall.", "Dad is reading."], "level": 1, "order": 12 },
+  { "id": "e13", "word": "sun", "chinese": "太阳", "category": "自然", "emoji": "☀️", "sentences": ["The sun is bright.", "I like the sun."], "level": 1, "order": 13 },
+  { "id": "e14", "word": "moon", "chinese": "月亮", "category": "自然", "emoji": "🌙", "sentences": ["The moon is round.", "Look at the moon."], "level": 1, "order": 14 },
+  { "id": "e15", "word": "water", "chinese": "水", "category": "自然", "emoji": "💧", "sentences": ["I drink water.", "Water is clean."], "level": 1, "order": 15 },
+  { "id": "e16", "word": "big", "chinese": "大的", "category": "形容词", "emoji": "🐘", "sentences": ["The elephant is big.", "This is a big house."], "level": 1, "order": 16 },
+  { "id": "e17", "word": "small", "chinese": "小的", "category": "形容词", "emoji": "🐭", "sentences": ["The mouse is small.", "I have a small toy."], "level": 1, "order": 17 },
+  { "id": "e18", "word": "happy", "chinese": "开心的", "category": "形容词", "emoji": "😊", "sentences": ["I am happy.", "Happy birthday!"], "level": 1, "order": 18 },
+  { "id": "e19", "word": "run", "chinese": "跑", "category": "动作", "emoji": "🏃", "sentences": ["I can run fast.", "Let's run together."], "level": 1, "order": 19 },
+  { "id": "e20", "word": "eat", "chinese": "吃", "category": "动作", "emoji": "🍽️", "sentences": ["I eat breakfast.", "I like to eat fruit."], "level": 1, "order": 20 }
+]

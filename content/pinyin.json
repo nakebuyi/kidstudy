@@ -1,0 +1,22 @@
+[
+  { "id": "p1", "pinyin": "b", "type": "initial", "examples": ["爸", "不", "白"], "level": 1, "order": 1 },
+  { "id": "p2", "pinyin": "p", "type": "initial", "examples": ["怕", "皮", "跑"], "level": 1, "order": 2 },
+  { "id": "p3", "pinyin": "m", "type": "initial", "examples": ["妈", "猫", "门"], "level": 1, "order": 3 },
+  { "id": "p4", "pinyin": "f", "type": "initial", "examples": ["发", "飞", "风"], "level": 1, "order": 4 },
+  { "id": "p5", "pinyin": "d", "type": "initial", "examples": ["大", "的", "地"], "level": 1, "order": 5 },
+  { "id": "p6", "pinyin": "t", "type": "initial", "examples": ["他", "天", "太"], "level": 1, "order": 6 },
+  { "id": "p7", "pinyin": "n", "type": "initial", "examples": ["你", "牛", "女"], "level": 1, "order": 7 },
+  { "id": "p8", "pinyin": "l", "type": "initial", "examples": ["了", "来", "老"], "level": 1, "order": 8 },
+  { "id": "p9", "pinyin": "a", "type": "final", "examples": ["啊", "爸", "妈"], "level": 1, "order": 9 },
+  { "id": "p10", "pinyin": "o", "type": "final", "examples": ["哦", "我", "波"], "level": 1, "order": 10 },
+  { "id": "p11", "pinyin": "e", "type": "final", "examples": ["鹅", "车", "喝"], "level": 1, "order": 11 },
+  { "id": "p12", "pinyin": "i", "type": "final", "examples": ["一", "衣", "比"], "level": 1, "order": 12 },
+  { "id": "p13", "pinyin": "u", "type": "final", "examples": ["五", "不", "书"], "level": 1, "order": 13 },
+  { "id": "p14", "pinyin": "ü", "type": "final", "examples": ["鱼", "女", "绿"], "level": 1, "order": 14 },
+  { "id": "p15", "pinyin": "ai", "type": "final", "examples": ["爱", "白", "来"], "level": 1, "order": 15 },
+  { "id": "p16", "pinyin": "ei", "type": "final", "examples": ["诶", "飞", "美"], "level": 1, "order": 16 },
+  { "id": "p17", "pinyin": "ao", "type": "final", "examples": ["奥", "好", "高"], "level": 1, "order": 17 },
+  { "id": "p18", "pinyin": "ou", "type": "final", "examples": ["欧", "走", "口"], "level": 1, "order": 18 },
+  { "id": "p19", "pinyin": "zhi", "type": "whole", "examples": ["知", "只", "纸"], "level": 1, "order": 19 },
+  { "id": "p20", "pinyin": "yi", "type": "whole", "examples": ["一", "衣", "以"], "level": 1, "order": 20 }
+]

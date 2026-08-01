@@ -1,0 +1,22 @@
+[
+  { "id": "m1", "type": "addition", "question": "1 + 1 = ?", "answer": 2, "options": [1, 2, 3, 4], "level": 1, "order": 1 },
+  { "id": "m2", "type": "addition", "question": "2 + 3 = ?", "answer": 5, "options": [3, 4, 5, 6], "level": 1, "order": 2 },
+  { "id": "m3", "type": "addition", "question": "4 + 2 = ?", "answer": 6, "options": [5, 6, 7, 8], "level": 1, "order": 3 },
+  { "id": "m4", "type": "addition", "question": "3 + 3 = ?", "answer": 6, "options": [4, 5, 6, 7], "level": 1, "order": 4 },
+  { "id": "m5", "type": "addition", "question": "5 + 4 = ?", "answer": 9, "options": [7, 8, 9, 10], "level": 1, "order": 5 },
+  { "id": "m6", "type": "subtraction", "question": "5 - 2 = ?", "answer": 3, "options": [1, 2, 3, 4], "level": 1, "order": 6 },
+  { "id": "m7", "type": "subtraction", "question": "8 - 3 = ?", "answer": 5, "options": [3, 4, 5, 6], "level": 1, "order": 7 },
+  { "id": "m8", "type": "subtraction", "question": "6 - 1 = ?", "answer": 5, "options": [3, 4, 5, 6], "level": 1, "order": 8 },
+  { "id": "m9", "type": "subtraction", "question": "9 - 4 = ?", "answer": 5, "options": [3, 4, 5, 6], "level": 1, "order": 9 },
+  { "id": "m10", "type": "subtraction", "question": "7 - 2 = ?", "answer": 5, "options": [3, 4, 5, 6], "level": 1, "order": 10 },
+  { "id": "m11", "type": "addition", "question": "6 + 6 = ?", "answer": 12, "options": [10, 11, 12, 13], "level": 2, "order": 11 },
+  { "id": "m12", "type": "addition", "question": "9 + 8 = ?", "answer": 17, "options": [15, 16, 17, 18], "level": 2, "order": 12 },
+  { "id": "m13", "type": "subtraction", "question": "15 - 7 = ?", "answer": 8, "options": [6, 7, 8, 9], "level": 2, "order": 13 },
+  { "id": "m14", "type": "subtraction", "question": "18 - 9 = ?", "answer": 9, "options": [7, 8, 9, 10], "level": 2, "order": 14 },
+  { "id": "m15", "type": "addition", "question": "12 + 7 = ?", "answer": 19, "options": [17, 18, 19, 20], "level": 2, "order": 15 },
+  { "id": "m16", "type": "subtraction", "question": "14 - 6 = ?", "answer": 8, "options": [6, 7, 8, 9], "level": 2, "order": 16 },
+  { "id": "m17", "type": "addition", "question": "3 + 5 + 2 = ?", "answer": 10, "options": [8, 9, 10, 11], "level": 2, "order": 17 },
+  { "id": "m18", "type": "subtraction", "question": "20 - 8 = ?", "answer": 12, "options": [10, 11, 12, 13], "level": 2, "order": 18 },
+  { "id": "m19", "type": "addition", "question": "7 + 8 = ?", "answer": 15, "options": [13, 14, 15, 16], "level": 2, "order": 19 },
+  { "id": "m20", "type": "subtraction", "question": "16 - 9 = ?", "answer": 7, "options": [5, 6, 7, 8], "level": 2, "order": 20 }
+]

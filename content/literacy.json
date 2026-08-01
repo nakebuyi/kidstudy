@@ -1,0 +1,22 @@
+[
+  { "id": "l1", "char": "一", "pinyin": "yī", "radical": "一", "strokes": 1, "words": ["一个", "一天", "第一"], "sentences": ["我有一个苹果。", "今天星期一。"], "emoji": "1️⃣", "level": 1, "order": 1 },
+  { "id": "l2", "char": "二", "pinyin": "èr", "radical": "二", "strokes": 2, "words": ["二月", "第二", "十二"], "sentences": ["二月有二十八天。", "我排第二个。"], "emoji": "2️⃣", "level": 1, "order": 2 },
+  { "id": "l3", "char": "三", "pinyin": "sān", "radical": "一", "strokes": 3, "words": ["三个", "三月", "再三"], "sentences": ["我有三个好朋友。", "三月春暖花开。"], "emoji": "3️⃣", "level": 1, "order": 3 },
+  { "id": "l4", "char": "大", "pinyin": "dà", "radical": "大", "strokes": 3, "words": ["大人", "大小", "大家"], "sentences": ["大象很大。", "大家好！"], "emoji": "🐘", "level": 1, "order": 4 },
+  { "id": "l5", "char": "小", "pinyin": "xiǎo", "radical": "小", "strokes": 3, "words": ["小孩", "大小", "小心"], "sentences": ["小鸟在唱歌。", "过马路要小心。"], "emoji": "🐤", "level": 1, "order": 5 },
+  { "id": "l6", "char": "人", "pinyin": "rén", "radical": "人", "strokes": 2, "words": ["人们", "大人", "工人"], "sentences": ["公园里有很多人。", "他是一个好人。"], "emoji": "🧑", "level": 1, "order": 6 },
+  { "id": "l7", "char": "口", "pinyin": "kǒu", "radical": "口", "strokes": 3, "words": ["口水", "入口", "开口"], "sentences": ["我口渴了。", "请张开嘴巴。"], "emoji": "👄", "level": 1, "order": 7 },
+  { "id": "l8", "char": "手", "pinyin": "shǒu", "radical": "手", "strokes": 4, "words": ["小手", "洗手", "手工"], "sentences": ["饭前要洗手。", "我的手很小。"], "emoji": "✋", "level": 1, "order": 8 },
+  { "id": "l9", "char": "目", "pinyin": "mù", "radical": "目", "strokes": 5, "words": ["目光", "节目", "目前"], "sentences": ["他的目光很温柔。", "这个节目很好看。"], "emoji": "👁️", "level": 1, "order": 9 },
+  { "id": "l10", "char": "日", "pinyin": "rì", "radical": "日", "strokes": 4, "words": ["日子", "生日", "日光"], "sentences": ["今天是我的生日。", "太阳出来了，日光很暖。"], "emoji": "☀️", "level": 1, "order": 10 },
+  { "id": "l11", "char": "月", "pinyin": "yuè", "radical": "月", "strokes": 4, "words": ["月亮", "月光", "一月"], "sentences": ["月亮又圆又亮。", "一月是新年的开始。"], "emoji": "🌙", "level": 1, "order": 11 },
+  { "id": "l12", "char": "水", "pinyin": "shuǐ", "radical": "水", "strokes": 4, "words": ["水果", "河水", "水杯"], "sentences": ["多喝水对身体好。", "河水很清澈。"], "emoji": "💧", "level": 1, "order": 12 },
+  { "id": "l13", "char": "火", "pinyin": "huǒ", "radical": "火", "strokes": 4, "words": ["火车", "灭火", "大火"], "sentences": ["火车开得很快。", "小心火源！"], "emoji": "🔥", "level": 1, "order": 13 },
+  { "id": "l14", "char": "山", "pinyin": "shān", "radical": "山", "strokes": 3, "words": ["山上", "高山", "火山"], "sentences": ["山上有座庙。", "远处的山很高。"], "emoji": "⛰️", "level": 1, "order": 14 },
+  { "id": "l15", "char": "石", "pinyin": "shí", "radical": "石", "strokes": 5, "words": ["石头", "石子", "宝石"], "sentences": ["路边有一块石头。", "这块宝石真漂亮。"], "emoji": "🪨", "level": 1, "order": 15 },
+  { "id": "l16", "char": "天", "pinyin": "tiān", "radical": "大", "strokes": 4, "words": ["天空", "天气", "今天"], "sentences": ["天空很蓝。", "今天天气真好。"], "emoji": "🌤️", "level": 1, "order": 16 },
+  { "id": "l17", "char": "田", "pinyin": "tián", "radical": "田", "strokes": 5, "words": ["田地", "稻田", "田野"], "sentences": ["农民在田里干活。", "田野一片金黄。"], "emoji": "🌾", "level": 1, "order": 17 },
+  { "id": "l18", "char": "禾", "pinyin": "hé", "radical": "禾", "strokes": 5, "words": ["禾苗", "禾田"], "sentences": ["禾苗在阳光下生长。", "田里的禾苗绿油油的。"], "emoji": "🌱", "level": 1, "order": 18 },
+  { "id": "l19", "char": "木", "pinyin": "mù", "radical": "木", "strokes": 4, "words": ["木头", "树木", "木马"], "sentences": ["木头可以用来做家具。", "树木是我们的朋友。"], "emoji": "🌳", "level": 1, "order": 19 },
+  { "id": "l20", "char": "花", "pinyin": "huā", "radical": "艹", "strokes": 7, "words": ["花朵", "花园", "开花"], "sentences": ["花园里开满了花。", "这朵花真好看。"], "emoji": "🌸", "level": 1, "order": 20 }
+]

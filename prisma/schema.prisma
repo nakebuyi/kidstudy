@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -43,14 +44,25 @@ model LearningRecord {
 }
 
 model CheckInRecord {
-  id           String   @id @default(uuid())
+  id           String        @id @default(uuid())
   childId      String
-  child        Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  child        Child         @relation(fields: [childId], references: [id], onDelete: Cascade)
   date         String
-  charId       String
-  completed    Boolean  @default(false)
-  pointsEarned Int      @default(0)
-  createdAt    DateTime @default(now())
+  allCompleted Boolean       @default(false)
+  bonusEarned  Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  tasks        CheckInTask[]
 
   @@unique([childId, date])
+}
+
+model CheckInTask {
+  id           String        @id @default(uuid())
+  recordId     String
+  record       CheckInRecord @relation(fields: [recordId], references: [id], onDelete: Cascade)
+  subject      String
+  taskType     String
+  completed    Boolean       @default(false)
+  pointsEarned Int           @default(0)
+  completedAt  DateTime?
 }
