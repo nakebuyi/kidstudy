@@ -1,3 +1,5 @@
+"use client";
+
 import { MobileTopBar } from "./MobileTopBar";
 import { MobileBottomTabs } from "./MobileBottomTabs";
 

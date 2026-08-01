@@ -196,7 +196,7 @@
 .stagger-5 { animation-delay: 0.25s; }
 
 /* Responsive: Mobile sidebar collapse */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .sidebar-desktop {
     display: none;
   }

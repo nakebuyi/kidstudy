@@ -16,7 +16,7 @@ export function MobileBottomTabs() {
   return (
     <nav className="h-14 border-t bg-white flex items-center justify-around shrink-0">
       {tabs.map((tab) => {
-        const isActive = pathname.startsWith(`/${tab.key}`);
+        const isActive = pathname.startsWith(tab.href);
         return (
           <Link
             key={tab.key}
