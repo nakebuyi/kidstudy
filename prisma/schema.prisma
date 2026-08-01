@@ -11,6 +11,7 @@ model Parent {
   id           String   @id @default(uuid())
   username     String   @unique
   passwordHash String
+  nickname     String   @default("")
   children     Child[]
   createdAt    DateTime @default(now())
 }
@@ -27,8 +28,19 @@ model Child {
   totalCheckIns Int              @default(0)
   pet           String           @default("{\"type\":\"cat\",\"name\":\"小咪\",\"level\":1,\"mood\":\"normal\"}")
   createdAt     DateTime         @default(now())
+  account       ChildAccount?
   learningRecords LearningRecord[]
   checkInRecords   CheckInRecord[]
+}
+
+model ChildAccount {
+  id           String   @id @default(uuid())
+  childId      String   @unique
+  child        Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  username     String   @unique
+  passwordHash String
+  nickname     String
+  createdAt    DateTime @default(now())
 }
 
 model LearningRecord {

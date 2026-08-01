@@ -14,10 +14,11 @@ async function main() {
 
   const parent = await prisma.parent.upsert({
     where: { username: "demo" },
-    update: {},
+    update: { nickname: "家长" },
     create: {
       username: "demo",
       passwordHash,
+      nickname: "家长",
       children: {
         create: {
           name: "小明",
