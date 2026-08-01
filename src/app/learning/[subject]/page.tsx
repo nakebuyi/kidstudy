@@ -2,12 +2,14 @@
 
 import { useState, useMemo, use } from "react";
 import { useLearning } from "@/store/LearningContext";
+import { useSpeech } from "@/hooks/useSpeech";
 import { DesktopLayout } from "@/components/layout/DesktopLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
+import { WritingCanvas } from "@/components/WritingCanvas";
 import Link from "next/link";
 
 const subjectNames: Record<string, { title: string; icon: string }> = {
@@ -26,6 +28,25 @@ const subjectColors: Record<string, string> = {
   poetry: "red",
 };
 
+// ===================== SPEECH BUTTON =====================
+
+function SpeakButton({ text, lang = "zh-CN" }: { text: string; lang?: string }) {
+  const { speak, speaking, supported } = useSpeech();
+  if (!supported) return null;
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      className="gap-1"
+      onClick={() => speak(text, lang)}
+      disabled={speaking}
+    >
+      <Volume2 className={`w-4 h-4 ${speaking ? "animate-pulse" : ""}`} />
+      {speaking ? "朗读中..." : "朗读"}
+    </Button>
+  );
+}
+
 // ===================== LITERACY =====================
 
 function LiteracyStep1({ char, onNext }: { char: any; onNext: () => void }) {
@@ -36,6 +57,7 @@ function LiteracyStep1({ char, onNext }: { char: any; onNext: () => void }) {
           <span className="text-8xl mb-4">{char.emoji}</span>
           <div className="text-6xl font-bold text-gray-800 mb-2">{char.char}</div>
           <div className="text-2xl text-orange-500 mb-4">{char.pinyin}</div>
+          <SpeakButton text={char.char} />
           <div className="text-sm text-gray-500">
             部首：{char.radical} · 笔画：{char.strokes}
           </div>
@@ -104,13 +126,8 @@ function LiteracyStep2({ char, onNext }: { char: any; onNext: () => void }) {
               <div className="text-sm text-gray-500">部首</div>
             </div>
           </div>
-          <div className="mt-4 bg-gray-50 rounded-lg p-4 text-center">
-            <p className="text-gray-600">
-              请在纸上练习书写汉字 <strong>{char.char}</strong>
-            </p>
-            <p className="text-sm text-gray-400 mt-1">
-              按照正确的笔顺，一笔一画地写出来
-            </p>
+          <div className="mt-4">
+            <WritingCanvas character={char.char} />
           </div>
         </CardContent>
       </Card>
@@ -197,9 +214,12 @@ function PinyinStep1({ item, onNext }: { item: any; onNext: () => void }) {
       <Card>
         <CardContent className="pt-6 flex flex-col items-center">
           <div className="text-7xl font-bold text-sky-500 mb-4">{item.pinyin}</div>
-          <Badge variant="secondary" className="text-lg px-4 py-2">
-            {typeNames[item.type] ?? item.type}
-          </Badge>
+          <SpeakButton text={item.pinyin} />
+          <div className="mt-2">
+            <Badge variant="secondary" className="text-lg px-4 py-2">
+              {typeNames[item.type] ?? item.type}
+            </Badge>
+          </div>
         </CardContent>
       </Card>
 
@@ -245,7 +265,8 @@ function PinyinStep2({ item, onNext }: { item: any; onNext: () => void }) {
       <Card>
         <CardContent className="pt-6 flex flex-col items-center">
           <div className="text-7xl font-bold text-sky-500 mb-4">{item.pinyin}</div>
-          <p className="text-gray-500">拼读练习</p>
+          <SpeakButton text={item.pinyin} />
+          <p className="text-gray-500 mt-2">拼读练习</p>
         </CardContent>
       </Card>
 
@@ -358,7 +379,10 @@ function EnglishStep1({ item, onNext }: { item: any; onNext: () => void }) {
           <span className="text-8xl mb-4">{item.emoji}</span>
           <div className="text-5xl font-bold text-green-600 mb-2">{item.word}</div>
           <div className="text-2xl text-gray-500 mb-2">{item.chinese}</div>
-          <Badge variant="secondary">{item.category}</Badge>
+          <SpeakButton text={item.word} lang="en-US" />
+          <div className="mt-2">
+            <Badge variant="secondary">{item.category}</Badge>
+          </div>
         </CardContent>
       </Card>
 
@@ -659,6 +683,7 @@ function PoetryStep1({ item, onNext }: { item: any; onNext: () => void }) {
           <div className="text-lg text-gray-500 mb-4">
             {item.dynasty} · {item.author}
           </div>
+          <SpeakButton text={item.content} />
         </CardContent>
       </Card>
 
