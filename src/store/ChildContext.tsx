@@ -35,6 +35,9 @@ export function ChildProvider({ children }: { children: ReactNode }) {
   const [child, setChild] = useState<Child | null>(null);
   const [childrenList, setChildrenList] = useState<Child[]>([]);
 
+  const role = (session as any)?.role as string | undefined;
+  const currentChildId = (session as any)?.currentChildId;
+
   const fetchChildren = useCallback(async () => {
     const res = await fetch("/api/children");
     if (res.ok) {
@@ -63,13 +66,19 @@ export function ChildProvider({ children }: { children: ReactNode }) {
   }, [fetchChildren]);
 
   const setCurrentChild = useCallback(async (childId: string) => {
+    const role = (session as any)?.role;
+    if (role !== "parent") return;  // child accounts cannot switch
     await update({ currentChildId: childId });
     await fetchChild(childId);
-  }, [update, fetchChild]);
+  }, [update, fetchChild, session]);
 
   useEffect(() => {
-    fetchChildren();
-  }, [fetchChildren]);
+    if (role === "parent") {
+      fetchChildren();
+    } else if (role === "child" && currentChildId) {
+      fetchChild(currentChildId);
+    }
+  }, [fetchChildren, fetchChild, session, role, currentChildId]);
 
   useEffect(() => {
     const currentChildId = (session as any)?.currentChildId;
