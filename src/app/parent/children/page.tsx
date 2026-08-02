@@ -130,6 +130,8 @@ export default function ChildrenPage() {
                       onClick={(e) => {
                         e.stopPropagation();
                         setAccountChildId(c.id);
+                        setAccountUsername("");
+                        setAccountPassword("");
                         setAccountNickname(c.name);
                         setAccountMessage("");
                       }}
@@ -149,6 +151,14 @@ export default function ChildrenPage() {
               还没有添加孩子，点击上方按钮添加
             </CardContent>
           </Card>
+        )}
+
+        {accountMessage && (
+          <div className={`p-3 rounded-lg text-center font-medium ${
+            accountMessage.startsWith("✅") ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
+          }`}>
+            {accountMessage}
+          </div>
         )}
 
         {accountChildId && (
@@ -191,18 +201,19 @@ export default function ChildrenPage() {
                     required
                   />
                 </div>
-                {accountMessage && (
-                  <div className={`p-3 rounded-lg text-center font-medium ${
-                    accountMessage.startsWith("✅") ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
-                  }`}>
-                    {accountMessage}
-                  </div>
-                )}
                 <div className="flex gap-2">
                   <Button type="submit" disabled={accountLoading}>
                     {accountLoading ? "创建中..." : "创建账号"}
                   </Button>
-                  <Button type="button" variant="outline" onClick={() => setAccountChildId(null)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setAccountChildId(null);
+                      setAccountUsername("");
+                      setAccountPassword("");
+                    }}
+                  >
                     取消
                   </Button>
                 </div>
