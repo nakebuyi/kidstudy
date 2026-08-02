@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const { username, password } = await req.json();
+    const { username, password, nickname } = await req.json();
 
     if (!username || !password) {
       return NextResponse.json({ error: "用户名和密码不能为空" }, { status: 400 });
@@ -19,8 +19,20 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "用户名已被注册" }, { status: 400 });
     }
 
+    // Also check ChildAccount for username collision
+    const existingChild = await prisma.childAccount.findUnique({ where: { username } });
+    if (existingChild) {
+      return NextResponse.json({ error: "用户名已被注册" }, { status: 400 });
+    }
+
     const passwordHash = await bcrypt.hash(password, 10);
-    await prisma.parent.create({ data: { username, passwordHash } });
+    await prisma.parent.create({
+      data: {
+        username,
+        passwordHash,
+        nickname: (nickname || "").trim() || username,  // NEW: default to username
+      },
+    });
 
     return NextResponse.json({ success: true });
   } catch {
