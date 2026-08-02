@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import { getOrCreateTodayRecord, completeTask, getTodayStatus } from "@/lib/checkin";
+import { getAuthorizedChild } from "@/lib/child-access";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -16,10 +16,8 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "请指定孩子" }, { status: 400 });
   }
 
-  // Verify child belongs to this parent
-  const child = await prisma.child.findFirst({
-    where: { id: childId, parentId: session.user.id },
-  });
+  // Verify the session may access this child (parent owns it, or child's own record)
+  const child = await getAuthorizedChild(session, childId);
   if (!child) {
     return NextResponse.json({ error: "孩子不存在" }, { status: 404 });
   }
@@ -40,10 +38,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "参数不完整" }, { status: 400 });
   }
 
-  // Verify child belongs to this parent
-  const child = await prisma.child.findFirst({
-    where: { id: childId, parentId: session.user.id },
-  });
+  // Verify the session may access this child (parent owns it, or child's own record)
+  const child = await getAuthorizedChild(session, childId);
   if (!child) {
     return NextResponse.json({ error: "孩子不存在" }, { status: 404 });
   }

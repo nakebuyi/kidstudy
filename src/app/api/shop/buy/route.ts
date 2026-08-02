@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { getAuthorizedChild } from "@/lib/child-access";
 import { spendPoints } from "@/lib/points";
 import { NextResponse } from "next/server";
 
@@ -14,9 +14,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "参数不完整" }, { status: 400 });
   }
 
-  const child = await prisma.child.findFirst({
-    where: { id: childId, parentId: session.user.id },
-  });
+  const child = await getAuthorizedChild(session, childId);
   if (!child) {
     return NextResponse.json({ error: "孩子不存在" }, { status: 404 });
   }

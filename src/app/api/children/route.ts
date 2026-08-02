@@ -55,6 +55,9 @@ export async function POST(req: Request) {
   if (!session?.user?.id) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
+  if ((session as any).role !== "parent") {
+    return NextResponse.json({ error: "无权操作" }, { status: 403 });
+  }
 
   const { name } = await req.json();
   if (!name || !name.trim()) {
