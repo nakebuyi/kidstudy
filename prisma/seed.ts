@@ -12,6 +12,10 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const passwordHash = await bcrypt.hash("123456", 10);
 
+  // Backfill: set nickname = username for existing Parent records where nickname is empty
+  const backfillResult = await prisma.$executeRaw`UPDATE Parent SET nickname = username WHERE nickname = ''`;
+  console.log(`🔧 Backfilled ${backfillResult} parent(s) with nickname = username`);
+
   const parent = await prisma.parent.upsert({
     where: { username: "demo" },
     update: { nickname: "家长" },
