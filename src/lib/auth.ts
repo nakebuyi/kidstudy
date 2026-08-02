@@ -13,25 +13,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) return null;
 
+        const username = credentials.username as string;
+        const password = credentials.password as string;
+
+        // 1. Try Parent
         const parent = await prisma.parent.findUnique({
-          where: { username: credentials.username as string },
+          where: { username },
           include: { children: { take: 1, orderBy: { createdAt: "desc" } } },
         });
 
-        if (!parent) return null;
+        if (parent) {
+          const isValid = await bcrypt.compare(password, parent.passwordHash);
+          if (!isValid) return null;
+          return {
+            id: parent.id,
+            name: parent.username,
+            role: "parent" as const,
+            nickname: parent.nickname || parent.username,
+            currentChildId: parent.children[0]?.id || null,
+          };
+        }
 
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          parent.passwordHash
-        );
+        // 2. Try ChildAccount
+        const childAccount = await prisma.childAccount.findUnique({
+          where: { username },
+          include: { child: true },
+        });
 
-        if (!isValid) return null;
+        if (childAccount) {
+          const isValid = await bcrypt.compare(password, childAccount.passwordHash);
+          if (!isValid) return null;
+          return {
+            id: childAccount.id,
+            name: childAccount.child.name,
+            role: "child" as const,
+            nickname: childAccount.nickname,
+            childId: childAccount.childId,
+          };
+        }
 
-        return {
-          id: parent.id,
-          name: parent.username,
-          currentChildId: parent.children[0]?.id || null,
-        };
+        return null;
       },
     }),
   ],
@@ -40,7 +61,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id;
         token.username = user.name;
-        token.currentChildId = (user as any).currentChildId;
+        token.role = (user as any).role;           // NEW
+        token.nickname = (user as any).nickname;   // NEW
+        if ((user as any).role === "child") {
+          token.currentChildId = (user as any).childId;  // child's own child record
+        } else {
+          token.currentChildId = (user as any).currentChildId;  // parent's selected child
+        }
       }
       if (trigger === "update" && session?.currentChildId) {
         token.currentChildId = session.currentChildId;
@@ -53,6 +80,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         id: token.id as string,
         name: token.username as string,
       };
+      (session as any).role = token.role;                // NEW
+      (session as any).nickname = token.nickname;         // NEW
       (session as any).currentChildId = token.currentChildId;
       return session;
     },
