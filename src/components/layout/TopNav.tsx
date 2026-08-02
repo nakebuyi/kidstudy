@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,6 +24,8 @@ const subjects = [
 export function TopNav() {
   const pathname = usePathname();
   const { child } = useChild();
+  const { data: session } = useSession();
+  const role = (session as any)?.role as string | undefined;
 
   return (
     <header className="h-14 border-b bg-white flex items-center justify-between px-4 shrink-0">
@@ -85,9 +87,11 @@ export function TopNav() {
         </nav>
       </div>
       <div className="flex items-center gap-2 md:gap-3">
-        <Link href="/parent" className="text-sm text-gray-600 hover:text-gray-900 hidden sm:inline">
-          👤 家长中心
-        </Link>
+        {role === "parent" && (
+          <Link href="/parent" className="text-sm text-gray-600 hover:text-gray-900 hidden sm:inline">
+            👤 家长中心
+          </Link>
+        )}
         <Button variant="ghost" size="sm" onClick={() => signOut({ callbackUrl: "/login" })}>
           退出
         </Button>
