@@ -23,7 +23,8 @@ export async function POST(
     return NextResponse.json({ error: "孩子不存在" }, { status: 404 });
   }
 
-  const { username, password, nickname } = await req.json();
+  const { username: rawUsername, password, nickname } = await req.json();
+  const username = rawUsername?.trim();
 
   if (!username || !password || !nickname) {
     return NextResponse.json({ error: "用户名、密码和昵称不能为空" }, { status: 400 });
