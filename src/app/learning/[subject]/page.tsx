@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, use, useEffect, useCallback } from "react";
+import { useState, useMemo, use, useEffect, useCallback, Fragment } from "react";
 import { useLearning } from "@/store/LearningContext";
 import { useChild } from "@/store/ChildContext";
 import { useSpeech } from "@/hooks/useSpeech";
@@ -1122,28 +1122,33 @@ export default function LearningSubjectPage({
           </Badge>
         </div>
 
-        {/* Progress Steps */}
-        <div className="flex items-center gap-2">
+        {/* Progress Steps —— 图标与下方文字共用相同的 flex-1 列 + 固定宽连接线几何，保证逐一对齐 */}
+        <div className="flex items-center">
           {[1, 2, 3].map((step) => (
-            <div key={step} className="flex items-center gap-2 flex-1">
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                  step < currentStep
-                    ? "bg-green-100 text-green-700"
-                    : step === currentStep
-                    ? colorMap[color]
-                    : "bg-gray-100 text-gray-400"
-                }`}
-              >
-                {step < currentStep ? <Check className="w-4 h-4" /> : step}
+            <Fragment key={step}>
+              <div className="flex-1 flex justify-center">
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                    step < currentStep
+                      ? "bg-green-100 text-green-700"
+                      : step === currentStep
+                      ? colorMap[color]
+                      : "bg-gray-100 text-gray-400"
+                  }`}
+                >
+                  {step < currentStep ? <Check className="w-4 h-4" /> : step}
+                </div>
               </div>
-              {step < 3 && <div className="flex-1 h-0.5 bg-gray-200" />}
-            </div>
+              {step < 3 && <div className="w-12 h-0.5 bg-gray-200 shrink-0" />}
+            </Fragment>
           ))}
         </div>
-        <div className="flex justify-between text-xs text-gray-500 px-1">
+        <div className="flex">
           {labels.map((label, i) => (
-            <span key={i}>{label}</span>
+            <Fragment key={i}>
+              <div className="flex-1 text-center text-xs text-gray-500">{label}</div>
+              {i < 2 && <div className="w-12 shrink-0" />}
+            </Fragment>
           ))}
         </div>
 
