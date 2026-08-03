@@ -13,6 +13,7 @@ import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
 import { SpeakAudio } from "@/components/SpeakAudio";
 import pinyinAudioMap from "@/lib/data/pinyin-audio-map.json";
+import { CHAR_PINYIN, getCharPinyin } from "@/lib/char-pinyin";
 import { isLastLearningItem } from "@/lib/checkin-completion";
 import Link from "next/link";
 
@@ -236,7 +237,7 @@ function PinyinStep1({ item, onNext }: { item: any; onNext: () => void }) {
             {item.examples.map((ex: string) => (
               <div key={ex} className="bg-sky-50 rounded-xl px-6 py-4 text-center flex flex-col items-center">
                 <div className="text-3xl font-bold text-gray-800">{ex}</div>
-                <div className="text-sm text-sky-500 mt-1">{item.pinyin}</div>
+                <div className="text-sm text-sky-500 mt-1">{getCharPinyin(ex)}</div>
                 <SpeakAudio text={ex} kind="char" dir="zh" map={pinyinAudioMap} className="mt-2" />
               </div>
             ))}
@@ -285,7 +286,7 @@ function PinyinStep2({ item, onNext }: { item: any; onNext: () => void }) {
               <div key={ex} className="flex items-center gap-4 bg-sky-50 rounded-lg p-4">
                 <span className="text-3xl font-bold text-gray-800">{ex}</span>
                 <span className="text-xl text-sky-500 flex-1">
-                  {item.pinyin} → {ex}
+                  {getCharPinyin(ex)} → {ex}
                 </span>
                 <SpeakAudio text={ex} kind="char" dir="zh" map={pinyinAudioMap} />
               </div>
@@ -293,7 +294,7 @@ function PinyinStep2({ item, onNext }: { item: any; onNext: () => void }) {
           </div>
           <div className="mt-4 bg-gray-50 rounded-lg p-4 text-center">
             <p className="text-gray-600">
-              请大声拼读每个例字：先读拼音 <strong>{item.pinyin}</strong>，再读汉字
+              请跟着拼音大声拼读每个例字，先读完整拼音（如 jiā），再读汉字
             </p>
             <p className="text-sm text-gray-400 mt-1">重复练习，直到熟练掌握</p>
           </div>
@@ -311,25 +312,22 @@ function PinyinStep3({ item, onComplete }: { item: any; onComplete: (correct: bo
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
 
+  const exampleChar = item.examples[0];
+  const answer = getCharPinyin(exampleChar);
+
   const options = useMemo(() => {
-    const allPinyins = ["b", "p", "m", "f", "d", "t", "n", "l", "a", "o", "e", "i", "u", "ü", "ai", "ei", "ao", "ou", "zhi", "yi"];
-    const wrong = allPinyins
-      .filter((p) => p !== item.pinyin)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 3);
-    const all = [...wrong, item.pinyin].sort(() => Math.random() - 0.5);
-    return all;
-  }, [item.pinyin]);
+    const pool = [...new Set(Object.values(CHAR_PINYIN))].filter((p) => p !== answer);
+    const wrong = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+    return [...wrong, answer].sort(() => Math.random() - 0.5);
+  }, [answer]);
 
   const handleSelect = (option: string) => {
     if (answered) return;
     setSelected(option);
     setAnswered(true);
-    const correct = option === item.pinyin;
+    const correct = option === answer;
     setTimeout(() => onComplete(correct), 800);
   };
-
-  const exampleChar = item.examples[0];
 
   return (
     <div className="space-y-6">
@@ -348,8 +346,8 @@ function PinyinStep3({ item, onComplete }: { item: any; onComplete: (correct: bo
           <div className="grid grid-cols-2 gap-4">
             {options.map((option) => {
               let variant: "outline" | "default" | "destructive" | "secondary" = "outline";
-              if (answered && option === item.pinyin) variant = "default";
-              if (answered && option === selected && option !== item.pinyin) variant = "destructive";
+              if (answered && option === answer) variant = "default";
+              if (answered && option === selected && option !== answer) variant = "destructive";
 
               return (
                 <Button
@@ -361,15 +359,15 @@ function PinyinStep3({ item, onComplete }: { item: any; onComplete: (correct: bo
                   disabled={answered}
                 >
                   {option}
-                  {answered && option === item.pinyin && <Check className="w-5 h-5 ml-2" />}
-                  {answered && option === selected && option !== item.pinyin && <X className="w-5 h-5 ml-2" />}
+                  {answered && option === answer && <Check className="w-5 h-5 ml-2" />}
+                  {answered && option === selected && option !== answer && <X className="w-5 h-5 ml-2" />}
                 </Button>
               );
             })}
           </div>
           {answered && (
-            <div className={`text-center mt-4 text-lg font-medium ${selected === item.pinyin ? "text-green-500" : "text-red-500"}`}>
-              {selected === item.pinyin ? "🎉 太棒了！回答正确！" : "😊 没关系，再试试吧！"}
+            <div className={`text-center mt-4 text-lg font-medium ${selected === answer ? "text-green-500" : "text-red-500"}`}>
+              {selected === answer ? "🎉 太棒了！回答正确！" : `😊 没关系，正确答案是 "${answer}"`}
             </div>
           )}
         </CardContent>
