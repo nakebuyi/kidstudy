@@ -13,6 +13,7 @@ import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
 import { SpeakAudio } from "@/components/SpeakAudio";
 import pinyinAudioMap from "@/lib/data/pinyin-audio-map.json";
+import poetryAudioMap from "@/lib/data/poetry-audio-map.json";
 import { CHAR_PINYIN, getCharPinyin } from "@/lib/char-pinyin";
 import { isLastLearningItem } from "@/lib/checkin-completion";
 import Link from "next/link";
@@ -700,7 +701,7 @@ function PoetryStep1({ item, onNext }: { item: any; onNext: () => void }) {
           <div className="text-lg text-gray-500 mb-4">
             {item.dynasty} · {item.author}
           </div>
-          <SpeakButton text={item.content} />
+          <SpeakAudio text={item.content} kind="poetry" dir="zh" map={poetryAudioMap} />
         </CardContent>
       </Card>
 
@@ -752,6 +753,9 @@ function PoetryStep2({ item, onNext }: { item: any; onNext: () => void }) {
             <p className="text-xl text-gray-700 leading-relaxed whitespace-pre-line">
               {item.content}
             </p>
+          </div>
+          <div className="mt-4 flex justify-center">
+            <SpeakAudio text={item.content} kind="poetry" dir="zh" map={poetryAudioMap} />
           </div>
           <div className="mt-4 bg-gray-50 rounded-lg p-4 text-center">
             <Volume2 className="w-8 h-8 text-red-500 mx-auto mb-2" />
