@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, use } from "react";
+import { useState, useMemo, use, useEffect } from "react";
 import { useLearning } from "@/store/LearningContext";
+import { useChild } from "@/store/ChildContext";
 import { useSpeech } from "@/hooks/useSpeech";
 import { DesktopLayout } from "@/components/layout/DesktopLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -872,8 +873,36 @@ export default function LearningSubjectPage({
   const { subject } = use(params);
   const info = subjectNames[subject] ?? { title: subject, icon: "📚" };
   const { currentStep, completeStep, setQuizResult, startLearning } = useLearning();
+  const { child } = useChild();
 
   const [charIndex, setCharIndex] = useState(0);
+  const [todayTask, setTodayTask] = useState<{
+    id: string;
+    subject: string;
+    taskType: string;
+    completed: boolean;
+    pointsEarned: number;
+  } | null>(null);
+  const [checkinLoading, setCheckinLoading] = useState(true);
+
+  // Fetch today's check-in task for this subject (view-only when completed)
+  useEffect(() => {
+    if (!child) {
+      setCheckinLoading(false);
+      return;
+    }
+    setCheckinLoading(true);
+    fetch(`/api/checkin?childId=${child.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const task = (data.tasks ?? []).find(
+          (t: { subject: string }) => t.subject === subject
+        );
+        setTodayTask(task ?? null);
+      })
+      .catch(() => {})
+      .finally(() => setCheckinLoading(false));
+  }, [child, subject]);
 
   const content = useMemo(() => {
     try {
@@ -932,6 +961,27 @@ export default function LearningSubjectPage({
     );
   }
 
+  // 今日打卡已完成 —— 只读展示完成情况，不允许再次打卡/修改
+  if (todayTask?.completed) {
+    return (
+      <DesktopLayout>
+        <div className="max-w-4xl mx-auto text-center py-12">
+          <div className="text-6xl mb-4">✅</div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            今日{info.title}打卡已完成
+          </h1>
+          <p className="text-gray-500 mb-2">任务：{todayTask.taskType}</p>
+          <p className="text-orange-500 font-medium mb-6">
+            +{todayTask.pointsEarned} 积分已入账
+          </p>
+          <Link href="/dashboard">
+            <Button size="lg">返回工作台</Button>
+          </Link>
+        </div>
+      </DesktopLayout>
+    );
+  }
+
   const handleNext = () => {
     completeStep(currentStep as 1 | 2 | 3);
   };
@@ -942,6 +992,29 @@ export default function LearningSubjectPage({
     setCharIndex(next);
     if (next < content.length) {
       startLearning(content[next].id);
+    }
+    // 完成学习即完成今日该科目的打卡任务（只标记一次）
+    if (child && todayTask && !todayTask.completed) {
+      fetch("/api/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ childId: child.id, taskId: todayTask.id }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.pointsEarned !== undefined) {
+            setTodayTask((t) =>
+              t
+                ? {
+                    ...t,
+                    completed: true,
+                    pointsEarned: data.pointsEarned,
+                  }
+                : t
+            );
+          }
+        })
+        .catch(() => {});
     }
   };
 
