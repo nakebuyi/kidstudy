@@ -39,12 +39,12 @@ interface CheckInStatus {
   totalCount: number;
   allCompleted: boolean;
   bonusEarned: boolean;
+  date: string;
 }
 
 export default function TasksPage() {
-  const { child, refreshChild } = useChild();
+  const { child } = useChild();
   const [status, setStatus] = useState<CheckInStatus | null>(null);
-  const [completing, setCompleting] = useState<string | null>(null);
 
   const fetchStatus = () => {
     if (!child) return;
@@ -57,21 +57,6 @@ export default function TasksPage() {
   useEffect(() => {
     fetchStatus();
   }, [child]);
-
-  const handleComplete = async (task: CheckInTask) => {
-    if (!child || task.completed) return;
-    setCompleting(task.id);
-    const res = await fetch("/api/checkin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ childId: child.id, taskId: task.id }),
-    });
-    if (res.ok) {
-      fetchStatus();
-      refreshChild();
-    }
-    setCompleting(null);
-  };
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -120,24 +105,17 @@ export default function TasksPage() {
                   </div>
                 </div>
                 {task.completed ? (
-                  <Badge variant="default" className="gap-1">
-                    <Check className="w-3 h-3" /> 已完成
-                  </Badge>
+                  <Link href={`/learning/${task.subject}/result?date=${status.date}`}>
+                    <Badge variant="default" className="gap-1 cursor-pointer hover:opacity-80">
+                      <Check className="w-3 h-3" /> 已完成
+                    </Badge>
+                  </Link>
                 ) : (
-                  <Button
-                    size="sm"
-                    onClick={() => handleComplete(task)}
-                    disabled={completing === task.id}
-                    className="gap-1"
-                  >
-                    {completing === task.id ? (
-                      "完成中..."
-                    ) : (
-                      <>
-                        <Sparkles className="w-3 h-3" /> 完成打卡
-                      </>
-                    )}
-                  </Button>
+                  <Link href={`/learning/${task.subject}`}>
+                    <Button size="sm" className="gap-1">
+                      <Sparkles className="w-3 h-3" /> 完成打卡
+                    </Button>
+                  </Link>
                 )}
               </CardContent>
             </Card>

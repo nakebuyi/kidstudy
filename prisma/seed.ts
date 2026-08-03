@@ -74,6 +74,34 @@ async function seedLearningContent() {
   }
 }
 
+/**
+ * 幂等迁移：给 LearningRecord 加 subject/date 列和查询索引。
+ * Prisma CLI 无法直连 Turso（file: only），故在 seed 内用 SQL 迁移。
+ */
+async function migrateLearningRecord() {
+  const cols = await prisma.$queryRawUnsafe<{ name: string }[]>(
+    `PRAGMA table_info("LearningRecord")`
+  );
+  const names = cols.map((c) => c.name);
+
+  if (!names.includes("subject")) {
+    await prisma.$executeRawUnsafe(
+      `ALTER TABLE "LearningRecord" ADD COLUMN "subject" TEXT NOT NULL DEFAULT ''`
+    );
+    console.log("✅ Added LearningRecord.subject");
+  }
+  if (!names.includes("date")) {
+    await prisma.$executeRawUnsafe(
+      `ALTER TABLE "LearningRecord" ADD COLUMN "date" TEXT NOT NULL DEFAULT ''`
+    );
+    console.log("✅ Added LearningRecord.date");
+  }
+  await prisma.$executeRawUnsafe(
+    `CREATE INDEX IF NOT EXISTS "LearningRecord_childId_subject_date_idx" ON "LearningRecord" ("childId", "subject", "date")`
+  );
+  console.log("✅ LearningRecord index ensured");
+}
+
 async function main() {
   const passwordHash = await bcrypt.hash("123456", 10);
 
@@ -104,6 +132,7 @@ async function main() {
   console.log(`✅ Seeded child: ${child?.name} (id: ${child?.id})`);
 
   await seedLearningContent();
+  await migrateLearningRecord();
 }
 
 main()

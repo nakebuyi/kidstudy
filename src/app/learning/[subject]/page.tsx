@@ -1008,9 +1008,14 @@ export default function LearningSubjectPage({
           <p className="text-orange-500 font-medium mb-6">
             +{todayTask.pointsEarned} 积分已入账
           </p>
-          <Link href="/dashboard">
-            <Button size="lg">返回工作台</Button>
-          </Link>
+          <div className="flex gap-3 justify-center">
+            <Link href={`/learning/${subject}/result`}>
+              <Button size="lg">查看答题结果</Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button size="lg" variant="outline">返回工作台</Button>
+            </Link>
+          </div>
         </div>
       </DesktopLayout>
     );
@@ -1020,10 +1025,23 @@ export default function LearningSubjectPage({
     completeStep(currentStep as 1 | 2 | 3);
   };
 
-  const handleQuizComplete = (correct: boolean) => {
+  const handleQuizComplete = async (correct: boolean) => {
     setQuizResult(correct);
+    const item = content[charIndex]; // 先读当前题，再递增
     const next = charIndex + 1;
     setCharIndex(next);
+
+    // 每道测试题实时记录对错（日期由服务端按北京时间计算）
+    if (child && item) {
+      const recordFetch = fetch("/api/learning/record", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ childId: child.id, subject, charId: item.id, correct }),
+      }).catch(() => {});
+      // 最后一题：确保该题记录已落库再完成打卡，避免孩子跳走丢记录
+      if (next >= content.length) await recordFetch;
+    }
+
     if (next < content.length) {
       startLearning(content[next].id);
     }
