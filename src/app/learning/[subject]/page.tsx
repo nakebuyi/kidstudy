@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
 import { getPinyinSpeechText } from "@/lib/pinyin-pronunciation";
+import { getEnglishSpeechText } from "@/lib/english-pronunciation";
 import { isLastLearningItem } from "@/lib/checkin-completion";
 import Link from "next/link";
 
@@ -33,7 +34,7 @@ const subjectColors: Record<string, string> = {
 
 // ===================== SPEECH BUTTON =====================
 
-function SpeakButton({ text, lang = "zh-CN" }: { text: string; lang?: string }) {
+function SpeakButton({ text, lang = "zh-CN", fallback }: { text: string; lang?: string; fallback?: string }) {
   const { speak, speaking, supported } = useSpeech();
   if (!supported) return null;
   return (
@@ -41,7 +42,7 @@ function SpeakButton({ text, lang = "zh-CN" }: { text: string; lang?: string }) 
       variant="outline"
       size="sm"
       className="gap-1"
-      onClick={() => speak(text, lang)}
+      onClick={() => speak(text, lang, fallback)}
       disabled={speaking}
     >
       <Volume2 className={`w-4 h-4 ${speaking ? "animate-pulse" : ""}`} />
@@ -382,7 +383,7 @@ function EnglishStep1({ item, onNext }: { item: any; onNext: () => void }) {
           <span className="text-8xl mb-4">{item.emoji}</span>
           <div className="text-5xl font-bold text-green-600 mb-2">{item.word}</div>
           <div className="text-2xl text-gray-500 mb-2">{item.chinese}</div>
-          <SpeakButton text={item.word} lang="en-US" />
+          <SpeakButton text={item.word} lang="en-US" fallback={getEnglishSpeechText(item.word)} />
           <div className="mt-2">
             <Badge variant="secondary">{item.category}</Badge>
           </div>

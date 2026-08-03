@@ -1,5 +1,23 @@
 import { describe, it, expect } from "vitest";
-import { selectVoice } from "./speech-voices";
+import { selectVoice, hasVoiceForLang } from "./speech-voices";
+
+describe("hasVoiceForLang", () => {
+  it("returns false when no voices", () => {
+    expect(hasVoiceForLang([], "en-US")).toBe(false);
+  });
+
+  it("returns true for exact match", () => {
+    expect(hasVoiceForLang([{ lang: "en-US", default: true }], "en-US")).toBe(true);
+  });
+
+  it("returns true for prefix match", () => {
+    expect(hasVoiceForLang([{ lang: "en-GB", default: true }], "en-US")).toBe(true);
+  });
+
+  it("returns false when only unrelated voices exist", () => {
+    expect(hasVoiceForLang([{ lang: "zh-CN", default: true }], "en-US")).toBe(false);
+  });
+});
 
 describe("selectVoice", () => {
   it("returns null when no voices are available", () => {

@@ -25,6 +25,25 @@ export interface SpeechVoiceLike {
  *
  * 无可用语音时返回 null（调用方仍会尝试用 lang 播放）。
  */
+/**
+ * 判断可用语音中是否存在匹配指定语言（精确或前缀）的语音。
+ * 与 selectVoice 不同，此函数不回退到默认语音 —— 用于判断
+ * "该语言是否真的可用"，从而决定是否需要中文音译回退。
+ */
+export function hasVoiceForLang(
+  voices: SpeechVoiceLike[],
+  lang: string
+): boolean {
+  if (!voices.length) return false;
+  const target = lang.toLowerCase();
+  const prefix = target.split("-")[0];
+  return voices.some(
+    (v) =>
+      v.lang.toLowerCase() === target ||
+      v.lang.toLowerCase().startsWith(prefix)
+  );
+}
+
 export function selectVoice<T extends SpeechVoiceLike>(
   voices: T[],
   lang: string

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import { selectVoice } from "@/lib/speech-voices";
+import { selectVoice, hasVoiceForLang } from "@/lib/speech-voices";
 
 export function useSpeech() {
   const [speaking, setSpeaking] = useState(false);
@@ -9,7 +9,7 @@ export function useSpeech() {
     typeof window !== "undefined" && "speechSynthesis" in window;
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
-  const pendingRef = useRef<{ text: string; lang: string } | null>(null);
+  const pendingRef = useRef<{ text: string; lang: string; fallback?: string } | null>(null);
 
   const buildUtterance = useCallback(
     (text: string, lang: string): SpeechSynthesisUtterance | null => {
@@ -17,7 +17,8 @@ export function useSpeech() {
       const utterance = new SpeechSynthesisUtterance(text);
       // Explicitly pick a matching voice: Chrome silently drops utterances
       // when the requested lang has no available voice (e.g. en-US on a
-      // Chinese-only TTS environment).
+      // Chinese-only TTS environment). If the lang has a real voice, use it;
+      // otherwise use the best available voice (often Chinese).
       const voice = selectVoice(voicesRef.current, lang);
       if (voice) {
         utterance.voice = voice;
@@ -48,9 +49,12 @@ export function useSpeech() {
       const hadVoices = voicesRef.current.length > 0;
       voicesRef.current = window.speechSynthesis.getVoices();
       if (!hadVoices && voicesRef.current.length > 0 && pendingRef.current) {
-        const { text, lang } = pendingRef.current;
+        const { text, lang, fallback } = pendingRef.current;
         pendingRef.current = null;
-        const utterance = buildUtterance(text, lang);
+        const effectiveText = hasVoiceForLang(voicesRef.current, lang)
+          ? text
+          : (fallback ?? text);
+        const utterance = buildUtterance(effectiveText, lang);
         if (utterance) window.speechSynthesis.speak(utterance);
       }
     };
@@ -62,7 +66,7 @@ export function useSpeech() {
   }, [supported, buildUtterance]);
 
   const speak = useCallback(
-    (text: string, lang: string = "zh-CN") => {
+    (text: string, lang: string = "zh-CN", fallback?: string) => {
       if (!supported) return;
 
       window.speechSynthesis.cancel();
@@ -70,13 +74,19 @@ export function useSpeech() {
       // If voices haven't loaded yet, remember this request and replay it
       // when 'voiceschanged' fires, otherwise Chrome may silently drop it.
       if (voicesRef.current.length === 0) {
-        pendingRef.current = { text, lang };
+        pendingRef.current = { text, lang, fallback };
         // Force Chrome to start loading voices.
         window.speechSynthesis.getVoices();
         return;
       }
 
-      const utterance = buildUtterance(text, lang);
+      // If the requested language has no matching voice (e.g. en-US in a
+      // Chinese-only TTS environment), fall back to reading a Chinese
+      // transliteration with an available voice instead of staying silent.
+      const effectiveText = hasVoiceForLang(voicesRef.current, lang)
+        ? text
+        : (fallback ?? text);
+      const utterance = buildUtterance(effectiveText, lang);
       if (!utterance) return;
       utteranceRef.current = utterance;
       window.speechSynthesis.speak(utterance);
