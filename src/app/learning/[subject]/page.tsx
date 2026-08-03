@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
 import { getPinyinSpeechText } from "@/lib/pinyin-pronunciation";
+import { isLastLearningItem } from "@/lib/checkin-completion";
 import Link from "next/link";
 
 const subjectNames: Record<string, { title: string; icon: string }> = {
@@ -993,8 +994,8 @@ export default function LearningSubjectPage({
     if (next < content.length) {
       startLearning(content[next].id);
     }
-    // 完成学习即完成今日该科目的打卡任务（只标记一次）
-    if (child && todayTask && !todayTask.completed) {
+    // 只有完成整个学习流程（最后一个内容）才完成今日该科目的打卡任务
+    if (isLastLearningItem(charIndex, content.length) && child && todayTask && !todayTask.completed) {
       fetch("/api/checkin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
