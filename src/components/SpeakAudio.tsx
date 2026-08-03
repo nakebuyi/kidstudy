@@ -26,7 +26,7 @@ export function SpeakAudio({
   map = defaultMap,
 }: {
   text: string;
-  kind: "word" | "sentence" | "pinyin" | "char";
+  kind: "word" | "sentence" | "pinyin" | "char" | "poetry";
   className?: string;
   dir?: string;
   map?: AudioMap;
