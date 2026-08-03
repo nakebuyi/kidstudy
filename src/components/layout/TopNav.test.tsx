@@ -112,4 +112,29 @@ describe("TopNav", () => {
     render(<TopNav />);
     expect(screen.getByText("退出")).toBeInTheDocument();
   });
+
+  it("hides subject tabs for parent role", () => {
+    mockUseSession.mockReturnValue({
+      data: { user: { id: "p1" }, role: "parent" },
+    });
+
+    render(<TopNav />);
+    expect(screen.queryByText(/识字/)).toBeNull();
+    expect(screen.queryByText(/拼音/)).toBeNull();
+    expect(screen.queryByText(/英语/)).toBeNull();
+    expect(screen.queryByText(/算数/)).toBeNull();
+    expect(screen.queryByText(/古诗词/)).toBeNull();
+  });
+
+  it("shows subject tabs for child role", () => {
+    mockUseSession.mockReturnValue({
+      data: { user: { id: "c1" }, role: "child" },
+    });
+
+    render(<TopNav />);
+    // Desktop nav + mobile dropdown both render for child
+    expect(screen.getAllByText(/识字/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/拼音/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/英语/).length).toBeGreaterThan(0);
+  });
 });

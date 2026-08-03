@@ -32,7 +32,8 @@ export function decideRoute(args: {
     if (
       path === "/dashboard" ||
       path.startsWith("/dashboard/") ||
-      path.startsWith("/games/")
+      path.startsWith("/games/") ||
+      path.startsWith("/learning/")
     ) {
       return { type: "redirect", to: "/parent" };
     }

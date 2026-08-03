@@ -26,65 +26,71 @@ export function TopNav() {
   const { child } = useChild();
   const { data: session } = useSession();
   const role = (session as any)?.role as string | undefined;
+  const isParent = role === "parent";
 
   return (
     <header className="h-14 border-b bg-white flex items-center justify-between px-4 shrink-0">
       <div className="flex items-center gap-4">
-        {/* Mobile menu */}
-        <div className="md:hidden">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost" size="sm">
-                <Menu className="w-5 h-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48">
-              {subjects.map((s) => (
+        {/* Mobile menu (child only) */}
+        {!isParent && (
+          <div className="md:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button variant="ghost" size="sm">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                {subjects.map((s) => (
+                  <DropdownMenuItem
+                    key={s.key}
+                    onClick={() => s.enabled && (window.location.href = `/learning/${s.key}`)}
+                    className="cursor-pointer"
+                  >
+                    {s.icon} {s.label}
+                  </DropdownMenuItem>
+                ))}
                 <DropdownMenuItem
-                  key={s.key}
-                  onClick={() => s.enabled && (window.location.href = `/learning/${s.key}`)}
+                  onClick={() => (window.location.href = "/games/pet")}
                   className="cursor-pointer"
                 >
-                  {s.icon} {s.label}
+                  🐾 宠物
                 </DropdownMenuItem>
-              ))}
-              <DropdownMenuItem
-                onClick={() => (window.location.href = "/games/pet")}
-                className="cursor-pointer"
-              >
-                🐾 宠物
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => (window.location.href = "/games/shop")}
-                className="cursor-pointer"
-              >
-                🛍️ 商城
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+                <DropdownMenuItem
+                  onClick={() => (window.location.href = "/games/shop")}
+                  className="cursor-pointer"
+                >
+                  🛍️ 商城
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
 
         <Link href="/dashboard" className="text-lg md:text-xl font-bold text-orange-500">
           📚 幼小衔接
         </Link>
-        <nav className="hidden md:flex items-center gap-1">
-          {subjects.map((s) => (
-            <Link
-              key={s.key}
-              href={s.enabled ? `/learning/${s.key}` : "#"}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                s.enabled
-                  ? pathname.startsWith(`/learning/${s.key}`)
-                    ? "bg-orange-100 text-orange-700"
-                    : "hover:bg-gray-100"
-                  : "text-gray-400 cursor-not-allowed"
-              }`}
-              onClick={(e) => { if (!s.enabled) e.preventDefault(); }}
-            >
-              {s.label}
-            </Link>
-          ))}
-        </nav>
+        {/* Subject tabs (child only) */}
+        {!isParent && (
+          <nav className="hidden md:flex items-center gap-1">
+            {subjects.map((s) => (
+              <Link
+                key={s.key}
+                href={s.enabled ? `/learning/${s.key}` : "#"}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  s.enabled
+                    ? pathname.startsWith(`/learning/${s.key}`)
+                      ? "bg-orange-100 text-orange-700"
+                      : "hover:bg-gray-100"
+                    : "text-gray-400 cursor-not-allowed"
+                }`}
+                onClick={(e) => { if (!s.enabled) e.preventDefault(); }}
+              >
+                {s.label}
+              </Link>
+            ))}
+          </nav>
+        )}
       </div>
       <div className="flex items-center gap-2 md:gap-3">
         {role === "parent" && (

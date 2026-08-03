@@ -30,7 +30,10 @@ export function LoginForm() {
       setError("用户名或密码错误");
       setLoading(false);
     } else {
-      router.push("/dashboard");
+      // 家长直接进家长中心；孩子进工作台
+      const session = await fetch("/api/auth/session").then((r) => r.json());
+      const role = (session as any)?.role;
+      router.push(role === "parent" ? "/parent" : "/dashboard");
       router.refresh();
     }
   };

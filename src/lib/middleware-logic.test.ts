@@ -115,10 +115,16 @@ describe("decideRoute", () => {
       ).toEqual({ type: "next" });
     });
 
-    it("allows parent on /learning/literacy", () => {
+    it("redirects parent on /learning/literacy to /parent", () => {
       expect(
         decideRoute({ path: "/learning/literacy", isLoggedIn: true, role: "parent" })
-      ).toEqual({ type: "next" });
+      ).toEqual({ type: "redirect", to: "/parent" });
+    });
+
+    it("redirects parent on /learning/pinyin to /parent", () => {
+      expect(
+        decideRoute({ path: "/learning/pinyin", isLoggedIn: true, role: "parent" })
+      ).toEqual({ type: "redirect", to: "/parent" });
     });
 
     it("does NOT redirect parent on /games (exact, no trailing)", () => {

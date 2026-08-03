@@ -34,10 +34,10 @@ export function RegisterForm() {
       return;
     }
 
-    // 自动登录
+    // 自动登录（注册的是家长账号，直接进家长中心）
     const result = await signIn("credentials", { username, password, redirect: false });
     if (result?.ok) {
-      router.push("/dashboard");
+      router.push("/parent");
       router.refresh();
     }
   };
