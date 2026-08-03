@@ -310,7 +310,7 @@ Expected: 打印 `拼音 63/63，例字 150`，无失败列表；`public/audio/z
 验证文件数：
 
 ```bash
-ls public/audio/zh/pinyin | wc -l   # 63
+ls public/audio/zh/pinyin | wc -l   # 46（共享呼读音去重；map 键数应为 63）
 ls public/audio/zh/char | wc -l     # 150
 node -e "const m=require('./src/lib/data/pinyin-audio-map.json'); console.log(Object.keys(m.pinyin).length, Object.keys(m.char).length)"  # 63 150
 ```

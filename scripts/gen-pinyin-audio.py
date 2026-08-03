@@ -58,6 +58,7 @@ def download(url: str, dest: str, retries: int = 3) -> bool:
                 continue
             with open(dest, "wb") as f:
                 f.write(data)
+            time.sleep(0.3)  # 限速，避免 Google TTS 429 节流（对齐英语脚本）
             return True
         except Exception as e:
             print(f"  ✗ 错误 {attempt + 1}: {e}")
@@ -83,7 +84,8 @@ def main():
     os.makedirs(OUT_PINYIN, exist_ok=True)
     os.makedirs(OUT_CHAR, exist_ok=True)
 
-    items = json.load(open(CONTENT, encoding="utf-8"))
+    with open(CONTENT, encoding="utf-8") as f:
+        items = json.load(f)
     print(f"共 {len(items)} 个拼音")
 
     pinyin_map: dict[str, str] = {}
@@ -114,6 +116,7 @@ def main():
 
     with open(MAP_PATH, "w", encoding="utf-8") as f:
         json.dump({"pinyin": pinyin_map, "char": char_map}, f, ensure_ascii=False, indent=2)
+        f.write("\n")
     print(f"拼音 {len(pinyin_map)}/{len(items)}，例字 {len(char_map)}")
     if failures:
         print("失败:", failures)
