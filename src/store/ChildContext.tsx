@@ -12,6 +12,7 @@ interface Child {
   maxStreak: number;
   totalCheckIns: number;
   pet: string;
+  account?: { id: string; username: string; nickname: string } | null;
 }
 
 interface ChildContextType {

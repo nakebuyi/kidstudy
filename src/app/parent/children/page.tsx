@@ -43,6 +43,7 @@ export default function ChildrenPage() {
       setAccountUsername("");
       setAccountPassword("");
       setAccountNickname("");
+      await refreshChildren();
     } else {
       setAccountMessage(`❌ ${data.error || "创建失败"}`);
     }
@@ -124,20 +125,26 @@ export default function ChildrenPage() {
                     🌟 {c.points} 积分 · 🔥 {c.streak} 天
                   </div>
                   <div className="mt-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setAccountChildId(c.id);
-                        setAccountUsername("");
-                        setAccountPassword("");
-                        setAccountNickname(c.name);
-                        setAccountMessage("");
-                      }}
-                    >
-                      🔑 创建登录账号
-                    </Button>
+                    {c.account ? (
+                      <Badge variant="secondary" className="text-sm px-3 py-1">
+                        👤 登录账号：{c.account.nickname}（{c.account.username}）
+                      </Badge>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAccountChildId(c.id);
+                          setAccountUsername("");
+                          setAccountPassword("");
+                          setAccountNickname(c.name);
+                          setAccountMessage("");
+                        }}
+                      >
+                        🔑 创建登录账号
+                      </Button>
+                    )}
                   </div>
                 </div>
               </CardContent>
