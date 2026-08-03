@@ -32,21 +32,42 @@ def slug(text: str) -> str:
     return hashlib.md5(text.encode("utf-8")).hexdigest()[:12]
 
 
+def remove_best_effort(path: str) -> None:
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+    except OSError:
+        pass  # best-effort，删除失败不影响主流程
+
+
 async def gen(text: str, dest: str) -> bool:
     if os.path.exists(dest) and os.path.getsize(dest) > MIN_SIZE:
         return True  # 已生成，跳过
+    tmp = dest + ".tmp"
     try:
         communicate = edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH)
-        await communicate.save(dest)
+        await communicate.save(tmp)
+        if os.path.getsize(tmp) <= MIN_SIZE:
+            print(f"  ✗ 过小 ({os.path.getsize(tmp)}b): {dest}")
+            remove_best_effort(tmp)
+            remove_best_effort(dest)
+            return False
+        os.replace(tmp, dest)  # 原子替换，避免残留半截文件
     except Exception as e:
+        remove_best_effort(tmp)
+        remove_best_effort(dest)
         print(f"  ✗ 失败: {e}")
         return False
-    return os.path.exists(dest) and os.path.getsize(dest) > MIN_SIZE
+    ok = os.path.exists(dest) and os.path.getsize(dest) > MIN_SIZE
+    if not ok:
+        remove_best_effort(dest)
+    return ok
 
 
 async def main():
     os.makedirs(OUT_DIR, exist_ok=True)
-    items = json.load(open(CONTENT, encoding="utf-8"))
+    with open(CONTENT, encoding="utf-8") as f:
+        items = json.load(f)
     print(f"共 {len(items)} 首诗")
 
     audio_map: dict[str, str] = {}
