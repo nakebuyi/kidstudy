@@ -305,7 +305,7 @@ if __name__ == "__main__":
 - [ ] **Step 4: 运行脚本生成音频与 map**
 
 Run: `python3 scripts/gen-pinyin-audio.py`
-Expected: 打印 `拼音 63/63，例字 150`，无失败列表；`public/audio/zh/pinyin/` 63 个 mp3、`public/audio/zh/char/` 150 个 mp3、`src/lib/data/pinyin-audio-map.json` 生成。
+Expected: 打印 `拼音 63/63，例字 150`，无失败列表；`public/audio/zh/pinyin/` 46 个去重后 mp3（63 个呼读音共享，如 i/y/yi 均读"衣"）、`public/audio/zh/char/` 150 个 mp3、`src/lib/data/pinyin-audio-map.json` 生成（63+150 个映射键）。
 
 验证文件数：
 
