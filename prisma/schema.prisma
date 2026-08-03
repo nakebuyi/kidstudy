@@ -78,3 +78,15 @@ model CheckInTask {
   pointsEarned Int           @default(0)
   completedAt  DateTime?
 }
+
+model LearningContent {
+  id        String   @id
+  subject   String
+  level     Int
+  order     Int
+  data      String // JSON string: full subject-specific item payload
+  createdAt DateTime @default(now())
+
+  @@index([subject, level])
+  @@unique([subject, order])
+}

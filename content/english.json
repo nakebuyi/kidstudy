@@ -1,22 +1,2121 @@
 [
-  { "id": "e1", "word": "apple", "chinese": "苹果", "category": "水果", "emoji": "🍎", "sentences": ["I like apples.", "This apple is red."], "level": 1, "order": 1 },
-  { "id": "e2", "word": "banana", "chinese": "香蕉", "category": "水果", "emoji": "🍌", "sentences": ["I eat a banana.", "Bananas are yellow."], "level": 1, "order": 2 },
-  { "id": "e3", "word": "cat", "chinese": "猫", "category": "动物", "emoji": "🐱", "sentences": ["The cat is cute.", "I have a cat."], "level": 1, "order": 3 },
-  { "id": "e4", "word": "dog", "chinese": "狗", "category": "动物", "emoji": "🐶", "sentences": ["The dog is big.", "I love dogs."], "level": 1, "order": 4 },
-  { "id": "e5", "word": "red", "chinese": "红色", "category": "颜色", "emoji": "🔴", "sentences": ["The apple is red.", "I like red."], "level": 1, "order": 5 },
-  { "id": "e6", "word": "blue", "chinese": "蓝色", "category": "颜色", "emoji": "🔵", "sentences": ["The sky is blue.", "I have a blue pen."], "level": 1, "order": 6 },
-  { "id": "e7", "word": "one", "chinese": "一", "category": "数字", "emoji": "1️⃣", "sentences": ["I have one apple.", "One plus one is two."], "level": 1, "order": 7 },
-  { "id": "e8", "word": "two", "chinese": "二", "category": "数字", "emoji": "2️⃣", "sentences": ["I have two hands.", "Two birds are singing."], "level": 1, "order": 8 },
-  { "id": "e9", "word": "eye", "chinese": "眼睛", "category": "身体", "emoji": "👁️", "sentences": ["I have two eyes.", "Open your eyes."], "level": 1, "order": 9 },
-  { "id": "e10", "word": "hand", "chinese": "手", "category": "身体", "emoji": "✋", "sentences": ["Wash your hands.", "I have two hands."], "level": 1, "order": 10 },
-  { "id": "e11", "word": "mom", "chinese": "妈妈", "category": "家庭", "emoji": "👩", "sentences": ["My mom loves me.", "Mom is cooking."], "level": 1, "order": 11 },
-  { "id": "e12", "word": "dad", "chinese": "爸爸", "category": "家庭", "emoji": "👨", "sentences": ["My dad is tall.", "Dad is reading."], "level": 1, "order": 12 },
-  { "id": "e13", "word": "sun", "chinese": "太阳", "category": "自然", "emoji": "☀️", "sentences": ["The sun is bright.", "I like the sun."], "level": 1, "order": 13 },
-  { "id": "e14", "word": "moon", "chinese": "月亮", "category": "自然", "emoji": "🌙", "sentences": ["The moon is round.", "Look at the moon."], "level": 1, "order": 14 },
-  { "id": "e15", "word": "water", "chinese": "水", "category": "自然", "emoji": "💧", "sentences": ["I drink water.", "Water is clean."], "level": 1, "order": 15 },
-  { "id": "e16", "word": "big", "chinese": "大的", "category": "形容词", "emoji": "🐘", "sentences": ["The elephant is big.", "This is a big house."], "level": 1, "order": 16 },
-  { "id": "e17", "word": "small", "chinese": "小的", "category": "形容词", "emoji": "🐭", "sentences": ["The mouse is small.", "I have a small toy."], "level": 1, "order": 17 },
-  { "id": "e18", "word": "happy", "chinese": "开心的", "category": "形容词", "emoji": "😊", "sentences": ["I am happy.", "Happy birthday!"], "level": 1, "order": 18 },
-  { "id": "e19", "word": "run", "chinese": "跑", "category": "动作", "emoji": "🏃", "sentences": ["I can run fast.", "Let's run together."], "level": 1, "order": 19 },
-  { "id": "e20", "word": "eat", "chinese": "吃", "category": "动作", "emoji": "🍽️", "sentences": ["I eat breakfast.", "I like to eat fruit."], "level": 1, "order": 20 }
+  {
+    "id": "e1",
+    "word": "one",
+    "chinese": "一",
+    "category": "数字",
+    "emoji": "1️⃣",
+    "sentences": [
+      "I have one apple.",
+      "One plus one is two."
+    ],
+    "level": 1,
+    "order": 1
+  },
+  {
+    "id": "e2",
+    "word": "two",
+    "chinese": "二",
+    "category": "数字",
+    "emoji": "2️⃣",
+    "sentences": [
+      "I have two hands.",
+      "Two birds are singing."
+    ],
+    "level": 1,
+    "order": 2
+  },
+  {
+    "id": "e3",
+    "word": "three",
+    "chinese": "三",
+    "category": "数字",
+    "emoji": "3️⃣",
+    "sentences": [
+      "I see three cats.",
+      "Three is a lucky number."
+    ],
+    "level": 1,
+    "order": 3
+  },
+  {
+    "id": "e4",
+    "word": "four",
+    "chinese": "四",
+    "category": "数字",
+    "emoji": "4️⃣",
+    "sentences": [
+      "There are four seasons.",
+      "I have four books."
+    ],
+    "level": 1,
+    "order": 4
+  },
+  {
+    "id": "e5",
+    "word": "five",
+    "chinese": "五",
+    "category": "数字",
+    "emoji": "5️⃣",
+    "sentences": [
+      "I have five fingers.",
+      "Five is my lucky number."
+    ],
+    "level": 1,
+    "order": 5
+  },
+  {
+    "id": "e6",
+    "word": "six",
+    "chinese": "六",
+    "category": "数字",
+    "emoji": "6️⃣",
+    "sentences": [
+      "I have six toys.",
+      "Six and one is seven."
+    ],
+    "level": 1,
+    "order": 6
+  },
+  {
+    "id": "e7",
+    "word": "seven",
+    "chinese": "七",
+    "category": "数字",
+    "emoji": "7️⃣",
+    "sentences": [
+      "There are seven days in a week.",
+      "I am seven years old."
+    ],
+    "level": 1,
+    "order": 7
+  },
+  {
+    "id": "e8",
+    "word": "eight",
+    "chinese": "八",
+    "category": "数字",
+    "emoji": "8️⃣",
+    "sentences": [
+      "The spider has eight legs.",
+      "Eight is a big number."
+    ],
+    "level": 1,
+    "order": 8
+  },
+  {
+    "id": "e9",
+    "word": "nine",
+    "chinese": "九",
+    "category": "数字",
+    "emoji": "9️⃣",
+    "sentences": [
+      "I have nine crayons.",
+      "Nine is close to ten."
+    ],
+    "level": 1,
+    "order": 9
+  },
+  {
+    "id": "e10",
+    "word": "ten",
+    "chinese": "十",
+    "category": "数字",
+    "emoji": "🔟",
+    "sentences": [
+      "I have ten fingers.",
+      "Ten minus one is nine."
+    ],
+    "level": 1,
+    "order": 10
+  },
+  {
+    "id": "e11",
+    "word": "eleven",
+    "chinese": "十一",
+    "category": "数字",
+    "emoji": "1️⃣1️⃣",
+    "sentences": [
+      "Eleven comes after ten.",
+      "I am eleven years old."
+    ],
+    "level": 1,
+    "order": 11
+  },
+  {
+    "id": "e12",
+    "word": "twelve",
+    "chinese": "十二",
+    "category": "数字",
+    "emoji": "1️⃣2️⃣",
+    "sentences": [
+      "There are twelve months.",
+      "Twelve eggs in the box."
+    ],
+    "level": 1,
+    "order": 12
+  },
+  {
+    "id": "e13",
+    "word": "red",
+    "chinese": "红色",
+    "category": "颜色",
+    "emoji": "🔴",
+    "sentences": [
+      "The apple is red.",
+      "I like red."
+    ],
+    "level": 1,
+    "order": 13
+  },
+  {
+    "id": "e14",
+    "word": "blue",
+    "chinese": "蓝色",
+    "category": "颜色",
+    "emoji": "🔵",
+    "sentences": [
+      "The sky is blue.",
+      "I have a blue pen."
+    ],
+    "level": 1,
+    "order": 14
+  },
+  {
+    "id": "e15",
+    "word": "yellow",
+    "chinese": "黄色",
+    "category": "颜色",
+    "emoji": "🟡",
+    "sentences": [
+      "The banana is yellow.",
+      "Sun is yellow."
+    ],
+    "level": 1,
+    "order": 15
+  },
+  {
+    "id": "e16",
+    "word": "green",
+    "chinese": "绿色",
+    "category": "颜色",
+    "emoji": "🟢",
+    "sentences": [
+      "The grass is green.",
+      "I like green leaves."
+    ],
+    "level": 1,
+    "order": 16
+  },
+  {
+    "id": "e17",
+    "word": "black",
+    "chinese": "黑色",
+    "category": "颜色",
+    "emoji": "⚫",
+    "sentences": [
+      "The night is black.",
+      "I have black shoes."
+    ],
+    "level": 1,
+    "order": 17
+  },
+  {
+    "id": "e18",
+    "word": "white",
+    "chinese": "白色",
+    "category": "颜色",
+    "emoji": "⚪",
+    "sentences": [
+      "Snow is white.",
+      "The rabbit is white."
+    ],
+    "level": 1,
+    "order": 18
+  },
+  {
+    "id": "e19",
+    "word": "orange",
+    "chinese": "橙色",
+    "category": "颜色",
+    "emoji": "🟠",
+    "sentences": [
+      "The orange is orange.",
+      "I like the color orange."
+    ],
+    "level": 1,
+    "order": 19
+  },
+  {
+    "id": "e20",
+    "word": "purple",
+    "chinese": "紫色",
+    "category": "颜色",
+    "emoji": "🟣",
+    "sentences": [
+      "The grape is purple.",
+      "I like purple flowers."
+    ],
+    "level": 1,
+    "order": 20
+  },
+  {
+    "id": "e21",
+    "word": "pink",
+    "chinese": "粉色",
+    "category": "颜色",
+    "emoji": "🌸",
+    "sentences": [
+      "The flower is pink.",
+      "I like pink."
+    ],
+    "level": 1,
+    "order": 21
+  },
+  {
+    "id": "e22",
+    "word": "brown",
+    "chinese": "棕色",
+    "category": "颜色",
+    "emoji": "🟤",
+    "sentences": [
+      "The bear is brown.",
+      "I have brown hair."
+    ],
+    "level": 1,
+    "order": 22
+  },
+  {
+    "id": "e23",
+    "word": "gray",
+    "chinese": "灰色",
+    "category": "颜色",
+    "emoji": "⬜",
+    "sentences": [
+      "The mouse is gray.",
+      "Clouds are gray."
+    ],
+    "level": 1,
+    "order": 23
+  },
+  {
+    "id": "e24",
+    "word": "cat",
+    "chinese": "猫",
+    "category": "动物",
+    "emoji": "🐱",
+    "sentences": [
+      "The cat is cute.",
+      "I have a cat."
+    ],
+    "level": 1,
+    "order": 24
+  },
+  {
+    "id": "e25",
+    "word": "dog",
+    "chinese": "狗",
+    "category": "动物",
+    "emoji": "🐶",
+    "sentences": [
+      "The dog is big.",
+      "I love dogs."
+    ],
+    "level": 1,
+    "order": 25
+  },
+  {
+    "id": "e26",
+    "word": "bird",
+    "chinese": "鸟",
+    "category": "动物",
+    "emoji": "🐦",
+    "sentences": [
+      "The bird can fly.",
+      "I see a bird."
+    ],
+    "level": 1,
+    "order": 26
+  },
+  {
+    "id": "e27",
+    "word": "fish",
+    "chinese": "鱼",
+    "category": "动物",
+    "emoji": "🐟",
+    "sentences": [
+      "The fish can swim.",
+      "I like fish."
+    ],
+    "level": 1,
+    "order": 27
+  },
+  {
+    "id": "e28",
+    "word": "rabbit",
+    "chinese": "兔子",
+    "category": "动物",
+    "emoji": "🐰",
+    "sentences": [
+      "The rabbit is white.",
+      "Rabbits like carrots."
+    ],
+    "level": 1,
+    "order": 28
+  },
+  {
+    "id": "e29",
+    "word": "monkey",
+    "chinese": "猴子",
+    "category": "动物",
+    "emoji": "🐵",
+    "sentences": [
+      "The monkey likes bananas.",
+      "Monkeys are smart."
+    ],
+    "level": 1,
+    "order": 29
+  },
+  {
+    "id": "e30",
+    "word": "tiger",
+    "chinese": "老虎",
+    "category": "动物",
+    "emoji": "🐯",
+    "sentences": [
+      "The tiger is big.",
+      "Tigers are strong."
+    ],
+    "level": 1,
+    "order": 30
+  },
+  {
+    "id": "e31",
+    "word": "lion",
+    "chinese": "狮子",
+    "category": "动物",
+    "emoji": "🦁",
+    "sentences": [
+      "The lion is the king.",
+      "Lions are brave."
+    ],
+    "level": 1,
+    "order": 31
+  },
+  {
+    "id": "e32",
+    "word": "elephant",
+    "chinese": "大象",
+    "category": "动物",
+    "emoji": "🐘",
+    "sentences": [
+      "The elephant is huge.",
+      "Elephants have long noses."
+    ],
+    "level": 1,
+    "order": 32
+  },
+  {
+    "id": "e33",
+    "word": "panda",
+    "chinese": "熊猫",
+    "category": "动物",
+    "emoji": "🐼",
+    "sentences": [
+      "The panda likes bamboo.",
+      "Pandas are black and white."
+    ],
+    "level": 1,
+    "order": 33
+  },
+  {
+    "id": "e34",
+    "word": "bear",
+    "chinese": "熊",
+    "category": "动物",
+    "emoji": "🐻",
+    "sentences": [
+      "The bear is brown.",
+      "Bears like honey."
+    ],
+    "level": 1,
+    "order": 34
+  },
+  {
+    "id": "e35",
+    "word": "horse",
+    "chinese": "马",
+    "category": "动物",
+    "emoji": "🐴",
+    "sentences": [
+      "The horse runs fast.",
+      "I like horses."
+    ],
+    "level": 1,
+    "order": 35
+  },
+  {
+    "id": "e36",
+    "word": "sheep",
+    "chinese": "羊",
+    "category": "动物",
+    "emoji": "🐑",
+    "sentences": [
+      "The sheep is white.",
+      "Sheep say baa."
+    ],
+    "level": 1,
+    "order": 36
+  },
+  {
+    "id": "e37",
+    "word": "duck",
+    "chinese": "鸭子",
+    "category": "动物",
+    "emoji": "🦆",
+    "sentences": [
+      "The duck can swim.",
+      "Ducks say quack."
+    ],
+    "level": 1,
+    "order": 37
+  },
+  {
+    "id": "e38",
+    "word": "chicken",
+    "chinese": "鸡",
+    "category": "动物",
+    "emoji": "🐔",
+    "sentences": [
+      "The chicken is yellow.",
+      "Chickens can run."
+    ],
+    "level": 1,
+    "order": 38
+  },
+  {
+    "id": "e39",
+    "word": "pig",
+    "chinese": "猪",
+    "category": "动物",
+    "emoji": "🐷",
+    "sentences": [
+      "The pig is fat.",
+      "Pigs are pink."
+    ],
+    "level": 1,
+    "order": 39
+  },
+  {
+    "id": "e40",
+    "word": "cow",
+    "chinese": "牛",
+    "category": "动物",
+    "emoji": "🐮",
+    "sentences": [
+      "The cow gives milk.",
+      "Cows say moo."
+    ],
+    "level": 1,
+    "order": 40
+  },
+  {
+    "id": "e41",
+    "word": "frog",
+    "chinese": "青蛙",
+    "category": "动物",
+    "emoji": "🐸",
+    "sentences": [
+      "The frog can jump.",
+      "Frogs live near water."
+    ],
+    "level": 1,
+    "order": 41
+  },
+  {
+    "id": "e42",
+    "word": "snake",
+    "chinese": "蛇",
+    "category": "动物",
+    "emoji": "🐍",
+    "sentences": [
+      "The snake is long.",
+      "Snakes have no legs."
+    ],
+    "level": 1,
+    "order": 42
+  },
+  {
+    "id": "e43",
+    "word": "turtle",
+    "chinese": "乌龟",
+    "category": "动物",
+    "emoji": "🐢",
+    "sentences": [
+      "The turtle is slow.",
+      "Turtles have shells."
+    ],
+    "level": 1,
+    "order": 43
+  },
+  {
+    "id": "e44",
+    "word": "bee",
+    "chinese": "蜜蜂",
+    "category": "动物",
+    "emoji": "🐝",
+    "sentences": [
+      "The bee makes honey.",
+      "Bees like flowers."
+    ],
+    "level": 1,
+    "order": 44
+  },
+  {
+    "id": "e45",
+    "word": "butterfly",
+    "chinese": "蝴蝶",
+    "category": "动物",
+    "emoji": "🦋",
+    "sentences": [
+      "The butterfly is beautiful.",
+      "Butterflies fly."
+    ],
+    "level": 1,
+    "order": 45
+  },
+  {
+    "id": "e46",
+    "word": "apple",
+    "chinese": "苹果",
+    "category": "水果",
+    "emoji": "🍎",
+    "sentences": [
+      "I like apples.",
+      "This apple is red."
+    ],
+    "level": 1,
+    "order": 46
+  },
+  {
+    "id": "e47",
+    "word": "banana",
+    "chinese": "香蕉",
+    "category": "水果",
+    "emoji": "🍌",
+    "sentences": [
+      "I eat a banana.",
+      "Bananas are yellow."
+    ],
+    "level": 1,
+    "order": 47
+  },
+  {
+    "id": "e48",
+    "word": "grape",
+    "chinese": "葡萄",
+    "category": "水果",
+    "emoji": "🍇",
+    "sentences": [
+      "Grapes are purple.",
+      "I like grapes."
+    ],
+    "level": 1,
+    "order": 48
+  },
+  {
+    "id": "e49",
+    "word": "watermelon",
+    "chinese": "西瓜",
+    "category": "水果",
+    "emoji": "🍉",
+    "sentences": [
+      "Watermelon is sweet.",
+      "I like watermelon."
+    ],
+    "level": 1,
+    "order": 49
+  },
+  {
+    "id": "e50",
+    "word": "strawberry",
+    "chinese": "草莓",
+    "category": "水果",
+    "emoji": "🍓",
+    "sentences": [
+      "Strawberries are red.",
+      "I like strawberries."
+    ],
+    "level": 1,
+    "order": 50
+  },
+  {
+    "id": "e51",
+    "word": "peach",
+    "chinese": "桃子",
+    "category": "水果",
+    "emoji": "🍑",
+    "sentences": [
+      "The peach is soft.",
+      "I like peaches."
+    ],
+    "level": 1,
+    "order": 51
+  },
+  {
+    "id": "e52",
+    "word": "pear",
+    "chinese": "梨",
+    "category": "水果",
+    "emoji": "🍐",
+    "sentences": [
+      "The pear is green.",
+      "I eat a pear."
+    ],
+    "level": 1,
+    "order": 52
+  },
+  {
+    "id": "e53",
+    "word": "mango",
+    "chinese": "芒果",
+    "category": "水果",
+    "emoji": "🥭",
+    "sentences": [
+      "The mango is yellow.",
+      "I like mango."
+    ],
+    "level": 1,
+    "order": 53
+  },
+  {
+    "id": "e54",
+    "word": "lemon",
+    "chinese": "柠檬",
+    "category": "水果",
+    "emoji": "🍋",
+    "sentences": [
+      "The lemon is sour.",
+      "I drink lemon water."
+    ],
+    "level": 1,
+    "order": 54
+  },
+  {
+    "id": "e55",
+    "word": "cherry",
+    "chinese": "樱桃",
+    "category": "水果",
+    "emoji": "🍒",
+    "sentences": [
+      "Cherries are small.",
+      "I like cherries."
+    ],
+    "level": 1,
+    "order": 55
+  },
+  {
+    "id": "e56",
+    "word": "rice",
+    "chinese": "米饭",
+    "category": "食物",
+    "emoji": "🍚",
+    "sentences": [
+      "I eat rice.",
+      "Rice is white."
+    ],
+    "level": 1,
+    "order": 56
+  },
+  {
+    "id": "e57",
+    "word": "bread",
+    "chinese": "面包",
+    "category": "食物",
+    "emoji": "🍞",
+    "sentences": [
+      "I eat bread for breakfast.",
+      "Bread is soft."
+    ],
+    "level": 1,
+    "order": 57
+  },
+  {
+    "id": "e58",
+    "word": "milk",
+    "chinese": "牛奶",
+    "category": "食物",
+    "emoji": "🥛",
+    "sentences": [
+      "I drink milk.",
+      "Milk is white."
+    ],
+    "level": 1,
+    "order": 58
+  },
+  {
+    "id": "e59",
+    "word": "egg",
+    "chinese": "鸡蛋",
+    "category": "食物",
+    "emoji": "🥚",
+    "sentences": [
+      "I eat an egg.",
+      "Eggs are good."
+    ],
+    "level": 1,
+    "order": 59
+  },
+  {
+    "id": "e60",
+    "word": "cake",
+    "chinese": "蛋糕",
+    "category": "食物",
+    "emoji": "🎂",
+    "sentences": [
+      "The cake is sweet.",
+      "Happy birthday!"
+    ],
+    "level": 1,
+    "order": 60
+  },
+  {
+    "id": "e61",
+    "word": "cookie",
+    "chinese": "饼干",
+    "category": "食物",
+    "emoji": "🍪",
+    "sentences": [
+      "I eat a cookie.",
+      "Cookies are sweet."
+    ],
+    "level": 1,
+    "order": 61
+  },
+  {
+    "id": "e62",
+    "word": "candy",
+    "chinese": "糖果",
+    "category": "食物",
+    "emoji": "🍬",
+    "sentences": [
+      "I like candy.",
+      "Don't eat too much candy."
+    ],
+    "level": 1,
+    "order": 62
+  },
+  {
+    "id": "e63",
+    "word": "juice",
+    "chinese": "果汁",
+    "category": "食物",
+    "emoji": "🧃",
+    "sentences": [
+      "I drink juice.",
+      "Orange juice is good."
+    ],
+    "level": 1,
+    "order": 63
+  },
+  {
+    "id": "e64",
+    "word": "tea",
+    "chinese": "茶",
+    "category": "食物",
+    "emoji": "🍵",
+    "sentences": [
+      "I drink tea.",
+      "Grandpa likes tea."
+    ],
+    "level": 1,
+    "order": 64
+  },
+  {
+    "id": "e65",
+    "word": "ice cream",
+    "chinese": "冰淇淋",
+    "category": "食物",
+    "emoji": "🍦",
+    "sentences": [
+      "I like ice cream.",
+      "Ice cream is cold."
+    ],
+    "level": 1,
+    "order": 65
+  },
+  {
+    "id": "e66",
+    "word": "eye",
+    "chinese": "眼睛",
+    "category": "身体",
+    "emoji": "👁️",
+    "sentences": [
+      "I have two eyes.",
+      "Open your eyes."
+    ],
+    "level": 1,
+    "order": 66
+  },
+  {
+    "id": "e67",
+    "word": "hand",
+    "chinese": "手",
+    "category": "身体",
+    "emoji": "✋",
+    "sentences": [
+      "Wash your hands.",
+      "I have two hands."
+    ],
+    "level": 1,
+    "order": 67
+  },
+  {
+    "id": "e68",
+    "word": "head",
+    "chinese": "头",
+    "category": "身体",
+    "emoji": "👦",
+    "sentences": [
+      "My head is big.",
+      "Shake your head."
+    ],
+    "level": 1,
+    "order": 68
+  },
+  {
+    "id": "e69",
+    "word": "face",
+    "chinese": "脸",
+    "category": "身体",
+    "emoji": "😊",
+    "sentences": [
+      "Wash your face.",
+      "My face is round."
+    ],
+    "level": 1,
+    "order": 69
+  },
+  {
+    "id": "e70",
+    "word": "ear",
+    "chinese": "耳朵",
+    "category": "身体",
+    "emoji": "👂",
+    "sentences": [
+      "I have two ears.",
+      "Ears can hear."
+    ],
+    "level": 1,
+    "order": 70
+  },
+  {
+    "id": "e71",
+    "word": "nose",
+    "chinese": "鼻子",
+    "category": "身体",
+    "emoji": "👃",
+    "sentences": [
+      "My nose smells.",
+      "The nose is small."
+    ],
+    "level": 1,
+    "order": 71
+  },
+  {
+    "id": "e72",
+    "word": "mouth",
+    "chinese": "嘴巴",
+    "category": "身体",
+    "emoji": "👄",
+    "sentences": [
+      "Open your mouth.",
+      "Mouth can talk."
+    ],
+    "level": 1,
+    "order": 72
+  },
+  {
+    "id": "e73",
+    "word": "tooth",
+    "chinese": "牙齿",
+    "category": "身体",
+    "emoji": "🦷",
+    "sentences": [
+      "Brush your teeth.",
+      "I have white teeth."
+    ],
+    "level": 1,
+    "order": 73
+  },
+  {
+    "id": "e74",
+    "word": "hair",
+    "chinese": "头发",
+    "category": "身体",
+    "emoji": "💇",
+    "sentences": [
+      "My hair is black.",
+      "She has long hair."
+    ],
+    "level": 1,
+    "order": 74
+  },
+  {
+    "id": "e75",
+    "word": "leg",
+    "chinese": "腿",
+    "category": "身体",
+    "emoji": "🦵",
+    "sentences": [
+      "I have two legs.",
+      "Legs can walk."
+    ],
+    "level": 1,
+    "order": 75
+  },
+  {
+    "id": "e76",
+    "word": "foot",
+    "chinese": "脚",
+    "category": "身体",
+    "emoji": "🦶",
+    "sentences": [
+      "My foot is small.",
+      "One foot, two feet."
+    ],
+    "level": 1,
+    "order": 76
+  },
+  {
+    "id": "e77",
+    "word": "arm",
+    "chinese": "手臂",
+    "category": "身体",
+    "emoji": "💪",
+    "sentences": [
+      "I have two arms.",
+      "Raise your arm."
+    ],
+    "level": 1,
+    "order": 77
+  },
+  {
+    "id": "e78",
+    "word": "finger",
+    "chinese": "手指",
+    "category": "身体",
+    "emoji": "🖐️",
+    "sentences": [
+      "I have ten fingers.",
+      "Point with your finger."
+    ],
+    "level": 1,
+    "order": 78
+  },
+  {
+    "id": "e79",
+    "word": "heart",
+    "chinese": "心",
+    "category": "身体",
+    "emoji": "❤️",
+    "sentences": [
+      "My heart beats.",
+      "Love with your heart."
+    ],
+    "level": 1,
+    "order": 79
+  },
+  {
+    "id": "e80",
+    "word": "mom",
+    "chinese": "妈妈",
+    "category": "家庭",
+    "emoji": "👩",
+    "sentences": [
+      "My mom loves me.",
+      "Mom is cooking."
+    ],
+    "level": 1,
+    "order": 80
+  },
+  {
+    "id": "e81",
+    "word": "dad",
+    "chinese": "爸爸",
+    "category": "家庭",
+    "emoji": "👨",
+    "sentences": [
+      "My dad is tall.",
+      "Dad is reading."
+    ],
+    "level": 1,
+    "order": 81
+  },
+  {
+    "id": "e82",
+    "word": "grandpa",
+    "chinese": "爷爷",
+    "category": "家庭",
+    "emoji": "👴",
+    "sentences": [
+      "My grandpa tells stories.",
+      "Grandpa is kind."
+    ],
+    "level": 1,
+    "order": 82
+  },
+  {
+    "id": "e83",
+    "word": "grandma",
+    "chinese": "奶奶",
+    "category": "家庭",
+    "emoji": "👵",
+    "sentences": [
+      "My grandma is nice.",
+      "Grandma knits."
+    ],
+    "level": 1,
+    "order": 83
+  },
+  {
+    "id": "e84",
+    "word": "brother",
+    "chinese": "兄弟",
+    "category": "家庭",
+    "emoji": "👦",
+    "sentences": [
+      "My brother is young.",
+      "I play with my brother."
+    ],
+    "level": 1,
+    "order": 84
+  },
+  {
+    "id": "e85",
+    "word": "sister",
+    "chinese": "姐妹",
+    "category": "家庭",
+    "emoji": "👧",
+    "sentences": [
+      "My sister sings well.",
+      "I love my sister."
+    ],
+    "level": 1,
+    "order": 85
+  },
+  {
+    "id": "e86",
+    "word": "baby",
+    "chinese": "宝宝",
+    "category": "家庭",
+    "emoji": "👶",
+    "sentences": [
+      "The baby is crying.",
+      "Baby is sleeping."
+    ],
+    "level": 1,
+    "order": 86
+  },
+  {
+    "id": "e87",
+    "word": "family",
+    "chinese": "家庭",
+    "category": "家庭",
+    "emoji": "👨‍👩‍👧",
+    "sentences": [
+      "I love my family.",
+      "My family is happy."
+    ],
+    "level": 1,
+    "order": 87
+  },
+  {
+    "id": "e88",
+    "word": "friend",
+    "chinese": "朋友",
+    "category": "家庭",
+    "emoji": "🤝",
+    "sentences": [
+      "He is my friend.",
+      "Friends help each other."
+    ],
+    "level": 1,
+    "order": 88
+  },
+  {
+    "id": "e89",
+    "word": "sun",
+    "chinese": "太阳",
+    "category": "自然",
+    "emoji": "☀️",
+    "sentences": [
+      "The sun is bright.",
+      "I like the sun."
+    ],
+    "level": 1,
+    "order": 89
+  },
+  {
+    "id": "e90",
+    "word": "moon",
+    "chinese": "月亮",
+    "category": "自然",
+    "emoji": "🌙",
+    "sentences": [
+      "The moon is round.",
+      "Look at the moon."
+    ],
+    "level": 1,
+    "order": 90
+  },
+  {
+    "id": "e91",
+    "word": "star",
+    "chinese": "星星",
+    "category": "自然",
+    "emoji": "⭐",
+    "sentences": [
+      "Stars twinkle at night.",
+      "I see a star."
+    ],
+    "level": 1,
+    "order": 91
+  },
+  {
+    "id": "e92",
+    "word": "sky",
+    "chinese": "天空",
+    "category": "自然",
+    "emoji": "🌤️",
+    "sentences": [
+      "The sky is blue.",
+      "Look at the sky."
+    ],
+    "level": 1,
+    "order": 92
+  },
+  {
+    "id": "e93",
+    "word": "cloud",
+    "chinese": "云",
+    "category": "自然",
+    "emoji": "☁️",
+    "sentences": [
+      "Clouds are white.",
+      "There are clouds in the sky."
+    ],
+    "level": 1,
+    "order": 93
+  },
+  {
+    "id": "e94",
+    "word": "rain",
+    "chinese": "雨",
+    "category": "自然",
+    "emoji": "🌧️",
+    "sentences": [
+      "Rain falls from the sky.",
+      "I like the rain."
+    ],
+    "level": 1,
+    "order": 94
+  },
+  {
+    "id": "e95",
+    "word": "snow",
+    "chinese": "雪",
+    "category": "自然",
+    "emoji": "❄️",
+    "sentences": [
+      "Snow is cold.",
+      "We make a snowman."
+    ],
+    "level": 1,
+    "order": 95
+  },
+  {
+    "id": "e96",
+    "word": "wind",
+    "chinese": "风",
+    "category": "自然",
+    "emoji": "🌬️",
+    "sentences": [
+      "The wind blows.",
+      "Wind is strong."
+    ],
+    "level": 1,
+    "order": 96
+  },
+  {
+    "id": "e97",
+    "word": "tree",
+    "chinese": "树",
+    "category": "自然",
+    "emoji": "🌳",
+    "sentences": [
+      "The tree is tall.",
+      "Trees give shade."
+    ],
+    "level": 1,
+    "order": 97
+  },
+  {
+    "id": "e98",
+    "word": "flower",
+    "chinese": "花",
+    "category": "自然",
+    "emoji": "🌸",
+    "sentences": [
+      "The flower is pretty.",
+      "Flowers smell nice."
+    ],
+    "level": 1,
+    "order": 98
+  },
+  {
+    "id": "e99",
+    "word": "grass",
+    "chinese": "草",
+    "category": "自然",
+    "emoji": "🌿",
+    "sentences": [
+      "Grass is green.",
+      "Cows eat grass."
+    ],
+    "level": 1,
+    "order": 99
+  },
+  {
+    "id": "e100",
+    "word": "river",
+    "chinese": "河流",
+    "category": "自然",
+    "emoji": "🏞️",
+    "sentences": [
+      "The river is long.",
+      "We swim in the river."
+    ],
+    "level": 1,
+    "order": 100
+  },
+  {
+    "id": "e101",
+    "word": "sea",
+    "chinese": "大海",
+    "category": "自然",
+    "emoji": "🌊",
+    "sentences": [
+      "The sea is big.",
+      "Fish live in the sea."
+    ],
+    "level": 1,
+    "order": 101
+  },
+  {
+    "id": "e102",
+    "word": "mountain",
+    "chinese": "山",
+    "category": "自然",
+    "emoji": "⛰️",
+    "sentences": [
+      "The mountain is high.",
+      "We climb the mountain."
+    ],
+    "level": 1,
+    "order": 102
+  },
+  {
+    "id": "e103",
+    "word": "stone",
+    "chinese": "石头",
+    "category": "自然",
+    "emoji": "🪨",
+    "sentences": [
+      "The stone is hard.",
+      "Throw the stone."
+    ],
+    "level": 1,
+    "order": 103
+  },
+  {
+    "id": "e104",
+    "word": "fire",
+    "chinese": "火",
+    "category": "自然",
+    "emoji": "🔥",
+    "sentences": [
+      "Fire is hot.",
+      "Don't play with fire."
+    ],
+    "level": 1,
+    "order": 104
+  },
+  {
+    "id": "e105",
+    "word": "big",
+    "chinese": "大的",
+    "category": "形容词",
+    "emoji": "🐘",
+    "sentences": [
+      "The elephant is big.",
+      "This is a big house."
+    ],
+    "level": 1,
+    "order": 105
+  },
+  {
+    "id": "e106",
+    "word": "small",
+    "chinese": "小的",
+    "category": "形容词",
+    "emoji": "🐭",
+    "sentences": [
+      "The mouse is small.",
+      "I have a small toy."
+    ],
+    "level": 1,
+    "order": 106
+  },
+  {
+    "id": "e107",
+    "word": "happy",
+    "chinese": "开心的",
+    "category": "形容词",
+    "emoji": "😊",
+    "sentences": [
+      "I am happy.",
+      "Happy birthday!"
+    ],
+    "level": 1,
+    "order": 107
+  },
+  {
+    "id": "e108",
+    "word": "sad",
+    "chinese": "难过的",
+    "category": "形容词",
+    "emoji": "😢",
+    "sentences": [
+      "I am sad.",
+      "The movie is sad."
+    ],
+    "level": 1,
+    "order": 108
+  },
+  {
+    "id": "e109",
+    "word": "tall",
+    "chinese": "高的",
+    "category": "形容词",
+    "emoji": "📏",
+    "sentences": [
+      "My dad is tall.",
+      "The tree is tall."
+    ],
+    "level": 1,
+    "order": 109
+  },
+  {
+    "id": "e110",
+    "word": "short",
+    "chinese": "矮的",
+    "category": "形容词",
+    "emoji": "🐤",
+    "sentences": [
+      "The boy is short.",
+      "A short pencil."
+    ],
+    "level": 1,
+    "order": 110
+  },
+  {
+    "id": "e111",
+    "word": "fat",
+    "chinese": "胖的",
+    "category": "形容词",
+    "emoji": "🐷",
+    "sentences": [
+      "The pig is fat.",
+      "A fat cat."
+    ],
+    "level": 1,
+    "order": 111
+  },
+  {
+    "id": "e112",
+    "word": "thin",
+    "chinese": "瘦的",
+    "category": "形容词",
+    "emoji": "🐕",
+    "sentences": [
+      "The dog is thin.",
+      "A thin book."
+    ],
+    "level": 1,
+    "order": 112
+  },
+  {
+    "id": "e113",
+    "word": "long",
+    "chinese": "长的",
+    "category": "形容词",
+    "emoji": "🦒",
+    "sentences": [
+      "The snake is long.",
+      "A long rope."
+    ],
+    "level": 1,
+    "order": 113
+  },
+  {
+    "id": "e114",
+    "word": "new",
+    "chinese": "新的",
+    "category": "形容词",
+    "emoji": "🎁",
+    "sentences": [
+      "This is a new pen.",
+      "New clothes."
+    ],
+    "level": 1,
+    "order": 114
+  },
+  {
+    "id": "e115",
+    "word": "old",
+    "chinese": "旧的",
+    "category": "形容词",
+    "emoji": "📻",
+    "sentences": [
+      "The book is old.",
+      "An old house."
+    ],
+    "level": 1,
+    "order": 115
+  },
+  {
+    "id": "e116",
+    "word": "good",
+    "chinese": "好的",
+    "category": "形容词",
+    "emoji": "👍",
+    "sentences": [
+      "This is good.",
+      "A good day."
+    ],
+    "level": 1,
+    "order": 116
+  },
+  {
+    "id": "e117",
+    "word": "bad",
+    "chinese": "坏的",
+    "category": "形容词",
+    "emoji": "👎",
+    "sentences": [
+      "That is bad.",
+      "Bad weather."
+    ],
+    "level": 1,
+    "order": 117
+  },
+  {
+    "id": "e118",
+    "word": "hot",
+    "chinese": "热的",
+    "category": "形容词",
+    "emoji": "🔥",
+    "sentences": [
+      "The soup is hot.",
+      "A hot day."
+    ],
+    "level": 1,
+    "order": 118
+  },
+  {
+    "id": "e119",
+    "word": "cold",
+    "chinese": "冷的",
+    "category": "形容词",
+    "emoji": "❄️",
+    "sentences": [
+      "The ice is cold.",
+      "A cold drink."
+    ],
+    "level": 1,
+    "order": 119
+  },
+  {
+    "id": "e120",
+    "word": "sweet",
+    "chinese": "甜的",
+    "category": "形容词",
+    "emoji": "🍯",
+    "sentences": [
+      "The candy is sweet.",
+      "A sweet smile."
+    ],
+    "level": 1,
+    "order": 120
+  },
+  {
+    "id": "e121",
+    "word": "sour",
+    "chinese": "酸的",
+    "category": "形容词",
+    "emoji": "🍋",
+    "sentences": [
+      "The lemon is sour.",
+      "Sour grapes."
+    ],
+    "level": 1,
+    "order": 121
+  },
+  {
+    "id": "e122",
+    "word": "pretty",
+    "chinese": "漂亮的",
+    "category": "形容词",
+    "emoji": "🌸",
+    "sentences": [
+      "The flower is pretty.",
+      "A pretty girl."
+    ],
+    "level": 1,
+    "order": 122
+  },
+  {
+    "id": "e123",
+    "word": "clean",
+    "chinese": "干净的",
+    "category": "形容词",
+    "emoji": "🧼",
+    "sentences": [
+      "The room is clean.",
+      "Wash your hands clean."
+    ],
+    "level": 1,
+    "order": 123
+  },
+  {
+    "id": "e124",
+    "word": "dirty",
+    "chinese": "脏的",
+    "category": "形容词",
+    "emoji": "🦠",
+    "sentences": [
+      "My hands are dirty.",
+      "Dirty shoes."
+    ],
+    "level": 1,
+    "order": 124
+  },
+  {
+    "id": "e125",
+    "word": "fast",
+    "chinese": "快的",
+    "category": "形容词",
+    "emoji": "🏎️",
+    "sentences": [
+      "The car is fast.",
+      "Run fast!"
+    ],
+    "level": 1,
+    "order": 125
+  },
+  {
+    "id": "e126",
+    "word": "slow",
+    "chinese": "慢的",
+    "category": "形容词",
+    "emoji": "🐢",
+    "sentences": [
+      "The turtle is slow.",
+      "A slow train."
+    ],
+    "level": 1,
+    "order": 126
+  },
+  {
+    "id": "e127",
+    "word": "run",
+    "chinese": "跑",
+    "category": "动作",
+    "emoji": "🏃",
+    "sentences": [
+      "I can run fast.",
+      "Let's run together."
+    ],
+    "level": 1,
+    "order": 127
+  },
+  {
+    "id": "e128",
+    "word": "eat",
+    "chinese": "吃",
+    "category": "动作",
+    "emoji": "🍽️",
+    "sentences": [
+      "I eat breakfast.",
+      "I like to eat fruit."
+    ],
+    "level": 1,
+    "order": 128
+  },
+  {
+    "id": "e129",
+    "word": "drink",
+    "chinese": "喝",
+    "category": "动作",
+    "emoji": "🥤",
+    "sentences": [
+      "I drink water.",
+      "Drink some milk."
+    ],
+    "level": 1,
+    "order": 129
+  },
+  {
+    "id": "e130",
+    "word": "sleep",
+    "chinese": "睡觉",
+    "category": "动作",
+    "emoji": "😴",
+    "sentences": [
+      "I sleep at night.",
+      "Go to sleep."
+    ],
+    "level": 1,
+    "order": 130
+  },
+  {
+    "id": "e131",
+    "word": "walk",
+    "chinese": "走路",
+    "category": "动作",
+    "emoji": "🚶",
+    "sentences": [
+      "I walk to school.",
+      "Walk slowly."
+    ],
+    "level": 1,
+    "order": 131
+  },
+  {
+    "id": "e132",
+    "word": "jump",
+    "chinese": "跳",
+    "category": "动作",
+    "emoji": "🦘",
+    "sentences": [
+      "I can jump high.",
+      "Jump over the box."
+    ],
+    "level": 1,
+    "order": 132
+  },
+  {
+    "id": "e133",
+    "word": "swim",
+    "chinese": "游泳",
+    "category": "动作",
+    "emoji": "🏊",
+    "sentences": [
+      "I can swim.",
+      "Fish swim in water."
+    ],
+    "level": 1,
+    "order": 133
+  },
+  {
+    "id": "e134",
+    "word": "fly",
+    "chinese": "飞",
+    "category": "动作",
+    "emoji": "✈️",
+    "sentences": [
+      "Birds can fly.",
+      "The plane can fly."
+    ],
+    "level": 1,
+    "order": 134
+  },
+  {
+    "id": "e135",
+    "word": "sing",
+    "chinese": "唱歌",
+    "category": "动作",
+    "emoji": "🎤",
+    "sentences": [
+      "I can sing.",
+      "She sings well."
+    ],
+    "level": 1,
+    "order": 135
+  },
+  {
+    "id": "e136",
+    "word": "dance",
+    "chinese": "跳舞",
+    "category": "动作",
+    "emoji": "💃",
+    "sentences": [
+      "I can dance.",
+      "Dance with me."
+    ],
+    "level": 1,
+    "order": 136
+  },
+  {
+    "id": "e137",
+    "word": "read",
+    "chinese": "读书",
+    "category": "动作",
+    "emoji": "📖",
+    "sentences": [
+      "I like to read.",
+      "Read a book."
+    ],
+    "level": 1,
+    "order": 137
+  },
+  {
+    "id": "e138",
+    "word": "write",
+    "chinese": "写字",
+    "category": "动作",
+    "emoji": "✍️",
+    "sentences": [
+      "I can write.",
+      "Write your name."
+    ],
+    "level": 1,
+    "order": 138
+  },
+  {
+    "id": "e139",
+    "word": "draw",
+    "chinese": "画画",
+    "category": "动作",
+    "emoji": "🎨",
+    "sentences": [
+      "I like to draw.",
+      "Draw a picture."
+    ],
+    "level": 1,
+    "order": 139
+  },
+  {
+    "id": "e140",
+    "word": "play",
+    "chinese": "玩",
+    "category": "动作",
+    "emoji": "🎮",
+    "sentences": [
+      "Let's play.",
+      "I play with toys."
+    ],
+    "level": 1,
+    "order": 140
+  },
+  {
+    "id": "e141",
+    "word": "wash",
+    "chinese": "洗",
+    "category": "动作",
+    "emoji": "🧼",
+    "sentences": [
+      "Wash your hands.",
+      "Wash the dishes."
+    ],
+    "level": 1,
+    "order": 141
+  },
+  {
+    "id": "e142",
+    "word": "brush",
+    "chinese": "刷",
+    "category": "动作",
+    "emoji": "🪥",
+    "sentences": [
+      "Brush your teeth.",
+      "Brush my hair."
+    ],
+    "level": 1,
+    "order": 142
+  },
+  {
+    "id": "e143",
+    "word": "help",
+    "chinese": "帮助",
+    "category": "动作",
+    "emoji": "🤝",
+    "sentences": [
+      "Can you help me?",
+      "Help others."
+    ],
+    "level": 1,
+    "order": 143
+  },
+  {
+    "id": "e144",
+    "word": "love",
+    "chinese": "爱",
+    "category": "动作",
+    "emoji": "❤️",
+    "sentences": [
+      "I love my mom.",
+      "Love your family."
+    ],
+    "level": 1,
+    "order": 144
+  },
+  {
+    "id": "e145",
+    "word": "like",
+    "chinese": "喜欢",
+    "category": "动作",
+    "emoji": "😍",
+    "sentences": [
+      "I like apples.",
+      "Like to read."
+    ],
+    "level": 1,
+    "order": 145
+  },
+  {
+    "id": "e146",
+    "word": "smile",
+    "chinese": "微笑",
+    "category": "动作",
+    "emoji": "😊",
+    "sentences": [
+      "Please smile.",
+      "Smile every day."
+    ],
+    "level": 1,
+    "order": 146
+  },
+  {
+    "id": "e147",
+    "word": "cry",
+    "chinese": "哭",
+    "category": "动作",
+    "emoji": "😢",
+    "sentences": [
+      "Don't cry.",
+      "The baby cries."
+    ],
+    "level": 1,
+    "order": 147
+  },
+  {
+    "id": "e148",
+    "word": "school",
+    "chinese": "学校",
+    "category": "学校",
+    "emoji": "🏫",
+    "sentences": [
+      "I go to school.",
+      "My school is big."
+    ],
+    "level": 1,
+    "order": 148
+  },
+  {
+    "id": "e149",
+    "word": "book",
+    "chinese": "书",
+    "category": "学校",
+    "emoji": "📖",
+    "sentences": [
+      "I read a book.",
+      "This is my book."
+    ],
+    "level": 1,
+    "order": 149
+  },
+  {
+    "id": "e150",
+    "word": "pen",
+    "chinese": "钢笔",
+    "category": "学校",
+    "emoji": "🖊️",
+    "sentences": [
+      "I write with a pen.",
+      "My pen is blue."
+    ],
+    "level": 1,
+    "order": 150
+  },
+  {
+    "id": "e151",
+    "word": "pencil",
+    "chinese": "铅笔",
+    "category": "学校",
+    "emoji": "✏️",
+    "sentences": [
+      "I write with a pencil.",
+      "Sharp pencil."
+    ],
+    "level": 1,
+    "order": 151
+  },
+  {
+    "id": "e152",
+    "word": "ruler",
+    "chinese": "尺子",
+    "category": "学校",
+    "emoji": "📏",
+    "sentences": [
+      "The ruler is long.",
+      "Use a ruler."
+    ],
+    "level": 1,
+    "order": 152
+  },
+  {
+    "id": "e153",
+    "word": "bag",
+    "chinese": "书包",
+    "category": "学校",
+    "emoji": "🎒",
+    "sentences": [
+      "My bag is heavy.",
+      "Carry your bag."
+    ],
+    "level": 1,
+    "order": 153
+  },
+  {
+    "id": "e154",
+    "word": "teacher",
+    "chinese": "老师",
+    "category": "学校",
+    "emoji": "👩‍🏫",
+    "sentences": [
+      "My teacher is nice.",
+      "Teachers teach us."
+    ],
+    "level": 1,
+    "order": 154
+  },
+  {
+    "id": "e155",
+    "word": "student",
+    "chinese": "学生",
+    "category": "学校",
+    "emoji": "🧑‍🎓",
+    "sentences": [
+      "I am a student.",
+      "Good students."
+    ],
+    "level": 1,
+    "order": 155
+  },
+  {
+    "id": "e156",
+    "word": "classroom",
+    "chinese": "教室",
+    "category": "学校",
+    "emoji": "🏫",
+    "sentences": [
+      "Our classroom is bright.",
+      "Sit in the classroom."
+    ],
+    "level": 1,
+    "order": 156
+  },
+  {
+    "id": "e157",
+    "word": "desk",
+    "chinese": "课桌",
+    "category": "学校",
+    "emoji": "🪑",
+    "sentences": [
+      "My desk is clean.",
+      "Sit at the desk."
+    ],
+    "level": 1,
+    "order": 157
+  },
+  {
+    "id": "e158",
+    "word": "chair",
+    "chinese": "椅子",
+    "category": "学校",
+    "emoji": "🪑",
+    "sentences": [
+      "Sit on the chair.",
+      "The chair is red."
+    ],
+    "level": 1,
+    "order": 158
+  },
+  {
+    "id": "e159",
+    "word": "paper",
+    "chinese": "纸",
+    "category": "学校",
+    "emoji": "📄",
+    "sentences": [
+      "I draw on paper.",
+      "A piece of paper."
+    ],
+    "level": 1,
+    "order": 159
+  },
+  {
+    "id": "e160",
+    "word": "eraser",
+    "chinese": "橡皮",
+    "category": "学校",
+    "emoji": "🧽",
+    "sentences": [
+      "I use an eraser.",
+      "The eraser is white."
+    ],
+    "level": 1,
+    "order": 160
+  },
+  {
+    "id": "e161",
+    "word": "crayon",
+    "chinese": "蜡笔",
+    "category": "学校",
+    "emoji": "🖍️",
+    "sentences": [
+      "I color with crayons.",
+      "Colorful crayons."
+    ],
+    "level": 1,
+    "order": 161
+  },
+  {
+    "id": "e162",
+    "word": "toy",
+    "chinese": "玩具",
+    "category": "学校",
+    "emoji": "🧸",
+    "sentences": [
+      "I like toys.",
+      "My toy is new."
+    ],
+    "level": 1,
+    "order": 162
+  },
+  {
+    "id": "e163",
+    "word": "ball",
+    "chinese": "球",
+    "category": "学校",
+    "emoji": "⚽",
+    "sentences": [
+      "I play with a ball.",
+      "Throw the ball."
+    ],
+    "level": 1,
+    "order": 163
+  }
 ]

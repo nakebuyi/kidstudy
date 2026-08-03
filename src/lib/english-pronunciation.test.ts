@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { getEnglishSpeechText, ENGLISH_FALLBACKS } from "./english-pronunciation";
+import englishData from "@/../content/english.json";
+
+interface EnglishItem {
+  word: string;
+}
 
 describe("getEnglishSpeechText", () => {
   it("returns a Chinese phonetic fallback for a known word", () => {
@@ -10,9 +15,9 @@ describe("getEnglishSpeechText", () => {
     expect(getEnglishSpeechText("xyzzy")).toBe("xyzzy");
   });
 
-  it("covers all words in the content", () => {
-    // 20 words from content/english.json
-    const words = ["apple","banana","cat","dog","red","blue","one","two","eye","hand","mom","dad","sun","moon","water","big","small","happy","run","eat"];
+  it("covers every word in the content JSON", () => {
+    const words = (englishData as EnglishItem[]).map((w) => w.word);
+    expect(words.length).toBeGreaterThanOrEqual(150);
     for (const w of words) {
       const fallback = getEnglishSpeechText(w);
       expect(fallback).not.toBe(w);
@@ -22,7 +27,15 @@ describe("getEnglishSpeechText", () => {
 });
 
 describe("ENGLISH_FALLBACKS table", () => {
-  it("has an entry for every content word", () => {
-    expect(Object.keys(ENGLISH_FALLBACKS)).toHaveLength(20);
+  it("has a fallback for every content word", () => {
+    const words = (englishData as EnglishItem[]).map((w) => w.word.toLowerCase());
+    for (const w of words) {
+      expect(ENGLISH_FALLBACKS[w]).toBeDefined();
+    }
+  });
+
+  it("is in sync with content count", () => {
+    const words = (englishData as EnglishItem[]).map((w) => w.word.toLowerCase());
+    expect(Object.keys(ENGLISH_FALLBACKS).length).toBeGreaterThanOrEqual(words.length);
   });
 });

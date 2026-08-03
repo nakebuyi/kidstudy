@@ -1,22 +1,757 @@
 [
-  { "id": "p1", "pinyin": "b", "type": "initial", "examples": ["爸", "不", "白"], "level": 1, "order": 1 },
-  { "id": "p2", "pinyin": "p", "type": "initial", "examples": ["怕", "皮", "跑"], "level": 1, "order": 2 },
-  { "id": "p3", "pinyin": "m", "type": "initial", "examples": ["妈", "猫", "门"], "level": 1, "order": 3 },
-  { "id": "p4", "pinyin": "f", "type": "initial", "examples": ["发", "飞", "风"], "level": 1, "order": 4 },
-  { "id": "p5", "pinyin": "d", "type": "initial", "examples": ["大", "的", "地"], "level": 1, "order": 5 },
-  { "id": "p6", "pinyin": "t", "type": "initial", "examples": ["他", "天", "太"], "level": 1, "order": 6 },
-  { "id": "p7", "pinyin": "n", "type": "initial", "examples": ["你", "牛", "女"], "level": 1, "order": 7 },
-  { "id": "p8", "pinyin": "l", "type": "initial", "examples": ["了", "来", "老"], "level": 1, "order": 8 },
-  { "id": "p9", "pinyin": "a", "type": "final", "examples": ["啊", "爸", "妈"], "level": 1, "order": 9 },
-  { "id": "p10", "pinyin": "o", "type": "final", "examples": ["哦", "我", "波"], "level": 1, "order": 10 },
-  { "id": "p11", "pinyin": "e", "type": "final", "examples": ["鹅", "车", "喝"], "level": 1, "order": 11 },
-  { "id": "p12", "pinyin": "i", "type": "final", "examples": ["一", "衣", "比"], "level": 1, "order": 12 },
-  { "id": "p13", "pinyin": "u", "type": "final", "examples": ["五", "不", "书"], "level": 1, "order": 13 },
-  { "id": "p14", "pinyin": "ü", "type": "final", "examples": ["鱼", "女", "绿"], "level": 1, "order": 14 },
-  { "id": "p15", "pinyin": "ai", "type": "final", "examples": ["爱", "白", "来"], "level": 1, "order": 15 },
-  { "id": "p16", "pinyin": "ei", "type": "final", "examples": ["诶", "飞", "美"], "level": 1, "order": 16 },
-  { "id": "p17", "pinyin": "ao", "type": "final", "examples": ["奥", "好", "高"], "level": 1, "order": 17 },
-  { "id": "p18", "pinyin": "ou", "type": "final", "examples": ["欧", "走", "口"], "level": 1, "order": 18 },
-  { "id": "p19", "pinyin": "zhi", "type": "whole", "examples": ["知", "只", "纸"], "level": 1, "order": 19 },
-  { "id": "p20", "pinyin": "yi", "type": "whole", "examples": ["一", "衣", "以"], "level": 1, "order": 20 }
+  {
+    "id": "p1",
+    "pinyin": "b",
+    "type": "initial",
+    "examples": [
+      "爸",
+      "不",
+      "白"
+    ],
+    "level": 1,
+    "order": 1
+  },
+  {
+    "id": "p2",
+    "pinyin": "p",
+    "type": "initial",
+    "examples": [
+      "怕",
+      "皮",
+      "跑"
+    ],
+    "level": 1,
+    "order": 2
+  },
+  {
+    "id": "p3",
+    "pinyin": "m",
+    "type": "initial",
+    "examples": [
+      "妈",
+      "门",
+      "米"
+    ],
+    "level": 1,
+    "order": 3
+  },
+  {
+    "id": "p4",
+    "pinyin": "f",
+    "type": "initial",
+    "examples": [
+      "发",
+      "飞",
+      "风"
+    ],
+    "level": 1,
+    "order": 4
+  },
+  {
+    "id": "p5",
+    "pinyin": "d",
+    "type": "initial",
+    "examples": [
+      "大",
+      "地",
+      "东"
+    ],
+    "level": 1,
+    "order": 5
+  },
+  {
+    "id": "p6",
+    "pinyin": "t",
+    "type": "initial",
+    "examples": [
+      "他",
+      "天",
+      "听"
+    ],
+    "level": 1,
+    "order": 6
+  },
+  {
+    "id": "p7",
+    "pinyin": "n",
+    "type": "initial",
+    "examples": [
+      "你",
+      "女",
+      "鸟"
+    ],
+    "level": 1,
+    "order": 7
+  },
+  {
+    "id": "p8",
+    "pinyin": "l",
+    "type": "initial",
+    "examples": [
+      "了",
+      "来",
+      "六"
+    ],
+    "level": 1,
+    "order": 8
+  },
+  {
+    "id": "p9",
+    "pinyin": "g",
+    "type": "initial",
+    "examples": [
+      "哥",
+      "高",
+      "干"
+    ],
+    "level": 1,
+    "order": 9
+  },
+  {
+    "id": "p10",
+    "pinyin": "k",
+    "type": "initial",
+    "examples": [
+      "口",
+      "开",
+      "看"
+    ],
+    "level": 1,
+    "order": 10
+  },
+  {
+    "id": "p11",
+    "pinyin": "h",
+    "type": "initial",
+    "examples": [
+      "好",
+      "和",
+      "花"
+    ],
+    "level": 1,
+    "order": 11
+  },
+  {
+    "id": "p12",
+    "pinyin": "j",
+    "type": "initial",
+    "examples": [
+      "家",
+      "今",
+      "几"
+    ],
+    "level": 1,
+    "order": 12
+  },
+  {
+    "id": "p13",
+    "pinyin": "q",
+    "type": "initial",
+    "examples": [
+      "七",
+      "去",
+      "前"
+    ],
+    "level": 1,
+    "order": 13
+  },
+  {
+    "id": "p14",
+    "pinyin": "x",
+    "type": "initial",
+    "examples": [
+      "下",
+      "小",
+      "学"
+    ],
+    "level": 1,
+    "order": 14
+  },
+  {
+    "id": "p15",
+    "pinyin": "zh",
+    "type": "initial",
+    "examples": [
+      "这",
+      "中",
+      "只"
+    ],
+    "level": 1,
+    "order": 15
+  },
+  {
+    "id": "p16",
+    "pinyin": "ch",
+    "type": "initial",
+    "examples": [
+      "吃",
+      "出",
+      "车"
+    ],
+    "level": 1,
+    "order": 16
+  },
+  {
+    "id": "p17",
+    "pinyin": "sh",
+    "type": "initial",
+    "examples": [
+      "上",
+      "山",
+      "十"
+    ],
+    "level": 1,
+    "order": 17
+  },
+  {
+    "id": "p18",
+    "pinyin": "r",
+    "type": "initial",
+    "examples": [
+      "日",
+      "人",
+      "热"
+    ],
+    "level": 1,
+    "order": 18
+  },
+  {
+    "id": "p19",
+    "pinyin": "z",
+    "type": "initial",
+    "examples": [
+      "在",
+      "走",
+      "早"
+    ],
+    "level": 1,
+    "order": 19
+  },
+  {
+    "id": "p20",
+    "pinyin": "c",
+    "type": "initial",
+    "examples": [
+      "从",
+      "草",
+      "菜"
+    ],
+    "level": 1,
+    "order": 20
+  },
+  {
+    "id": "p21",
+    "pinyin": "s",
+    "type": "initial",
+    "examples": [
+      "三",
+      "四",
+      "说"
+    ],
+    "level": 1,
+    "order": 21
+  },
+  {
+    "id": "p22",
+    "pinyin": "y",
+    "type": "initial",
+    "examples": [
+      "一",
+      "有",
+      "要"
+    ],
+    "level": 1,
+    "order": 22
+  },
+  {
+    "id": "p23",
+    "pinyin": "w",
+    "type": "initial",
+    "examples": [
+      "五",
+      "我",
+      "玩"
+    ],
+    "level": 1,
+    "order": 23
+  },
+  {
+    "id": "p24",
+    "pinyin": "a",
+    "type": "final",
+    "examples": [
+      "妈",
+      "爸",
+      "大"
+    ],
+    "level": 1,
+    "order": 24
+  },
+  {
+    "id": "p25",
+    "pinyin": "o",
+    "type": "final",
+    "examples": [
+      "喔",
+      "窝",
+      "哦"
+    ],
+    "level": 1,
+    "order": 25
+  },
+  {
+    "id": "p26",
+    "pinyin": "e",
+    "type": "final",
+    "examples": [
+      "鹅",
+      "饿",
+      "歌"
+    ],
+    "level": 1,
+    "order": 26
+  },
+  {
+    "id": "p27",
+    "pinyin": "i",
+    "type": "final",
+    "examples": [
+      "衣",
+      "一",
+      "地"
+    ],
+    "level": 1,
+    "order": 27
+  },
+  {
+    "id": "p28",
+    "pinyin": "u",
+    "type": "final",
+    "examples": [
+      "乌",
+      "五",
+      "屋"
+    ],
+    "level": 1,
+    "order": 28
+  },
+  {
+    "id": "p29",
+    "pinyin": "ü",
+    "type": "final",
+    "examples": [
+      "鱼",
+      "雨",
+      "女"
+    ],
+    "level": 1,
+    "order": 29
+  },
+  {
+    "id": "p30",
+    "pinyin": "ai",
+    "type": "final",
+    "examples": [
+      "爱",
+      "白",
+      "来"
+    ],
+    "level": 1,
+    "order": 30
+  },
+  {
+    "id": "p31",
+    "pinyin": "ei",
+    "type": "final",
+    "examples": [
+      "飞",
+      "杯",
+      "给"
+    ],
+    "level": 1,
+    "order": 31
+  },
+  {
+    "id": "p32",
+    "pinyin": "ui",
+    "type": "final",
+    "examples": [
+      "水",
+      "对",
+      "谁"
+    ],
+    "level": 1,
+    "order": 32
+  },
+  {
+    "id": "p33",
+    "pinyin": "ao",
+    "type": "final",
+    "examples": [
+      "包",
+      "猫",
+      "好"
+    ],
+    "level": 1,
+    "order": 33
+  },
+  {
+    "id": "p34",
+    "pinyin": "ou",
+    "type": "final",
+    "examples": [
+      "口",
+      "手",
+      "头"
+    ],
+    "level": 1,
+    "order": 34
+  },
+  {
+    "id": "p35",
+    "pinyin": "iu",
+    "type": "final",
+    "examples": [
+      "六",
+      "牛",
+      "秋"
+    ],
+    "level": 1,
+    "order": 35
+  },
+  {
+    "id": "p36",
+    "pinyin": "ie",
+    "type": "final",
+    "examples": [
+      "叶",
+      "姐",
+      "鞋"
+    ],
+    "level": 1,
+    "order": 36
+  },
+  {
+    "id": "p37",
+    "pinyin": "üe",
+    "type": "final",
+    "examples": [
+      "月",
+      "学",
+      "雪"
+    ],
+    "level": 1,
+    "order": 37
+  },
+  {
+    "id": "p38",
+    "pinyin": "er",
+    "type": "final",
+    "examples": [
+      "二",
+      "耳",
+      "儿"
+    ],
+    "level": 1,
+    "order": 38
+  },
+  {
+    "id": "p39",
+    "pinyin": "an",
+    "type": "final",
+    "examples": [
+      "山",
+      "三",
+      "安"
+    ],
+    "level": 1,
+    "order": 39
+  },
+  {
+    "id": "p40",
+    "pinyin": "en",
+    "type": "final",
+    "examples": [
+      "门",
+      "人",
+      "很"
+    ],
+    "level": 1,
+    "order": 40
+  },
+  {
+    "id": "p41",
+    "pinyin": "in",
+    "type": "final",
+    "examples": [
+      "金",
+      "心",
+      "新"
+    ],
+    "level": 1,
+    "order": 41
+  },
+  {
+    "id": "p42",
+    "pinyin": "un",
+    "type": "final",
+    "examples": [
+      "春",
+      "文",
+      "问"
+    ],
+    "level": 1,
+    "order": 42
+  },
+  {
+    "id": "p43",
+    "pinyin": "ün",
+    "type": "final",
+    "examples": [
+      "云",
+      "军",
+      "裙"
+    ],
+    "level": 1,
+    "order": 43
+  },
+  {
+    "id": "p44",
+    "pinyin": "ang",
+    "type": "final",
+    "examples": [
+      "上",
+      "长",
+      "羊"
+    ],
+    "level": 1,
+    "order": 44
+  },
+  {
+    "id": "p45",
+    "pinyin": "eng",
+    "type": "final",
+    "examples": [
+      "风",
+      "灯",
+      "冷"
+    ],
+    "level": 1,
+    "order": 45
+  },
+  {
+    "id": "p46",
+    "pinyin": "ing",
+    "type": "final",
+    "examples": [
+      "星",
+      "听",
+      "名"
+    ],
+    "level": 1,
+    "order": 46
+  },
+  {
+    "id": "p47",
+    "pinyin": "ong",
+    "type": "final",
+    "examples": [
+      "红",
+      "东",
+      "中"
+    ],
+    "level": 1,
+    "order": 47
+  },
+  {
+    "id": "p48",
+    "pinyin": "zhi",
+    "type": "whole",
+    "examples": [
+      "知",
+      "只",
+      "纸"
+    ],
+    "level": 1,
+    "order": 48
+  },
+  {
+    "id": "p49",
+    "pinyin": "chi",
+    "type": "whole",
+    "examples": [
+      "吃",
+      "尺",
+      "池"
+    ],
+    "level": 1,
+    "order": 49
+  },
+  {
+    "id": "p50",
+    "pinyin": "shi",
+    "type": "whole",
+    "examples": [
+      "十",
+      "石",
+      "是"
+    ],
+    "level": 1,
+    "order": 50
+  },
+  {
+    "id": "p51",
+    "pinyin": "ri",
+    "type": "whole",
+    "examples": [
+      "日",
+      "热"
+    ],
+    "level": 1,
+    "order": 51
+  },
+  {
+    "id": "p52",
+    "pinyin": "zi",
+    "type": "whole",
+    "examples": [
+      "字",
+      "子",
+      "自"
+    ],
+    "level": 1,
+    "order": 52
+  },
+  {
+    "id": "p53",
+    "pinyin": "ci",
+    "type": "whole",
+    "examples": [
+      "词",
+      "次",
+      "此"
+    ],
+    "level": 1,
+    "order": 53
+  },
+  {
+    "id": "p54",
+    "pinyin": "si",
+    "type": "whole",
+    "examples": [
+      "四",
+      "思",
+      "丝"
+    ],
+    "level": 1,
+    "order": 54
+  },
+  {
+    "id": "p55",
+    "pinyin": "yi",
+    "type": "whole",
+    "examples": [
+      "一",
+      "衣",
+      "意"
+    ],
+    "level": 1,
+    "order": 55
+  },
+  {
+    "id": "p56",
+    "pinyin": "wu",
+    "type": "whole",
+    "examples": [
+      "五",
+      "屋",
+      "物"
+    ],
+    "level": 1,
+    "order": 56
+  },
+  {
+    "id": "p57",
+    "pinyin": "yu",
+    "type": "whole",
+    "examples": [
+      "鱼",
+      "雨",
+      "玉"
+    ],
+    "level": 1,
+    "order": 57
+  },
+  {
+    "id": "p58",
+    "pinyin": "ye",
+    "type": "whole",
+    "examples": [
+      "叶",
+      "夜",
+      "也"
+    ],
+    "level": 1,
+    "order": 58
+  },
+  {
+    "id": "p59",
+    "pinyin": "yue",
+    "type": "whole",
+    "examples": [
+      "月",
+      "越",
+      "乐"
+    ],
+    "level": 1,
+    "order": 59
+  },
+  {
+    "id": "p60",
+    "pinyin": "yuan",
+    "type": "whole",
+    "examples": [
+      "圆",
+      "元",
+      "远"
+    ],
+    "level": 1,
+    "order": 60
+  },
+  {
+    "id": "p61",
+    "pinyin": "yin",
+    "type": "whole",
+    "examples": [
+      "音",
+      "因",
+      "阴"
+    ],
+    "level": 1,
+    "order": 61
+  },
+  {
+    "id": "p62",
+    "pinyin": "yun",
+    "type": "whole",
+    "examples": [
+      "云",
+      "运",
+      "晕"
+    ],
+    "level": 1,
+    "order": 62
+  },
+  {
+    "id": "p63",
+    "pinyin": "ying",
+    "type": "whole",
+    "examples": [
+      "英",
+      "影",
+      "应"
+    ],
+    "level": 1,
+    "order": 63
+  }
 ]

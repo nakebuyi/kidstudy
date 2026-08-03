@@ -88,6 +88,29 @@ describe("getPoetryContent", () => {
   });
 });
 
+// 每日抽取 20 个要求各科内容池 ≥ 20，且达到扩充目标规模
+describe("content pool sizes (daily 20-selection prerequisite)", () => {
+  it("literacy pool has >= 200 items", () => {
+    expect(getLiteracyContent().length).toBeGreaterThanOrEqual(200);
+  });
+
+  it("pinyin pool has the full 63", () => {
+    expect(getPinyinContent().length).toBeGreaterThanOrEqual(63);
+  });
+
+  it("english pool has >= 150 items", () => {
+    expect(getEnglishContent().length).toBeGreaterThanOrEqual(150);
+  });
+
+  it("math pool has >= 200 items", () => {
+    expect(getMathContent().length).toBeGreaterThanOrEqual(200);
+  });
+
+  it("poetry pool has >= 20 items", () => {
+    expect(getPoetryContent().length).toBeGreaterThanOrEqual(20);
+  });
+});
+
 describe("getPoetryByLevel", () => {
   it("filters by level", () => {
     const all = getPoetryContent();

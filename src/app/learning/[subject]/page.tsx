@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, use, useEffect } from "react";
+import { useState, useMemo, use, useEffect, useCallback } from "react";
 import { useLearning } from "@/store/LearningContext";
 import { useChild } from "@/store/ChildContext";
 import { useSpeech } from "@/hooks/useSpeech";
@@ -906,26 +906,32 @@ export default function LearningSubjectPage({
       .finally(() => setCheckinLoading(false));
   }, [child, subject]);
 
-  const content = useMemo(() => {
-    try {
-      switch (subject) {
-        case "literacy":
-          return require("@/../content/literacy.json") as any[];
-        case "pinyin":
-          return require("@/../content/pinyin.json") as any[];
-        case "english":
-          return require("@/../content/english.json") as any[];
-        case "math":
-          return require("@/../content/math.json") as any[];
-        case "poetry":
-          return require("@/../content/poetry.json") as any[];
-        default:
-          return [];
-      }
-    } catch {
-      return [];
+  const [content, setContent] = useState<any[]>([]);
+  const [contentLoading, setContentLoading] = useState(true);
+  const [contentError, setContentError] = useState<string | null>(null);
+
+  // Load today's 20 items for this subject from the API (deterministic per day)
+  const loadContent = useCallback(() => {
+    if (!child) {
+      setContentLoading(false);
+      return;
     }
-  }, [subject]);
+    setContentLoading(true);
+    setContentError(null);
+    fetch(`/api/learning/${subject}?childId=${child.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data?.items)) setContent(data.items);
+        else setContentError(data?.error ?? "内容加载失败");
+      })
+      .catch(() => setContentError("内容加载失败"))
+      .finally(() => setContentLoading(false));
+  }, [child, subject]);
+
+  useEffect(() => {
+    setCharIndex(0);
+    loadContent();
+  }, [loadContent]);
 
   const currentItem = content[charIndex] ?? null;
 
@@ -943,6 +949,32 @@ export default function LearningSubjectPage({
               <p className="text-gray-500">该学习模块不存在，请返回工作台重新选择。</p>
             </CardContent>
           </Card>
+        </div>
+      </DesktopLayout>
+    );
+  }
+
+  if (contentLoading) {
+    return (
+      <DesktopLayout>
+        <div className="max-w-4xl mx-auto text-center py-12">
+          <div className="text-5xl mb-4">📚</div>
+          <h1 className="text-xl font-bold text-gray-800 mb-2">正在准备今日学习内容...</h1>
+        </div>
+      </DesktopLayout>
+    );
+  }
+
+  if (contentError) {
+    return (
+      <DesktopLayout>
+        <div className="max-w-4xl mx-auto text-center py-12">
+          <div className="text-5xl mb-4">😢</div>
+          <h1 className="text-xl font-bold text-gray-800 mb-2">内容加载失败</h1>
+          <p className="text-gray-500 mb-6">{contentError}</p>
+          <Button size="lg" onClick={loadContent}>
+            重试
+          </Button>
         </div>
       </DesktopLayout>
     );
