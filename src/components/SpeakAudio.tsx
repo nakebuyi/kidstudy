@@ -4,36 +4,40 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Volume2 } from "lucide-react";
 import englishAudioMap from "@/lib/data/english-audio-map.json";
+import { resolveAudioSlug } from "@/lib/audio-map";
+import type { AudioMap } from "@/lib/audio-map";
 
-type AudioMap = {
-  words: Record<string, string>;
-  sentences: Record<string, string>;
-};
-
-const map = englishAudioMap as AudioMap;
+const defaultMap = englishAudioMap as AudioMap;
 
 /**
- * 预生成音频播放按钮 —— 英语单词/例句专用。
+ * 预生成音频播放按钮 —— 播放 public/audio/ 下的 MP3，不依赖浏览器 TTS
+ * （speechSynthesis 在某些设备上静默失败）。100% 可靠。
  *
- * 用 <audio> 播放 public/audio/en/ 下的 MP3，不依赖浏览器 TTS
- * （speechSynthesis 在某些设备上对英文静默失败）。100% 可靠。
+ * 英语：<SpeakAudio text={word} kind="word" />
+ *        → /audio/en/word/{slug}.mp3（默认 dir="en"、map=英语 map，兼容旧调用）
+ * 拼音：<SpeakAudio text="b" kind="pinyin" dir="zh" map={pinyinAudioMap} />
+ *        → /audio/zh/pinyin/{slug}.mp3
  */
 export function SpeakAudio({
   text,
   kind,
   className,
+  dir = "en",
+  map = defaultMap,
 }: {
   text: string;
-  kind: "word" | "sentence";
+  kind: string;
   className?: string;
+  dir?: string;
+  map?: AudioMap;
 }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [speaking, setSpeaking] = useState(false);
 
-  const slug = kind === "word" ? map.words[text] : map.sentences[text];
+  const slug = resolveAudioSlug(map, kind, text);
   if (!slug) return null;
 
-  const src = `/audio/en/${kind}/${slug}.mp3`;
+  const src = `/audio/${dir}/${kind}/${slug}.mp3`;
 
   const play = () => {
     // 复用同一个 audio 元素，避免并发
