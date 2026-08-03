@@ -21,7 +21,7 @@ npm run dev        # http://localhost:3000
 
 ## 朗读音频（预生成 MP3，不依赖浏览器 TTS）
 
-英语与拼音的朗读采用**预生成 MP3**（`<audio>` 元素播放），彻底规避浏览器 `speechSynthesis` 在某些设备上静默失败的问题。识字与古诗仍使用浏览器 TTS（zh-CN 稳定可靠）。
+英语、拼音与古诗的朗读采用**预生成 MP3**（`<audio>` 元素播放），彻底规避浏览器 `speechSynthesis` 在某些设备上静默失败的问题。识字仍使用浏览器 TTS（zh-CN 稳定可靠）。
 
 **目录与映射：**
 
@@ -29,6 +29,7 @@ npm run dev        # http://localhost:3000
 |------|---------|---------|
 | 英语 | `public/audio/en/word`、`public/audio/en/sentence` | `src/lib/data/english-audio-map.json` |
 | 拼音 | `public/audio/zh/pinyin`（呼读音）、`public/audio/zh/char`（例字） | `src/lib/data/pinyin-audio-map.json` |
+| 古诗 | `public/audio/zh/poetry` | `src/lib/data/poetry-audio-map.json` |
 
 - 音频文件名 `slug = md5(文本)[:12]`，稳定且 URL-safe。
 - 播放组件：`src/components/SpeakAudio.tsx`（`dir` / `map` 参数，默认英语，向后兼容）。
@@ -36,12 +37,15 @@ npm run dev        # http://localhost:3000
 - 拼音呼读音表：`src/lib/pinyin-pronunciation.ts`（与 `scripts/gen-pinyin-audio.py` 保持一致）。
 - 中间件 `src/middleware.ts` 已放行 `/audio` 静态资源。
 
-**重新生成音频**（需联网访问 Google TTS；已存在且 >500B 的文件自动跳过，可重复运行）：
+**重新生成音频**（需联网：英语/拼音走 Google TTS，古诗走 Microsoft edge-tts；已存在且 >10KB 的文件自动跳过，可重复运行）：
 
 ```bash
 python3 scripts/gen-english-audio.py   # 英语单词 + 例句
 python3 scripts/gen-pinyin-audio.py    # 拼音呼读音 + 例字，并自动写出映射 JSON
+python3 scripts/gen-poetry-audio.py    # 古诗朗读（edge-tts 神经语音），并自动写出映射 JSON
 ```
+
+> 注意：古诗脚本依赖 `pip install edge-tts`（Microsoft Edge 神经语音）；英语/拼音脚本无需额外依赖。
 
 > 注意：拼音 63 个呼读音会按文本哈希去重（如 i / y / yi 均读"衣"），因此 `public/audio/zh/pinyin/` 实际约 46 个文件，但映射始终覆盖全部 63 个拼音键。
 

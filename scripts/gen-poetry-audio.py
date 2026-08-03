@@ -25,7 +25,7 @@ MAP_PATH = os.path.join(ROOT, "src", "lib", "data", "poetry-audio-map.json")
 VOICE = "zh-CN-XiaoxiaoNeural"
 RATE = "-12%"
 PITCH = "-2Hz"
-MIN_SIZE = 500
+MIN_SIZE = 10240
 
 
 def slug(text: str) -> str:

@@ -16,11 +16,11 @@ describe("poetry-audio-map", () => {
     );
   });
 
-  it("every slug has a real audio file >500B", () => {
+  it("every slug has a real audio file >10KB", () => {
     for (const slug of Object.values(map.poetry)) {
       const p = `public/audio/zh/poetry/${slug}.mp3`;
       expect(existsSync(p), `缺失文件 ${p}`).toBe(true);
-      expect(statSync(p).size, `${p} 文件过小`).toBeGreaterThan(500);
+      expect(statSync(p).size, `${p} 文件过小`).toBeGreaterThan(10240);
     }
   });
 });
