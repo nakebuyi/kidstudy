@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getChinaDateStr } from "@/lib/checkin-date";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -22,17 +23,16 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "孩子不存在" }, { status: 404 });
   }
 
-  // Today's check-in status
-  const today = new Date().toISOString().slice(0, 10);
+  // Today's check-in status (Beijing date)
+  const today = getChinaDateStr();
   const todayRecord = await prisma.checkInRecord.findUnique({
     where: { childId_date: { childId, date: today } },
     include: { tasks: true },
   });
 
-  // This week's records (last 7 days)
-  const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
-  const weekStart = weekAgo.toISOString().slice(0, 10);
+  // This week's records (last 7 days, Beijing date)
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const weekStart = getChinaDateStr(weekAgo);
 
   const weekRecords = await prisma.checkInRecord.findMany({
     where: {

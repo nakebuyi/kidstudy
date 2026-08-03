@@ -1,4 +1,5 @@
 import { prisma } from "./prisma";
+import { getChinaDateStr } from "./checkin-date";
 
 const subjects = ["literacy", "pinyin", "english", "math", "poetry"];
 
@@ -11,7 +12,8 @@ const taskTypes: Record<string, string[]> = {
 };
 
 function getTodayDate(): string {
-  return new Date().toISOString().slice(0, 10);
+  // 北京时间日期（UTC+8），确保每日重置发生在北京午夜而非早上 8 点
+  return getChinaDateStr();
 }
 
 function hashDate(date: string, subject: string): number {
