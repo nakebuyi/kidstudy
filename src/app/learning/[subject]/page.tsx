@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
 import { SpeakAudio } from "@/components/SpeakAudio";
-import { getPinyinSpeechText } from "@/lib/pinyin-pronunciation";
+import pinyinAudioMap from "@/lib/data/pinyin-audio-map.json";
 import { isLastLearningItem } from "@/lib/checkin-completion";
 import Link from "next/link";
 
@@ -218,7 +218,7 @@ function PinyinStep1({ item, onNext }: { item: any; onNext: () => void }) {
       <Card>
         <CardContent className="pt-6 flex flex-col items-center">
           <div className="text-7xl font-bold text-sky-500 mb-4">{item.pinyin}</div>
-          <SpeakButton text={getPinyinSpeechText(item.pinyin)} />
+          <SpeakAudio text={item.pinyin} kind="pinyin" dir="zh" map={pinyinAudioMap} />
           <div className="mt-2">
             <Badge variant="secondary" className="text-lg px-4 py-2">
               {typeNames[item.type] ?? item.type}
@@ -234,9 +234,10 @@ function PinyinStep1({ item, onNext }: { item: any; onNext: () => void }) {
         <CardContent>
           <div className="flex flex-wrap gap-3 justify-center">
             {item.examples.map((ex: string) => (
-              <div key={ex} className="bg-sky-50 rounded-xl px-6 py-4 text-center">
+              <div key={ex} className="bg-sky-50 rounded-xl px-6 py-4 text-center flex flex-col items-center">
                 <div className="text-3xl font-bold text-gray-800">{ex}</div>
                 <div className="text-sm text-sky-500 mt-1">{item.pinyin}</div>
+                <SpeakAudio text={ex} kind="char" dir="zh" map={pinyinAudioMap} className="mt-2" />
               </div>
             ))}
           </div>
@@ -269,7 +270,7 @@ function PinyinStep2({ item, onNext }: { item: any; onNext: () => void }) {
       <Card>
         <CardContent className="pt-6 flex flex-col items-center">
           <div className="text-7xl font-bold text-sky-500 mb-4">{item.pinyin}</div>
-          <SpeakButton text={getPinyinSpeechText(item.pinyin)} />
+          <SpeakAudio text={item.pinyin} kind="pinyin" dir="zh" map={pinyinAudioMap} />
           <p className="text-gray-500 mt-2">拼读练习</p>
         </CardContent>
       </Card>
@@ -283,9 +284,10 @@ function PinyinStep2({ item, onNext }: { item: any; onNext: () => void }) {
             {item.examples.map((ex: string) => (
               <div key={ex} className="flex items-center gap-4 bg-sky-50 rounded-lg p-4">
                 <span className="text-3xl font-bold text-gray-800">{ex}</span>
-                <span className="text-xl text-sky-500">
+                <span className="text-xl text-sky-500 flex-1">
                   {item.pinyin} → {ex}
                 </span>
+                <SpeakAudio text={ex} kind="char" dir="zh" map={pinyinAudioMap} />
               </div>
             ))}
           </div>
@@ -338,6 +340,9 @@ function PinyinStep3({ item, onComplete }: { item: any; onComplete: (correct: bo
           </h3>
           <div className="text-5xl text-center font-bold text-gray-800 mb-2">
             {exampleChar}
+          </div>
+          <div className="flex justify-center mb-6">
+            <SpeakAudio text={exampleChar} kind="char" dir="zh" map={pinyinAudioMap} />
           </div>
           <p className="text-center text-gray-500 mb-6">这个字的拼音是什么？</p>
           <div className="grid grid-cols-2 gap-4">
