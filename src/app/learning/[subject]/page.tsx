@@ -11,8 +11,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
+import { SpeakAudio } from "@/components/SpeakAudio";
 import { getPinyinSpeechText } from "@/lib/pinyin-pronunciation";
-import { getEnglishSpeechText } from "@/lib/english-pronunciation";
 import { isLastLearningItem } from "@/lib/checkin-completion";
 import Link from "next/link";
 
@@ -383,7 +383,7 @@ function EnglishStep1({ item, onNext }: { item: any; onNext: () => void }) {
           <span className="text-8xl mb-4">{item.emoji}</span>
           <div className="text-5xl font-bold text-green-600 mb-2">{item.word}</div>
           <div className="text-2xl text-gray-500 mb-2">{item.chinese}</div>
-          <SpeakButton text={item.word} lang="en-US" fallback={getEnglishSpeechText(item.word)} />
+          <SpeakAudio text={item.word} kind="word" />
           <div className="mt-2">
             <Badge variant="secondary">{item.category}</Badge>
           </div>
@@ -397,8 +397,9 @@ function EnglishStep1({ item, onNext }: { item: any; onNext: () => void }) {
         <CardContent>
           <ul className="space-y-2">
             {item.sentences.map((s: string) => (
-              <li key={s} className="text-gray-700 bg-green-50 rounded-lg px-4 py-2">
-                {s}
+              <li key={s} className="text-gray-700 bg-green-50 rounded-lg px-4 py-2 flex items-center justify-between gap-3">
+                <span>{s}</span>
+                <SpeakAudio text={s} kind="sentence" />
               </li>
             ))}
           </ul>
@@ -433,6 +434,9 @@ function EnglishStep2({ item, onNext }: { item: any; onNext: () => void }) {
           <span className="text-8xl mb-4">{item.emoji}</span>
           <div className="text-5xl font-bold text-green-600 mb-2">{item.word}</div>
           <div className="text-2xl text-gray-500">{item.chinese}</div>
+          <div className="mt-2">
+            <SpeakAudio text={item.word} kind="word" />
+          </div>
         </CardContent>
       </Card>
 
@@ -444,7 +448,10 @@ function EnglishStep2({ item, onNext }: { item: any; onNext: () => void }) {
           <div className="space-y-3">
             {item.sentences.map((s: string) => (
               <div key={s} className="bg-green-50 rounded-lg p-4">
-                <p className="text-lg text-gray-700">{s}</p>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-lg text-gray-700 flex-1">{s}</p>
+                  <SpeakAudio text={s} kind="sentence" />
+                </div>
                 <p className="text-sm text-green-500 mt-1">请大声朗读这个句子</p>
               </div>
             ))}
@@ -497,7 +504,10 @@ function EnglishStep3({ item, onComplete }: { item: any; onComplete: (correct: b
           <div className="text-3xl text-center font-bold text-gray-800 mb-2">
             {item.emoji} {item.chinese}
           </div>
-          <p className="text-center text-gray-500 mb-6">这个单词用英语怎么说？</p>
+          <p className="text-center text-gray-500 mb-2">这个单词用英语怎么说？</p>
+          <div className="flex justify-center mb-6">
+            <SpeakAudio text={item.word} kind="word" />
+          </div>
           <div className="grid grid-cols-2 gap-4">
             {options.map((option) => {
               let variant: "outline" | "default" | "destructive" | "secondary" = "outline";
