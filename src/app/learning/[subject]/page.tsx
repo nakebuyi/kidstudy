@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Check, X, Volume2 } from "lucide-react";
 import { WritingCanvas } from "@/components/WritingCanvas";
+import { getPinyinSpeechText } from "@/lib/pinyin-pronunciation";
 import Link from "next/link";
 
 const subjectNames: Record<string, { title: string; icon: string }> = {
@@ -214,7 +215,7 @@ function PinyinStep1({ item, onNext }: { item: any; onNext: () => void }) {
       <Card>
         <CardContent className="pt-6 flex flex-col items-center">
           <div className="text-7xl font-bold text-sky-500 mb-4">{item.pinyin}</div>
-          <SpeakButton text={item.pinyin} />
+          <SpeakButton text={getPinyinSpeechText(item.pinyin)} />
           <div className="mt-2">
             <Badge variant="secondary" className="text-lg px-4 py-2">
               {typeNames[item.type] ?? item.type}
@@ -265,7 +266,7 @@ function PinyinStep2({ item, onNext }: { item: any; onNext: () => void }) {
       <Card>
         <CardContent className="pt-6 flex flex-col items-center">
           <div className="text-7xl font-bold text-sky-500 mb-4">{item.pinyin}</div>
-          <SpeakButton text={item.pinyin} />
+          <SpeakButton text={getPinyinSpeechText(item.pinyin)} />
           <p className="text-gray-500 mt-2">拼读练习</p>
         </CardContent>
       </Card>
