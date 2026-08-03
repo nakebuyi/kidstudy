@@ -870,7 +870,7 @@ export default function LearningSubjectPage({
 }) {
   const { subject } = use(params);
   const info = subjectNames[subject] ?? { title: subject, icon: "📚" };
-  const { currentStep, completeStep, setQuizResult } = useLearning();
+  const { currentStep, completeStep, setQuizResult, startLearning } = useLearning();
 
   const [charIndex, setCharIndex] = useState(0);
 
@@ -937,7 +937,11 @@ export default function LearningSubjectPage({
 
   const handleQuizComplete = (correct: boolean) => {
     setQuizResult(correct);
-    setCharIndex((i) => i + 1);
+    const next = charIndex + 1;
+    setCharIndex(next);
+    if (next < content.length) {
+      startLearning(content[next].id);
+    }
   };
 
   const stepLabels = {
