@@ -2,6 +2,7 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import ChildrenPage from "./page";
 
 // Mock next/link
@@ -38,6 +39,7 @@ vi.mock("@/components/layout/DesktopLayout", () => ({
 vi.mock("lucide-react", () => ({
   Plus: () => <span>+</span>,
   Check: () => <span>✓</span>,
+  Trash2: () => <span>🗑</span>,
 }));
 
 // Mock UI primitives used by the page
@@ -64,6 +66,15 @@ vi.mock("@/components/ui/button", () => ({
 }));
 vi.mock("@/components/ui/badge", () => ({
   Badge: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
+}));
+vi.mock("@/components/ui/dialog", () => ({
+  Dialog: ({ children, open }: { children: React.ReactNode; open: boolean }) =>
+    open ? <div>{children}</div> : null,
+  DialogContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogHeader: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogTitle: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogDescription: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  DialogFooter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 const baseChild = {
@@ -134,5 +145,102 @@ describe("ChildrenPage account display", () => {
     render(<ChildrenPage />);
     expect(screen.getByText(/登录账号：小明昵称/)).toBeInTheDocument();
     expect(screen.getByText(/创建登录账号/)).toBeInTheDocument();
+  });
+});
+
+describe("ChildrenPage delete", () => {
+  it("renders delete button on each child card", () => {
+    const children = [
+      { ...baseChild, id: "c1", name: "小明" },
+      { ...baseChild, id: "c2", name: "小红" },
+    ];
+    mockUseChild.mockReturnValue({
+      child: children[0],
+      children,
+      setCurrentChild: vi.fn(),
+      refreshChildren: vi.fn(),
+      removeChild: vi.fn(),
+    });
+
+    render(<ChildrenPage />);
+    const deleteButtons = screen.getAllByText("🗑");
+    expect(deleteButtons).toHaveLength(2);
+  });
+
+  it("opens confirmation dialog when delete button is clicked", async () => {
+    mockUseChild.mockReturnValue({
+      child: baseChild,
+      children: [{ ...baseChild, id: "c1", name: "小明" }],
+      setCurrentChild: vi.fn(),
+      refreshChildren: vi.fn(),
+      removeChild: vi.fn(),
+    });
+
+    render(<ChildrenPage />);
+    const deleteBtn = screen.getByText("🗑");
+    await userEvent.click(deleteBtn);
+
+    expect(screen.getByText(/确认删除孩子/)).toBeInTheDocument();
+    expect(screen.getByText(/此操作不可撤销/)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/请输入孩子姓名/)).toBeInTheDocument();
+  });
+
+  it("disables confirm button when name does not match", async () => {
+    mockUseChild.mockReturnValue({
+      child: baseChild,
+      children: [{ ...baseChild, id: "c1", name: "小明" }],
+      setCurrentChild: vi.fn(),
+      refreshChildren: vi.fn(),
+      removeChild: vi.fn(),
+    });
+
+    render(<ChildrenPage />);
+    await userEvent.click(screen.getByText("🗑"));
+
+    const input = screen.getByPlaceholderText(/请输入孩子姓名/);
+    await userEvent.type(input, "小红"); // 不匹配
+
+    const confirmBtn = screen.getByText("确认删除").closest("button");
+    expect(confirmBtn).toBeDisabled();
+  });
+
+  it("enables confirm button when name matches", async () => {
+    mockUseChild.mockReturnValue({
+      child: baseChild,
+      children: [{ ...baseChild, id: "c1", name: "小明" }],
+      setCurrentChild: vi.fn(),
+      refreshChildren: vi.fn(),
+      removeChild: vi.fn(),
+    });
+
+    render(<ChildrenPage />);
+    await userEvent.click(screen.getByText("🗑"));
+
+    const input = screen.getByPlaceholderText(/请输入孩子姓名/);
+    await userEvent.type(input, "小明");
+
+    const confirmBtn = screen.getByText("确认删除").closest("button");
+    expect(confirmBtn).not.toBeDisabled();
+  });
+
+  it("calls removeChild and closes dialog on confirm", async () => {
+    const mockRemoveChild = vi.fn().mockResolvedValue(undefined);
+    mockUseChild.mockReturnValue({
+      child: baseChild,
+      children: [{ ...baseChild, id: "c1", name: "小明" }],
+      setCurrentChild: vi.fn(),
+      refreshChildren: vi.fn(),
+      removeChild: mockRemoveChild,
+    });
+
+    render(<ChildrenPage />);
+    await userEvent.click(screen.getByText("🗑"));
+
+    const input = screen.getByPlaceholderText(/请输入孩子姓名/);
+    await userEvent.type(input, "小明");
+
+    await userEvent.click(screen.getByText("确认删除"));
+
+    expect(mockRemoveChild).toHaveBeenCalledWith("c1");
   });
 });

@@ -8,10 +8,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Check } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Plus, Check, Trash2 } from "lucide-react";
 
 export default function ChildrenPage() {
-  const { child, children, setCurrentChild, refreshChildren } = useChild();
+  const { child, children, setCurrentChild, refreshChildren, removeChild } = useChild();
   const [showAdd, setShowAdd] = useState(false);
   const [newName, setNewName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +29,25 @@ export default function ChildrenPage() {
   const [accountNickname, setAccountNickname] = useState("");
   const [accountLoading, setAccountLoading] = useState(false);
   const [accountMessage, setAccountMessage] = useState("");
+
+  // 删除相关状态
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+  const [deleteConfirmName, setDeleteConfirmName] = useState("");
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const handleDeleteChild = async () => {
+    if (!deleteTarget || deleteConfirmName.trim() !== deleteTarget.name) return;
+    setDeleteLoading(true);
+    try {
+      await removeChild(deleteTarget.id);
+      setDeleteTarget(null);
+      setDeleteConfirmName("");
+    } catch {
+      // 错误已在 removeChild 中处理
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
 
   const handleCreateAccount = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,6 +174,18 @@ export default function ChildrenPage() {
                     )}
                   </div>
                 </div>
+                {/* 删除按钮 */}
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeleteTarget({ id: c.id, name: c.name });
+                    setDeleteConfirmName("");
+                  }}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -228,6 +267,52 @@ export default function ChildrenPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* 删除确认对话框 */}
+        <Dialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) { setDeleteTarget(null); setDeleteConfirmName(""); } }}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>⚠️ 确认删除孩子</DialogTitle>
+              <DialogDescription className="space-y-2">
+                <p>此操作不可撤销！将删除以下所有数据：</p>
+                <ul className="list-disc list-inside text-sm space-y-1">
+                  <li>孩子的登录账号</li>
+                  <li>所有学习记录</li>
+                  <li>所有打卡记录</li>
+                  <li>宠物信息和积分</li>
+                </ul>
+                <p className="pt-2">
+                  请输入孩子姓名 <strong>"{deleteTarget?.name}"</strong> 以确认删除：
+                </p>
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-2">
+              <Input
+                placeholder="请输入孩子姓名"
+                value={deleteConfirmName}
+                onChange={(e) => setDeleteConfirmName(e.target.value)}
+              />
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setDeleteTarget(null);
+                  setDeleteConfirmName("");
+                }}
+              >
+                取消
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={handleDeleteChild}
+                disabled={deleteConfirmName.trim() !== deleteTarget?.name || deleteLoading}
+              >
+                {deleteLoading ? "删除中..." : "确认删除"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </DesktopLayout>
   );
