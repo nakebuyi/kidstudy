@@ -21,6 +21,7 @@ interface ChildContextType {
   setCurrentChild: (childId: string) => void;
   refreshChild: () => Promise<void>;
   refreshChildren: () => Promise<void>;
+  removeChild: (childId: string) => Promise<void>;
 }
 
 const ChildContext = createContext<ChildContextType>({
@@ -29,6 +30,7 @@ const ChildContext = createContext<ChildContextType>({
   setCurrentChild: () => {},
   refreshChild: async () => {},
   refreshChildren: async () => {},
+  removeChild: async () => {},
 });
 
 export function ChildProvider({ children }: { children: ReactNode }) {
@@ -73,6 +75,25 @@ export function ChildProvider({ children }: { children: ReactNode }) {
     await fetchChild(childId);
   }, [update, fetchChild, session]);
 
+  const removeChild = useCallback(async (childId: string) => {
+    const res = await fetch(`/api/children/${childId}`, { method: "DELETE" });
+    if (!res.ok) return;
+
+    // 乐观更新：从本地列表中移除
+    setChildrenList(prev => prev.filter(c => c.id !== childId));
+
+    // 若删除的是当前选中的孩子，需要切换
+    const currentChildId = (session as any)?.currentChildId;
+    if (currentChildId === childId) {
+      const updated = await fetchChildren();
+      if (updated.length > 0) {
+        await setCurrentChild(updated[0].id);
+      } else {
+        setChild(null);
+      }
+    }
+  }, [fetchChildren, setCurrentChild, session]);
+
   useEffect(() => {
     if (role === "parent") {
       fetchChildren();
@@ -90,7 +111,7 @@ export function ChildProvider({ children }: { children: ReactNode }) {
 
   return (
     <ChildContext.Provider
-      value={{ child, children: childrenList, setCurrentChild, refreshChild, refreshChildren }}
+      value={{ child, children: childrenList, setCurrentChild, refreshChild, refreshChildren, removeChild }}
     >
       {children}
     </ChildContext.Provider>
