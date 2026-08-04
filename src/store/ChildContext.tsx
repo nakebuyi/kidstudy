@@ -77,7 +77,16 @@ export function ChildProvider({ children }: { children: ReactNode }) {
 
   const removeChild = useCallback(async (childId: string) => {
     const res = await fetch(`/api/children/${childId}`, { method: "DELETE" });
-    if (!res.ok) return;
+    if (!res.ok) {
+      let errorMsg = "删除失败";
+      try {
+        const data = await res.json();
+        if (data?.error) errorMsg = data.error;
+      } catch {
+        // response body not JSON; keep default message
+      }
+      throw new Error(errorMsg);
+    }
 
     // 乐观更新：从本地列表中移除
     setChildrenList(prev => prev.filter(c => c.id !== childId));
@@ -90,9 +99,10 @@ export function ChildProvider({ children }: { children: ReactNode }) {
         await setCurrentChild(updated[0].id);
       } else {
         setChild(null);
+        await update({ currentChildId: null });
       }
     }
-  }, [fetchChildren, setCurrentChild, session]);
+  }, [fetchChildren, setCurrentChild, update, session]);
 
   useEffect(() => {
     if (role === "parent") {

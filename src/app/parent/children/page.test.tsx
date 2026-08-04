@@ -1,7 +1,7 @@
 /// @vitest-environment jsdom
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ChildrenPage from "./page";
 
@@ -242,5 +242,30 @@ describe("ChildrenPage delete", () => {
     await userEvent.click(screen.getByText("确认删除"));
 
     expect(mockRemoveChild).toHaveBeenCalledWith("c1");
+  });
+
+  it("shows error message and keeps dialog open when deletion fails", async () => {
+    const mockRemoveChild = vi.fn().mockRejectedValue(new Error("删除失败：存在关联数据"));
+    mockUseChild.mockReturnValue({
+      child: baseChild,
+      children: [{ ...baseChild, id: "c1", name: "小明" }],
+      setCurrentChild: vi.fn(),
+      refreshChildren: vi.fn(),
+      removeChild: mockRemoveChild,
+    });
+
+    render(<ChildrenPage />);
+    await userEvent.click(screen.getByText("🗑"));
+
+    const input = screen.getByPlaceholderText(/请输入孩子姓名/);
+    await userEvent.type(input, "小明");
+
+    await userEvent.click(screen.getByText("确认删除"));
+
+    await waitFor(() => {
+      expect(screen.getByText(/删除失败：存在关联数据/)).toBeInTheDocument();
+    });
+    // Dialog should remain open
+    expect(screen.getByText(/确认删除孩子/)).toBeInTheDocument();
   });
 });

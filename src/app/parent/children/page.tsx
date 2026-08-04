@@ -34,16 +34,18 @@ export default function ChildrenPage() {
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
   const [deleteConfirmName, setDeleteConfirmName] = useState("");
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   const handleDeleteChild = async () => {
     if (!deleteTarget || deleteConfirmName.trim() !== deleteTarget.name) return;
     setDeleteLoading(true);
+    setDeleteError("");
     try {
       await removeChild(deleteTarget.id);
       setDeleteTarget(null);
       setDeleteConfirmName("");
-    } catch {
-      // 错误已在 removeChild 中处理
+    } catch (err) {
+      setDeleteError(err instanceof Error ? err.message : "删除失败，请稍后重试");
     } finally {
       setDeleteLoading(false);
     }
@@ -269,7 +271,7 @@ export default function ChildrenPage() {
         )}
 
         {/* 删除确认对话框 */}
-        <Dialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) { setDeleteTarget(null); setDeleteConfirmName(""); } }}>
+        <Dialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) { setDeleteTarget(null); setDeleteConfirmName(""); setDeleteError(""); } }}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>⚠️ 确认删除孩子</DialogTitle>
@@ -292,6 +294,9 @@ export default function ChildrenPage() {
                 value={deleteConfirmName}
                 onChange={(e) => setDeleteConfirmName(e.target.value)}
               />
+              {deleteError && (
+                <p className="text-sm text-red-600 font-medium">{deleteError}</p>
+              )}
             </div>
             <DialogFooter>
               <Button
@@ -299,6 +304,7 @@ export default function ChildrenPage() {
                 onClick={() => {
                   setDeleteTarget(null);
                   setDeleteConfirmName("");
+                  setDeleteError("");
                 }}
               >
                 取消

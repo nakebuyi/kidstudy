@@ -219,9 +219,10 @@ describe("removeChild", () => {
 
     expect(result.current.children).toHaveLength(0);
     expect(result.current.child).toBeNull();
+    expect(mockUpdate).toHaveBeenCalledWith({ currentChildId: null });
   });
 
-  it("does not modify state when DELETE fails", async () => {
+  it("throws and does not modify state when DELETE fails", async () => {
     mockUseSession.mockReturnValue({
       data: { user: { id: "p1" }, role: "parent", currentChildId: "c1" },
       status: "authenticated",
@@ -234,7 +235,11 @@ describe("removeChild", () => {
 
     vi.mocked(globalThis.fetch).mockImplementation((((url: string, opts?: RequestInit) => {
       if (opts?.method === "DELETE") {
-        return Promise.resolve({ ok: false, status: 500 } as Response);
+        return Promise.resolve({
+          ok: false,
+          status: 500,
+          json: () => Promise.resolve({ error: "服务器内部错误" }),
+        } as Response);
       }
       const u = url as string;
       if (u.includes("?id=")) {
@@ -258,7 +263,7 @@ describe("removeChild", () => {
     });
 
     await act(async () => {
-      await result.current.removeChild("c1");
+      await expect(result.current.removeChild("c1")).rejects.toThrow("服务器内部错误");
     });
 
     // Children list should remain unchanged
