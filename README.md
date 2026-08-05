@@ -7,9 +7,10 @@
 - **框架**：Next.js (App Router) + TypeScript
 - **样式**：Tailwind CSS + shadcn/ui
 - **状态**：React Context + useReducer
-- **数据**：Prisma + SQLite（本地开发）/ Turso（远程）；学习内容为静态 JSON（`content/*.json`）
-- **认证**：NextAuth（用户名密码，家长 / 孩子双角色）
+- **数据**：Prisma + PostgreSQL；学习内容为静态 JSON（`content/*.json`）
+- **认证**：JWT（jose），Web 端用户名密码登录，小程序端微信登录
 - **测试**：Vitest
+- **小程序**：Taro 4 + NutUI（微信小程序，`/miniprogram`）
 
 ## 快速开始
 
@@ -62,12 +63,37 @@ npm run lint      # eslint
 public/audio/          # 预生成朗读音频（en / zh）
 content/*.json         # 学习内容（识字/拼音/英语/算数/古诗）
 scripts/               # 音频生成脚本
+shared/                # 共享类型定义和常量（Web + 小程序共用）
+miniprogram/           # 微信小程序（Taro 4 + NutUI）
 src/app/               # Next.js App Router 页面（dashboard / learning / games / parent）
 src/components/        # UI、布局、学习、游戏组件
 src/lib/               # 工具、内容加载、打卡、积分、音频映射
 src/store/             # React Context（认证、孩子、学习状态）
 ```
 
+## 微信小程序
+
+本项目同时支持微信小程序，使用 Taro 框架开发。
+
+```bash
+cd miniprogram
+npm install
+npx taro build --type weapp --watch
+```
+
+然后在微信开发者工具中打开 `miniprogram/dist/` 目录。
+
+### 后端环境变量
+
+```env
+DATABASE_URL="postgresql://kidstudy:kidstudy123@localhost:5432/kidstudy"
+JWT_SECRET="your-jwt-secret"
+WECHAT_APPID="your-wechat-appid"
+WECHAT_SECRET="your-wechat-app-secret"
+```
+
+详见 [miniprogram/README.md](./miniprogram/README.md)。
+
 ## Deploy on Vercel
 
-本项目可部署到 [Vercel](https://vercel.com)。请确保在部署环境配置 Prisma 数据库连接（`DATABASE_URL` 或 `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`）及 `NEXTAUTH_SECRET` / `NEXTAUTH_URL`。
+本项目可部署到 [Vercel](https://vercel.com)。请确保在部署环境配置 PostgreSQL 数据库连接（`DATABASE_URL`）及 `JWT_SECRET`、`WECHAT_APPID`、`WECHAT_SECRET`。
