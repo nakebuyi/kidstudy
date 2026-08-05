@@ -1,12 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
-const adapter = new PrismaLibSql({
-  url: process.env.TURSO_DATABASE_URL ?? "file:./dev.db",
-  authToken: process.env.TURSO_AUTH_TOKEN,
-});
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
 export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter });
 

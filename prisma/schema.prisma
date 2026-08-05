@@ -1,34 +1,38 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model Parent {
-  id           String   @id @default(uuid())
-  username     String   @unique
-  passwordHash String
-  nickname     String   @default("")
-  children     Child[]
-  createdAt    DateTime @default(now())
+  id             String   @id @default(uuid())
+  username       String   @unique
+  passwordHash   String
+  nickname       String   @default("")
+  wechatOpenId   String?  @unique
+  wechatAvatar   String?  @default("")
+  wechatNickname String?  @default("")
+  role           String   @default("PARENT")
+  pin            String?  @default("1234")
+  children       Child[]
+  createdAt      DateTime @default(now())
 }
 
 model Child {
-  id            String           @id @default(uuid())
-  parentId      String
-  parent        Parent           @relation(fields: [parentId], references: [id], onDelete: Cascade)
-  name          String
-  avatar        String           @default("👦")
-  points        Int              @default(0)
-  streak        Int              @default(0)
-  maxStreak     Int              @default(0)
-  totalCheckIns Int              @default(0)
-  pet           String           @default("{\"type\":\"cat\",\"name\":\"小咪\",\"level\":1,\"mood\":\"normal\"}")
-  createdAt     DateTime         @default(now())
-  account       ChildAccount?
+  id             String           @id @default(uuid())
+  parentId       String
+  parent         Parent           @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  name           String
+  avatar         String           @default("👦")
+  points         Int              @default(0)
+  streak         Int              @default(0)
+  maxStreak      Int              @default(0)
+  totalCheckIns  Int              @default(0)
+  pet            String           @default("{\"type\":\"cat\",\"name\":\"小咪\",\"level\":1,\"mood\":\"normal\"}")
+  createdAt      DateTime         @default(now())
+  account        ChildAccount?
   learningRecords LearningRecord[]
   checkInRecords   CheckInRecord[]
 }
@@ -88,7 +92,7 @@ model LearningContent {
   subject   String
   level     Int
   order     Int
-  data      String // JSON string: full subject-specific item payload
+  data      String
   createdAt DateTime @default(now())
 
   @@index([subject, level])
