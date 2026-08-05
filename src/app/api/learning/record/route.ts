@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { getAuthorizedChild } from "@/lib/child-access";
 import {
   recordQuizAnswer,
@@ -14,8 +14,8 @@ import type { Subject } from "@/types";
  * 返回某科目某日的答题对错结果。
  */
 export async function GET(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 
@@ -44,8 +44,8 @@ export async function GET(req: Request) {
  * 实时记录一道测试题的作答对错。
  */
 export async function POST(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 

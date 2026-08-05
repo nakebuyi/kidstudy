@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { getAuthorizedChild } from "@/lib/child-access";
 import { getDailyContent } from "@/lib/daily-content";
@@ -18,8 +18,8 @@ export async function GET(
   req: Request,
   { params }: { params: Promise<{ subject: string }> }
 ) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 

@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -6,11 +6,11 @@ export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
-  if ((session as any).role !== "parent") {
+  if (session.role !== "parent") {
     return NextResponse.json({ error: "无权操作" }, { status: 403 });
   }
 

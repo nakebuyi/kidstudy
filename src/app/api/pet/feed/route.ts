@@ -1,12 +1,12 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { getAuthorizedChild } from "@/lib/child-access";
 import { spendPoints } from "@/lib/points";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 

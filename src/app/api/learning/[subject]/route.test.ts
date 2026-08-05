@@ -1,12 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { GET } from "./route";
 
-// Mock auth — returns the callback with a controllable session
-const mockAuth = vi.fn();
-vi.mock("@/lib/auth", () => ({
-  auth: () => mockAuth(),
-}));
-
 // Mock child-access
 const mockGetAuthorizedChild = vi.fn();
 vi.mock("@/lib/child-access", () => ({
@@ -28,10 +22,17 @@ const learningContent = prisma.learningContent as unknown as {
   findMany: ReturnType<typeof vi.fn>;
 };
 
-function makeReq(childId: string, date?: string): Request {
+const AUTH_HEADERS: Record<string, string> = {
+  "x-user-id": "p1",
+  "x-user-role": "PARENT",
+};
+
+function makeReq(childId: string, date?: string, auth: Record<string, string> = AUTH_HEADERS): Request {
   const qs = new URLSearchParams({ childId });
   if (date) qs.set("date", date);
-  return new Request(`http://localhost/api/learning/literacy?${qs}`);
+  return new Request(`http://localhost/api/learning/literacy?${qs}`, {
+    headers: auth,
+  });
 }
 
 const sampleRow = {
@@ -48,34 +49,29 @@ beforeEach(() => {
 
 describe("GET /api/learning/[subject]", () => {
   it("returns 401 without session", async () => {
-    mockAuth.mockResolvedValue(null);
-    const res = await GET(makeReq("c1"), { params: Promise.resolve({ subject: "literacy" }) });
+    const res = await GET(makeReq("c1", undefined, {}), { params: Promise.resolve({ subject: "literacy" }) });
     expect(res.status).toBe(401);
   });
 
   it("returns 400 for unknown subject", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await GET(makeReq("c1"), { params: Promise.resolve({ subject: "science" }) });
     expect(res.status).toBe(400);
   });
 
   it("returns 400 when childId is missing", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
-    const res = await GET(new Request("http://localhost/api/learning/literacy"), {
+    const res = await GET(new Request("http://localhost/api/learning/literacy", { headers: AUTH_HEADERS }), {
       params: Promise.resolve({ subject: "literacy" }),
     });
     expect(res.status).toBe(400);
   });
 
   it("returns 404 when child is not authorized", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue(null);
     const res = await GET(makeReq("c1"), { params: Promise.resolve({ subject: "literacy" }) });
     expect(res.status).toBe(404);
   });
 
   it("returns 20 items for a full pool", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue({ id: "c1" });
     // 30 rows of literacy content
     const rows = Array.from({ length: 30 }, (_, i) => ({
@@ -100,7 +96,6 @@ describe("GET /api/learning/[subject]", () => {
   });
 
   it("returns all items when pool is smaller than 20", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue({ id: "c1" });
     const rows = Array.from({ length: 3 }, (_, i) => ({
       ...sampleRow,
@@ -119,7 +114,6 @@ describe("GET /api/learning/[subject]", () => {
   });
 
   it("queries with stable orderBy", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue({ id: "c1" });
     mockFindMany.mockResolvedValue([]);
 

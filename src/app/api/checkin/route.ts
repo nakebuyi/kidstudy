@@ -1,11 +1,11 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { getOrCreateTodayRecord, completeTask, getTodayStatus } from "@/lib/checkin";
 import { getAuthorizedChild } from "@/lib/child-access";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 
@@ -27,8 +27,8 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 

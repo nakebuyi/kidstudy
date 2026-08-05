@@ -1,24 +1,21 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
 
-  const role = (session as any)?.role as string | undefined;
   const { searchParams } = new URL(req.url);
   const childId = searchParams.get("id");
 
   if (childId) {
-    // Child accounts may only fetch their own child record
-    if (role === "child") {
-      const account = await prisma.childAccount.findUnique({
-        where: { id: session.user.id },
-      });
-      if (!account || account.childId !== childId) {
+    // Child users may only fetch their own child record (their JWT userId is
+    // their own childId); parents may fetch any child they own.
+    if (session.role === "child") {
+      if (session.user.id !== childId) {
         return NextResponse.json({ error: "孩子不存在" }, { status: 404 });
       }
       const child = await prisma.child.findUnique({ where: { id: childId } });
@@ -38,7 +35,7 @@ export async function GET(req: Request) {
   }
 
   // Only parents may list all their children
-  if (role === "child") {
+  if (session.role === "child") {
     return NextResponse.json({ error: "无权操作" }, { status: 403 });
   }
 
@@ -56,11 +53,11 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const session = await auth();
-  if (!session?.user?.id) {
+  const session = sessionFromRequest(req);
+  if (!session) {
     return NextResponse.json({ error: "未登录" }, { status: 401 });
   }
-  if ((session as any).role !== "parent") {
+  if (session.role !== "parent") {
     return NextResponse.json({ error: "无权操作" }, { status: 403 });
   }
 

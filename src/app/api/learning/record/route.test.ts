@@ -1,12 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { GET, POST } from "./route";
 
-// Mock auth
-const mockAuth = vi.fn();
-vi.mock("@/lib/auth", () => ({
-  auth: () => mockAuth(),
-}));
-
 // Mock child-access
 const mockGetAuthorizedChild = vi.fn();
 vi.mock("@/lib/child-access", () => ({
@@ -37,56 +31,65 @@ beforeEach(() => {
   vi.resetAllMocks();
 });
 
-function getReq(childId?: string, subject?: string, date?: string): Request {
+const AUTH_HEADERS: Record<string, string> = {
+  "x-user-id": "p1",
+  "x-user-role": "PARENT",
+};
+
+function getReq(
+  childId?: string,
+  subject?: string,
+  date?: string,
+  auth: Record<string, string> = AUTH_HEADERS
+): Request {
   const qs = new URLSearchParams();
   if (childId) qs.set("childId", childId);
   if (subject) qs.set("subject", subject);
   if (date) qs.set("date", date);
-  return new Request(`http://localhost/api/learning/record?${qs}`);
+  return new Request(`http://localhost/api/learning/record?${qs}`, {
+    headers: auth,
+  });
 }
 
-function postReq(body: unknown): Request {
+function postReq(
+  body: unknown,
+  auth: Record<string, string> = AUTH_HEADERS
+): Request {
   return new Request("http://localhost/api/learning/record", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...auth },
     body: JSON.stringify(body),
   });
 }
 
 describe("GET /api/learning/record", () => {
   it("returns 401 without session", async () => {
-    mockAuth.mockResolvedValue(null);
-    const res = await GET(getReq("c1", "literacy"));
+    const res = await GET(getReq("c1", "literacy", undefined, {}));
     expect(res.status).toBe(401);
   });
 
   it("returns 400 when subject missing", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await GET(getReq("c1"));
     expect(res.status).toBe(400);
   });
 
   it("returns 400 when childId missing", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await GET(getReq(undefined, "literacy"));
     expect(res.status).toBe(400);
   });
 
   it("returns 400 for invalid subject", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await GET(getReq("c1", "science"));
     expect(res.status).toBe(400);
   });
 
   it("returns 404 when child not authorized", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue(null);
     const res = await GET(getReq("c1", "literacy"));
     expect(res.status).toBe(404);
   });
 
   it("returns results for a valid request", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue({ id: "c1" });
     mockFindMany.mockResolvedValue([
       { id: "r1", charId: "l1", score: 1, createdAt: new Date() },
@@ -110,38 +113,32 @@ describe("GET /api/learning/record", () => {
 
 describe("POST /api/learning/record", () => {
   it("returns 401 without session", async () => {
-    mockAuth.mockResolvedValue(null);
-    const res = await POST(postReq({ childId: "c1", subject: "literacy", charId: "l1", correct: true }));
+    const res = await POST(postReq({ childId: "c1", subject: "literacy", charId: "l1", correct: true }, {}));
     expect(res.status).toBe(401);
   });
 
   it("returns 400 when fields missing", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await POST(postReq({ childId: "c1", correct: true }));
     expect(res.status).toBe(400);
   });
 
   it("returns 400 when correct is not boolean", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await POST(postReq({ childId: "c1", subject: "literacy", charId: "l1", correct: "yes" }));
     expect(res.status).toBe(400);
   });
 
   it("returns 400 for invalid subject", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     const res = await POST(postReq({ childId: "c1", subject: "science", charId: "x1", correct: true }));
     expect(res.status).toBe(400);
   });
 
   it("returns 404 when child not authorized", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue(null);
     const res = await POST(postReq({ childId: "c1", subject: "literacy", charId: "l1", correct: true }));
     expect(res.status).toBe(404);
   });
 
   it("returns 201 and creates a record for correct: true", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue({ id: "c1" });
     mockCreate.mockResolvedValue({ id: "r1" });
 
@@ -163,7 +160,6 @@ describe("POST /api/learning/record", () => {
   });
 
   it("creates score 0 / accuracy 0 for correct: false", async () => {
-    mockAuth.mockResolvedValue({ user: { id: "p1" } });
     mockGetAuthorizedChild.mockResolvedValue({ id: "c1" });
     mockCreate.mockResolvedValue({ id: "r2" });
 

@@ -1,15 +1,15 @@
-import { auth } from "@/lib/auth";
+import { sessionFromRequest } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-// POST — Create child login account
+// POST - Create child login account
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-  if (!session?.user?.id || (session as any).role !== "parent") {
+  const session = sessionFromRequest(req);
+  if (!session || session.role !== "parent") {
     return NextResponse.json({ error: "无权操作" }, { status: 403 });
   }
 
@@ -60,13 +60,13 @@ export async function POST(
   return NextResponse.json({ id: account.id, username: account.username, nickname: account.nickname }, { status: 201 });
 }
 
-// DELETE — Remove child login account
+// DELETE - Remove child login account
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-  if (!session?.user?.id || (session as any).role !== "parent") {
+  const session = sessionFromRequest(req);
+  if (!session || session.role !== "parent") {
     return NextResponse.json({ error: "无权操作" }, { status: 403 });
   }
 
