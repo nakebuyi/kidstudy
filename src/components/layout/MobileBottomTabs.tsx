@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/store/AuthContext";
 
 const tabs = [
   { key: "dashboard", label: "工作台", icon: "🏠", href: "/dashboard" },
@@ -13,10 +13,10 @@ const tabs = [
 
 export function MobileBottomTabs() {
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const role = (session as any)?.role as string | undefined;
+  const { user } = useAuth();
+  const role = user?.role;
 
-  const visibleTabs = role === "parent" ? tabs : tabs.filter((t) => t.key !== "parent");
+  const visibleTabs = role === "PARENT" ? tabs : tabs.filter((t) => t.key !== "parent");
 
   return (
     <nav className="h-14 border-t bg-white flex items-center justify-around shrink-0">

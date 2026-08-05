@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/store/AuthContext";
 import { useChild } from "@/store/ChildContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -68,8 +68,8 @@ interface CheckInStatus {
 
 export default function DashboardPage() {
   const { child } = useChild();
-  const { data: session } = useSession();
-  const displayName = (session as any)?.nickname || child?.name || "";
+  const { user } = useAuth();
+  const displayName = user?.nickname || child?.name || "";
   const [checkInStatus, setCheckInStatus] = useState<CheckInStatus | null>(null);
 
   useEffect(() => {

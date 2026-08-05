@@ -27,12 +27,10 @@ vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname(),
 }));
 
-// Mock next-auth/react
-const mockSignOut = vi.fn();
-const mockUseSession = vi.fn();
-vi.mock("next-auth/react", () => ({
-  signOut: (...args: unknown[]) => mockSignOut(...args),
-  useSession: () => mockUseSession(),
+// Mock @/store/AuthContext
+const mockUseAuth = vi.fn();
+vi.mock("@/store/AuthContext", () => ({
+  useAuth: () => mockUseAuth(),
 }));
 
 // Mock @/store/ChildContext
@@ -81,12 +79,14 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
 beforeEach(() => {
   vi.clearAllMocks();
   mockUseChild.mockReturnValue({ child: null });
+  mockUseAuth.mockReturnValue({ user: null, logout: vi.fn() });
 });
 
 describe("TopNav", () => {
   it("does not render 家长中心 for child role", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "c1" }, role: "child" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "c1", role: "CHILD" },
+      logout: vi.fn(),
     });
 
     render(<TopNav />);
@@ -94,8 +94,9 @@ describe("TopNav", () => {
   });
 
   it("renders 家长中心 for parent role", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "p1", role: "PARENT" },
+      logout: vi.fn(),
     });
 
     render(<TopNav />);
@@ -105,8 +106,9 @@ describe("TopNav", () => {
   });
 
   it("renders 退出 button", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "p1", role: "PARENT" },
+      logout: vi.fn(),
     });
 
     render(<TopNav />);
@@ -114,8 +116,9 @@ describe("TopNav", () => {
   });
 
   it("hides subject tabs for parent role", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "p1", role: "PARENT" },
+      logout: vi.fn(),
     });
 
     render(<TopNav />);
@@ -127,8 +130,9 @@ describe("TopNav", () => {
   });
 
   it("shows subject tabs for child role", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "c1" }, role: "child" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "c1", role: "CHILD" },
+      logout: vi.fn(),
     });
 
     render(<TopNav />);

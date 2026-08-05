@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/store/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function LoginForm() {
   const router = useRouter();
+  const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,20 +21,16 @@ export function LoginForm() {
     setLoading(true);
     setError("");
 
-    const result = await signIn("credentials", {
-      username,
-      password,
-      redirect: false,
-    });
+    const result = await login(username, password);
 
-    if (result?.error) {
-      setError("用户名或密码错误");
+    if (!result.success) {
+      setError(result.error || "用户名或密码错误");
       setLoading(false);
     } else {
-      // 家长直接进家长中心；孩子进工作台
-      const session = await fetch("/api/auth/session").then((r) => r.json());
-      const role = (session as any)?.role;
-      router.push(role === "parent" ? "/parent" : "/dashboard");
+      // login() persists user to localStorage; read role to route
+      const storedUser = JSON.parse(localStorage.getItem("user") || "null");
+      const role = storedUser?.role;
+      router.push(role === "PARENT" ? "/parent" : "/dashboard");
       router.refresh();
     }
   };

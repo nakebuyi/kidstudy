@@ -4,11 +4,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
 import { ChildProvider, useChild } from "./ChildContext";
 
-const mockUpdate = vi.fn();
-const mockUseSession = vi.fn();
+const mockSetCurrentChildId = vi.fn();
+const mockUseAuth = vi.fn();
 
-vi.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
+vi.mock("@/store/AuthContext", () => ({
+  useAuth: () => mockUseAuth(),
 }));
 
 // Shared child data for fetch responses
@@ -17,7 +17,9 @@ const mockChildData = {
   streak: 2, maxStreak: 5, totalCheckIns: 3, pet: "{}",
 };
 
-// fetch mock that routes: /api/children (no query) → list, /api/children?id= → single child
+const AUTH_HEADERS = { Authorization: "Bearer tok" };
+
+// fetch mock that routes: /api/children (no query) -> list, /api/children?id= -> single child
 function mockFetch(childData: unknown, listData?: unknown) {
   vi.mocked(globalThis.fetch).mockImplementation(((url: string) => {
     if ((url as string).includes("?id=")) {
@@ -36,18 +38,17 @@ function mockFetch(childData: unknown, listData?: unknown) {
 beforeEach(() => {
   vi.clearAllMocks();
   vi.stubGlobal("fetch", vi.fn());
+  mockUseAuth.mockReturnValue({
+    user: { id: "p1", role: "PARENT", currentChildId: "c1" },
+    token: "tok",
+    setCurrentChildId: mockSetCurrentChildId,
+  });
 });
 
-describe("ChildContext — parent", () => {
+describe("ChildContext - parent", () => {
   const wrapper = ChildProvider;
 
   it("fetches children list and current child for parent", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
-    });
-
     // Both fetchChildren and fetchChild return the same data
     mockFetch(mockChildData, [mockChildData]);
 
@@ -62,31 +63,25 @@ describe("ChildContext — parent", () => {
     expect(result.current.child).toEqual(expect.objectContaining({ name: "小明" }));
   });
 
-  it("setCurrentChild calls update and fetches new child", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
-    });
-
+  it("setCurrentChild calls setCurrentChildId and fetches new child", async () => {
     mockFetch(mockChildData, [mockChildData]);
 
     const { result } = renderHook(() => useChild(), { wrapper });
 
     await result.current.setCurrentChild("c2");
 
-    expect(mockUpdate).toHaveBeenCalledWith({ currentChildId: "c2" });
+    expect(mockSetCurrentChildId).toHaveBeenCalledWith("c2");
   });
 });
 
-describe("ChildContext — child", () => {
+describe("ChildContext - child", () => {
   const wrapper = ChildProvider;
 
   it("fetches only own record, children empty", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "account-1" }, role: "child", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
+    mockUseAuth.mockReturnValue({
+      user: { id: "account-1", role: "CHILD", currentChildId: "c1" },
+      token: "tok",
+      setCurrentChildId: mockSetCurrentChildId,
     });
 
     mockFetch(mockChildData);
@@ -101,10 +96,10 @@ describe("ChildContext — child", () => {
   });
 
   it("setCurrentChild is a no-op for child", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "account-1" }, role: "child", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
+    mockUseAuth.mockReturnValue({
+      user: { id: "account-1", role: "CHILD", currentChildId: "c1" },
+      token: "tok",
+      setCurrentChildId: mockSetCurrentChildId,
     });
 
     mockFetch(mockChildData);
@@ -113,7 +108,7 @@ describe("ChildContext — child", () => {
 
     await result.current.setCurrentChild("c2");
 
-    expect(mockUpdate).not.toHaveBeenCalled();
+    expect(mockSetCurrentChildId).not.toHaveBeenCalled();
   });
 });
 
@@ -121,12 +116,6 @@ describe("removeChild", () => {
   const wrapper = ChildProvider;
 
   it("removes child from list and switches to first remaining child when current is deleted", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
-    });
-
     const initialList = [
       { id: "c1", name: "小明", avatar: "👦", points: 10, streak: 2, pet: "{}" },
       { id: "c2", name: "小红", avatar: "👧", points: 20, streak: 3, pet: "{}" },
@@ -169,18 +158,13 @@ describe("removeChild", () => {
 
     expect(globalThis.fetch).toHaveBeenCalledWith("/api/children/c1", {
       method: "DELETE",
+      headers: AUTH_HEADERS,
     });
     expect(result.current.children).toHaveLength(1);
     expect(result.current.children[0].id).toBe("c2");
   });
 
   it("sets child to null when deleting the only child", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
-    });
-
     const initialList = [
       { id: "c1", name: "小明", avatar: "👦", points: 10, streak: 2, pet: "{}" },
     ];
@@ -219,16 +203,10 @@ describe("removeChild", () => {
 
     expect(result.current.children).toHaveLength(0);
     expect(result.current.child).toBeNull();
-    expect(mockUpdate).toHaveBeenCalledWith({ currentChildId: null });
+    expect(mockSetCurrentChildId).toHaveBeenCalledWith(null);
   });
 
   it("throws and does not modify state when DELETE fails", async () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent", currentChildId: "c1" },
-      status: "authenticated",
-      update: mockUpdate,
-    });
-
     const initialList = [
       { id: "c1", name: "小明", avatar: "👦", points: 10, streak: 2, pet: "{}" },
     ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/store/AuthContext";
 import { useChild } from "@/store/ChildContext";
 import { PetDisplay } from "@/components/pet/PetDisplay";
 import { PointsDisplay } from "@/components/dashboard/PointsDisplay";
@@ -14,8 +14,8 @@ import {
 import { ChevronDown } from "lucide-react";
 
 export function Sidebar() {
-  const { data: session } = useSession();
-  const role = (session as any)?.role as string | undefined;
+  const { user } = useAuth();
+  const role = user?.role;
   const { child, children, setCurrentChild } = useChild();
 
   if (!child) return null;
@@ -25,7 +25,7 @@ export function Sidebar() {
   return (
     <aside className="w-[240px] border-r bg-white flex flex-col items-center py-6 px-4 gap-4 shrink-0">
       {/* Child Selector */}
-      {role === "parent" && (
+      {role === "PARENT" && (
         <DropdownMenu>
           <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
             <span className="text-lg">{child.avatar}</span>
@@ -54,10 +54,10 @@ export function Sidebar() {
         </DropdownMenu>
       )}
 
-      {role === "child" && (
+      {role === "CHILD" && (
         <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
           <span className="text-lg">{child.avatar}</span>
-          {(session as any)?.nickname || child.name}
+          {user?.nickname || child.name}
         </div>
       )}
 

@@ -4,10 +4,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Sidebar } from "./Sidebar";
 
-// Mock next-auth/react
-const mockUseSession = vi.fn();
-vi.mock("next-auth/react", () => ({
-  useSession: () => mockUseSession(),
+// Mock @/store/AuthContext
+const mockUseAuth = vi.fn();
+vi.mock("@/store/AuthContext", () => ({
+  useAuth: () => mockUseAuth(),
 }));
 
 // Mock @/store/ChildContext
@@ -76,10 +76,10 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-describe("Sidebar — child", () => {
+describe("Sidebar - child", () => {
   it("renders static nickname for child role", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "account-1" }, role: "child", nickname: "小明昵称" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "account-1", role: "CHILD", nickname: "小明昵称" },
     });
     mockUseChild.mockReturnValue({
       child: mockChild,
@@ -92,8 +92,8 @@ describe("Sidebar — child", () => {
   });
 
   it("falls back to child.name when no nickname", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "account-1" }, role: "child" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "account-1", role: "CHILD", nickname: "" },
     });
     mockUseChild.mockReturnValue({
       child: mockChild,
@@ -107,8 +107,8 @@ describe("Sidebar — child", () => {
 
   it("does not render child switcher for child role", () => {
     const setCurrentChild = vi.fn();
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "account-1" }, role: "child", nickname: "小明昵称" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "account-1", role: "CHILD", nickname: "小明昵称" },
     });
     mockUseChild.mockReturnValue({
       child: mockChild,
@@ -122,11 +122,11 @@ describe("Sidebar — child", () => {
   });
 });
 
-describe("Sidebar — parent", () => {
+describe("Sidebar - parent", () => {
   it("renders child switcher for parent role", () => {
     const setCurrentChild = vi.fn();
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "p1", role: "PARENT" },
     });
     mockUseChild.mockReturnValue({
       child: mockChild,
@@ -141,8 +141,8 @@ describe("Sidebar — parent", () => {
   });
 
   it("renders pet, points, and streak", () => {
-    mockUseSession.mockReturnValue({
-      data: { user: { id: "p1" }, role: "parent" },
+    mockUseAuth.mockReturnValue({
+      user: { id: "p1", role: "PARENT" },
     });
     mockUseChild.mockReturnValue({
       child: mockChild,

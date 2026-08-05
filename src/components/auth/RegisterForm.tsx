@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/store/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function RegisterForm() {
   const router = useRouter();
+  const { register, login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
@@ -21,24 +22,22 @@ export function RegisterForm() {
     setLoading(true);
     setError("");
 
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password, nickname }),
-    });
+    const result = await register(username, password, nickname);
 
-    if (!res.ok) {
-      const data = await res.json();
-      setError(data.error || "注册失败");
+    if (!result.success) {
+      setError(result.error || "注册失败");
       setLoading(false);
       return;
     }
 
     // 自动登录（注册的是家长账号，直接进家长中心）
-    const result = await signIn("credentials", { username, password, redirect: false });
-    if (result?.ok) {
+    const loginResult = await login(username, password);
+    if (loginResult.success) {
       router.push("/parent");
       router.refresh();
+    } else {
+      setError("注册成功，但自动登录失败，请手动登录");
+      router.push("/login");
     }
   };
 

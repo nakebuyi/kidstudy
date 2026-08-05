@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react";
-import { useSession } from "next-auth/react";
+import { useAuth } from "./AuthContext";
 
 interface Child {
   id: string;
@@ -34,90 +34,87 @@ const ChildContext = createContext<ChildContextType>({
 });
 
 export function ChildProvider({ children }: { children: ReactNode }) {
-  const { data: session, update } = useSession();
+  const { user, token, setCurrentChildId } = useAuth();
   const [child, setChild] = useState<Child | null>(null);
   const [childrenList, setChildrenList] = useState<Child[]>([]);
 
-  const role = (session as any)?.role as string | undefined;
-  const currentChildId = (session as any)?.currentChildId;
+  const role = user?.role;
+  const currentChildId = user?.currentChildId;
+
+  const authHeaders = { Authorization: `Bearer ${token}` };
 
   const fetchChildren = useCallback(async () => {
-    const res = await fetch("/api/children");
+    const res = await fetch("/api/children", { headers: authHeaders });
     if (res.ok) {
       const data = await res.json();
       setChildrenList(data);
       return data;
     }
     return [];
-  }, []);
+  }, [token]);
 
   const fetchChild = useCallback(async (childId: string) => {
-    const res = await fetch(`/api/children?id=${childId}`);
+    const res = await fetch(`/api/children?id=${childId}`, { headers: authHeaders });
     if (res.ok) {
       const data = await res.json();
       setChild(data);
     }
-  }, []);
+  }, [token]);
 
   const refreshChild = useCallback(async () => {
-    const currentChildId = (session as any)?.currentChildId;
     if (currentChildId) await fetchChild(currentChildId);
-  }, [session, fetchChild]);
+  }, [currentChildId, fetchChild]);
 
   const refreshChildren = useCallback(async () => {
     await fetchChildren();
   }, [fetchChildren]);
 
   const setCurrentChild = useCallback(async (childId: string) => {
-    const role = (session as any)?.role;
-    if (role !== "parent") return;  // child accounts cannot switch
-    await update({ currentChildId: childId });
+    if (role !== "PARENT") return;
+    setCurrentChildId(childId);
     await fetchChild(childId);
-  }, [update, fetchChild, session]);
+  }, [role, setCurrentChildId, fetchChild]);
 
   const removeChild = useCallback(async (childId: string) => {
-    const res = await fetch(`/api/children/${childId}`, { method: "DELETE" });
+    const res = await fetch(`/api/children/${childId}`, {
+      method: "DELETE",
+      headers: authHeaders,
+    });
     if (!res.ok) {
       let errorMsg = "删除失败";
       try {
         const data = await res.json();
         if (data?.error) errorMsg = data.error;
-      } catch {
-        // response body not JSON; keep default message
-      }
+      } catch { /* */ }
       throw new Error(errorMsg);
     }
 
-    // 乐观更新：从本地列表中移除
     setChildrenList(prev => prev.filter(c => c.id !== childId));
 
-    // 若删除的是当前选中的孩子，需要切换
-    const currentChildId = (session as any)?.currentChildId;
     if (currentChildId === childId) {
       const updated = await fetchChildren();
       if (updated.length > 0) {
         await setCurrentChild(updated[0].id);
       } else {
         setChild(null);
-        await update({ currentChildId: null });
+        setCurrentChildId(null);
       }
     }
-  }, [fetchChildren, setCurrentChild, update, session]);
+  }, [fetchChildren, setCurrentChild, setCurrentChildId, currentChildId, token]);
 
   useEffect(() => {
-    if (role === "parent") {
+    if (role === "PARENT") {
       fetchChildren();
-    } else if (role === "child" && currentChildId) {
+    } else if (role === "CHILD" && currentChildId) {
       fetchChild(currentChildId);
     }
-  }, [fetchChildren, fetchChild, session, role, currentChildId]);
+  }, [fetchChildren, fetchChild, role, currentChildId]);
 
   useEffect(() => {
-    const currentChildId = (session as any)?.currentChildId;
     if (currentChildId) {
       fetchChild(currentChildId);
     }
-  }, [session, fetchChild]);
+  }, [currentChildId, fetchChild]);
 
   return (
     <ChildContext.Provider
