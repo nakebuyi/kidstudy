@@ -1,16 +1,41 @@
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import "./index.scss";
+
+const SUBJECT_META: Record<string, { name: string; emoji: string; color: string }> = {
+  literacy: { name: "识字", emoji: "📖", color: "#F59E0B" },
+  pinyin: { name: "拼音", emoji: "🔤", color: "#0EA5E9" },
+  english: { name: "英语", emoji: "🌍", color: "#10B981" },
+  math: { name: "算术", emoji: "🧮", color: "#A855F7" },
+  poetry: { name: "古诗词", emoji: "📜", color: "#DC2626" },
+};
 
 export default function Subject() {
   const { subject } = Taro.getCurrentInstance().router?.params || {};
-  const names: Record<string, string> = {
-    literacy: "识字", pinyin: "拼音", english: "英语", math: "算术", poetry: "古诗词",
-  };
+  const meta = SUBJECT_META[subject as string];
+
+  if (!meta) {
+    return (
+      <View className="subject-page">
+        <Text className="subject-placeholder-text">未知科目</Text>
+      </View>
+    );
+  }
 
   return (
-    <View className="p-4">
-      <Text className="text-xl font-bold">{names[subject as string] || "学习"}</Text>
-      <Text className="text-gray-500 mt-4 block">即将上线...</Text>
+    <View className="subject-page">
+      {/* Header */}
+      <View className="subject-header">
+        <Text className="subject-header-emoji">{meta.emoji}</Text>
+        <Text className="subject-header-name">{meta.name}</Text>
+      </View>
+
+      {/* Placeholder — learning content will be built in Phase 5 */}
+      <View className="subject-placeholder">
+        <Text className="subject-placeholder-emoji">🚧</Text>
+        <Text className="subject-placeholder-text">{meta.name}学习内容即将上线</Text>
+        <Text className="subject-placeholder-hint">正在努力建设中...</Text>
+      </View>
     </View>
   );
 }
