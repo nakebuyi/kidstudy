@@ -1,0 +1,108 @@
+.parent-children {
+  min-height: 100vh;
+  background: #F5F5F5;
+  padding: 24px 20px;
+}
+
+/* Back button */
+.parent-back {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 8px 0;
+}
+
+.parent-back-text {
+  font-size: 30px;
+  color: #FF9800;
+  font-weight: bold;
+}
+
+.parent-title {
+  font-size: 40px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24px;
+  display: block;
+}
+
+/* Child card */
+.parent-child-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.parent-child-avatar {
+  font-size: 56px;
+  margin-right: 20px;
+}
+
+.parent-child-info {
+  flex: 1;
+}
+
+.parent-child-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.parent-child-stats {
+  font-size: 24px;
+  color: #A0A0A0;
+  display: block;
+  margin-top: 4px;
+}
+
+.parent-child-arrow {
+  font-size: 32px;
+  color: #CCC;
+}
+
+/* Empty */
+.parent-empty {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.parent-empty-text {
+  font-size: 28px;
+  color: #A0A0A0;
+}
+
+/* Add button */
+.parent-add-btn {
+  margin-top: 24px;
+  background: #FF9800;
+  padding: 28px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.3);
+}
+
+.parent-add-btn-text {
+  font-size: 32px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+/* Loading */
+.parent-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.parent-loading-text {
+  font-size: 28px;
+  color: #A0A0A0;
+}
