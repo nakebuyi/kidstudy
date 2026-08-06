@@ -1,4 +1,5 @@
 import { View, Text } from "@tarojs/components";
+import "./PetDisplay.scss";
 
 const PET_EMOJI: Record<string, string> = {
   cat: "🐱", dog: "🐶", rabbit: "🐰",

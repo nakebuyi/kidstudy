@@ -45,3 +45,27 @@
   flex-wrap: wrap;
   gap: 12px;
 }
+
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.page-loading-text {
+  font-size: 28px;
+  color: #A0A0A0;
+}
+
+.page-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.page-empty-text {
+  font-size: 30px;
+  color: #A0A0A0;
+}
