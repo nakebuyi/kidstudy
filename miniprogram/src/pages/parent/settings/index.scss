@@ -4,6 +4,18 @@
   padding: 20px;
 }
 
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.page-loading-text {
+  font-size: 28px;
+  color: #A0A0A0;
+}
+
 .settings-message {
   background: #E8F5E9;
   border-radius: 12px;
