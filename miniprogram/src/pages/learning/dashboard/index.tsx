@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { api, ChildData } from "../../../services/api";
-import { authStore } from "../../../store/auth";
 import { SubjectCard } from "../../../components/dashboard/SubjectCard";
 import "./index.scss";
 
