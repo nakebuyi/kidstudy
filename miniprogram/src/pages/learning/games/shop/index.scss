@@ -1,0 +1,47 @@
+.shop-page {
+  min-height: 100vh;
+  background: #FFF8F0;
+  padding: 20px;
+}
+
+.shop-header {
+  background: #FFF;
+  border-radius: 16px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.shop-header-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: #FF9800;
+}
+
+.shop-message {
+  background: #FFF3E0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 24px;
+  color: #E65100;
+}
+
+.shop-category {
+  margin-bottom: 24px;
+}
+
+.shop-category-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.shop-items-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
