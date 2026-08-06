@@ -1,44 +1,74 @@
 .subject-page {
   min-height: 100vh;
-  padding: 24px;
+  background: #FFF8F0;
+  padding: 20px;
 }
 
 .subject-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .subject-header-emoji {
-  font-size: 56px;
+  font-size: 40px;
 }
 
 .subject-header-name {
-  font-size: 40px;
+  font-size: 36px;
   font-weight: bold;
   color: #333;
+  flex: 1;
 }
 
-.subject-placeholder {
+.subject-header-progress {
+  font-size: 24px;
+  color: #A0A0A0;
+}
+
+.subject-content {
+  margin-top: 24px;
+}
+
+.subject-empty {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 0;
-  gap: 20px;
+  min-height: 60vh;
+  gap: 16px;
 }
 
-.subject-placeholder-emoji {
+.subject-empty-emoji {
   font-size: 80px;
 }
 
-.subject-placeholder-text {
-  font-size: 28px;
-  color: #A0A0A0;
+.subject-empty-text {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
 }
 
-.subject-placeholder-hint {
-  font-size: 24px;
-  color: #CCC;
+.subject-empty-hint {
+  font-size: 26px;
+  color: #888;
+}
+
+.subject-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+}
+
+.subject-loading-emoji {
+  font-size: 64px;
+}
+
+.subject-loading-text {
+  font-size: 28px;
+  color: #A0A0A0;
 }
