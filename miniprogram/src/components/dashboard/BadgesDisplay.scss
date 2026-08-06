@@ -1,0 +1,60 @@
+.badges-display {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.badges-display-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.badges-display-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.badges-display-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 72px;
+}
+
+.badges-display-item-locked {
+  opacity: 0.4;
+}
+
+.badges-display-icon {
+  font-size: 36px;
+}
+
+.badges-display-icon-locked {
+  filter: grayscale(1);
+}
+
+.badges-display-name {
+  font-size: 20px;
+  color: #555;
+  text-align: center;
+}
+
+.badges-display-name-locked {
+  color: #CCC;
+}
+
+.badges-display-empty {
+  font-size: 24px;
+  color: #A0A0A0;
+  text-align: center;
+  display: block;
+  padding: 16px 0;
+}

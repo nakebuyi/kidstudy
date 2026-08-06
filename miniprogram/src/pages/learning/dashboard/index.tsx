@@ -3,6 +3,7 @@ import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { api, ChildData } from "../../../services/api";
 import { SubjectCard } from "../../../components/dashboard/SubjectCard";
+import { BadgesDisplay } from "../../../components/dashboard/BadgesDisplay";
 import "./index.scss";
 
 const SUBJECTS = [
@@ -142,6 +143,13 @@ export default function Dashboard() {
           />
         ))}
       </View>
+
+      <BadgesDisplay
+        points={child.points}
+        streak={child.streak}
+        maxStreak={child.maxStreak}
+        totalCheckIns={child.totalCheckIns}
+      />
     </View>
   );
 }
