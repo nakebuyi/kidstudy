@@ -1,0 +1,130 @@
+.pet-page {
+  min-height: 100vh;
+  background: #FFF8F0;
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.pet-stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pet-stat-label {
+  font-size: 24px;
+  color: #888;
+}
+
+.pet-stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.pet-stat-bar {
+  height: 8px;
+  background: #F0F0F0;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.pet-stat-bar-fill {
+  height: 100%;
+  background: #FF9800;
+  border-radius: 4px;
+}
+
+.pet-stat-hint {
+  font-size: 22px;
+  color: #A0A0A0;
+  text-align: center;
+  display: block;
+}
+
+.pet-message {
+  background: #FFF3E0;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 24px;
+  color: #E65100;
+}
+
+.pet-food-grid {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pet-food-item {
+  flex: 1;
+  background: #FFF;
+  border: 2px solid #E8E8E8;
+  border-radius: 16px;
+  padding: 20px 12px;
+  text-align: center;
+}
+
+.pet-food-disabled {
+  opacity: 0.5;
+  border-color: #F0F0F0;
+}
+
+.pet-food-name {
+  font-size: 26px;
+  display: block;
+}
+
+.pet-food-desc {
+  font-size: 20px;
+  color: #A0A0A0;
+  display: block;
+  margin: 8px 0;
+}
+
+.pet-food-cost {
+  font-size: 22px;
+  color: #FF9800;
+  display: block;
+}
+
+.pet-points {
+  font-size: 24px;
+  color: #888;
+  text-align: center;
+  display: block;
+}
+
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.page-loading-text {
+  font-size: 28px;
+  color: #A0A0A0;
+}
+
+.page-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.page-empty-text {
+  font-size: 30px;
+  color: #A0A0A0;
+}
