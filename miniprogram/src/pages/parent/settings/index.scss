@@ -1,0 +1,68 @@
+.settings-page {
+  min-height: 100vh;
+  background: #FFF8F0;
+  padding: 20px;
+}
+
+.settings-message {
+  background: #E8F5E9;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 24px;
+  color: #2E7D32;
+}
+
+.settings-section-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.settings-label {
+  font-size: 26px;
+  color: #333;
+}
+
+.settings-input {
+  width: 120px;
+  height: 56px;
+  background: #F5F5F5;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  padding: 0 12px;
+}
+
+.settings-hint {
+  font-size: 22px;
+  color: #A0A0A0;
+  display: block;
+}
+
+.settings-save-btn {
+  background: #FF9800;
+  border-radius: 48px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.3);
+  margin-top: 24px;
+}
+
+.settings-save-btn-text {
+  color: #FFF;
+  font-size: 30px;
+  font-weight: bold;
+}
