@@ -1,0 +1,128 @@
+.report-page {
+  min-height: 100vh;
+  background: #FFF8F0;
+  padding: 20px;
+}
+
+.report-section-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.report-stats-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.report-stat {
+  flex: 1;
+  background: #F9F9F9;
+  border-radius: 16px;
+  padding: 20px 12px;
+  text-align: center;
+}
+
+.report-stat-value {
+  font-size: 36px;
+  font-weight: bold;
+  display: block;
+}
+
+.report-stat-value.orange { color: #FF9800; }
+.report-stat-value.blue { color: #0EA5E9; }
+.report-stat-value.green { color: #10B981; }
+
+.report-stat-label {
+  font-size: 22px;
+  color: #A0A0A0;
+}
+
+.report-progress-row {
+  margin-bottom: 16px;
+}
+
+.report-progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.report-progress-name {
+  font-size: 24px;
+  color: #333;
+}
+
+.report-progress-count {
+  font-size: 22px;
+  color: #A0A0A0;
+}
+
+.report-progress-bar {
+  height: 8px;
+  background: #F0F0F0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.report-progress-fill {
+  height: 100%;
+  background: #FF9800;
+  border-radius: 4px;
+}
+
+.report-weak-alert {
+  background: #FFF3E0;
+  border: 1px solid #FFB74D;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #E65100;
+}
+
+.report-trend-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.report-trend-date {
+  font-size: 22px;
+  color: #888;
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.report-trend-bar {
+  flex: 1;
+  height: 8px;
+  background: #F0F0F0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.report-trend-fill {
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 4px;
+}
+
+.report-trend-count {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  width: 60px;
+  text-align: right;
+}
+
+.report-empty-hint {
+  font-size: 24px;
+  color: #A0A0A0;
+  text-align: center;
+  display: block;
+  padding: 24px 0;
+}
