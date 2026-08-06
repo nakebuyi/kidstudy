@@ -10,12 +10,13 @@ import { Badge } from "@/components/ui/badge";
 import { getPetEmoji, getPetName } from "@/lib/points";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import type { Child } from "@/types";
 
-const petEmojis: Record<string, string> = {
-  cat: "🐱",
-  dog: "🐶",
-  rabbit: "🐰",
-};
+const PET_OPTIONS = [
+  { type: "cat", name: "小咪", emoji: "🐱" },
+  { type: "dog", name: "旺财", emoji: "🐶" },
+  { type: "rabbit", name: "小兔", emoji: "🐰" },
+];
 
 const foodItems = [
   { name: "🐟 小鱼干", cost: 5, hunger: 20, desc: "美味的小鱼干" },
@@ -25,16 +26,31 @@ const foodItems = [
 
 export default function PetPage() {
   const { child, refreshChild } = useChild();
-  const [feeding, setFeeding] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
 
   if (!child) return null;
 
+  // key={child.id} remounts the inner component when switching children,
+  // so selectedPetType re-initializes from the new child's pet type.
+  return <PetPageInner key={child.id} child={child} refreshChild={refreshChild} />;
+}
+
+function PetPageInner({
+  child,
+  refreshChild,
+}: {
+  child: Child;
+  refreshChild: () => Promise<void>;
+}) {
   const pet = JSON.parse(child.pet);
-  const petEmoji = getPetEmoji(pet);
+  const [selectedPetType, setSelectedPetType] = useState<string>(
+    pet.type || "cat"
+  );
+  const [feeding, setFeeding] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
+
+  const petEmoji = getPetEmoji({ type: selectedPetType, mood: pet.mood });
 
   const handleFeed = async (food: (typeof foodItems)[0]) => {
-    if (!child) return;
     setFeeding(food.name);
     setMessage("");
 
@@ -66,13 +82,35 @@ export default function PetPage() {
           <h1 className="text-2xl font-bold text-gray-800">🐾 宠物养成</h1>
         </div>
 
+        {/* Pet Type Selector */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">🐾 选择宠物</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-3">
+              {PET_OPTIONS.map((p) => (
+                <Button
+                  key={p.type}
+                  variant={selectedPetType === p.type ? "default" : "outline"}
+                  className="h-auto py-4 flex flex-col items-center gap-2"
+                  onClick={() => setSelectedPetType(p.type)}
+                >
+                  <span className="text-3xl">{p.emoji}</span>
+                  <span className="text-sm">{p.name}</span>
+                </Button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Pet Display */}
         <Card>
           <CardContent className="pt-6 flex flex-col items-center">
             <div className="text-8xl mb-4 animate-bounce">{petEmoji}</div>
             <h2 className="text-2xl font-bold text-gray-800 mb-1">{pet.name}</h2>
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary">{getPetName(pet)}</Badge>
+              <Badge variant="secondary">{getPetName({ type: selectedPetType })}</Badge>
               <Badge variant="outline">Lv.{pet.level}</Badge>
               <Badge
                 variant={
