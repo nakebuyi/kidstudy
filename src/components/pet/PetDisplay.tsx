@@ -1,4 +1,4 @@
-import { getPetEmoji } from "@/lib/points";
+import { getPetEmoji } from "@/lib/pet-utils";
 
 interface Pet {
   type: string;

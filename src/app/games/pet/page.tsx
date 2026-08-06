@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { getPetEmoji, getPetName } from "@/lib/points";
+import { getPetEmoji, getPetName } from "@/lib/pet-utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { Child } from "@/types";
