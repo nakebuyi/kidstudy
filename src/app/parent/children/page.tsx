@@ -18,10 +18,16 @@ import {
 } from "@/components/ui/dialog";
 import { Plus, Check, Trash2 } from "lucide-react";
 
+const AVATARS = [
+  { key: "👦", label: "男孩" },
+  { key: "👧", label: "女孩" },
+];
+
 export default function ChildrenPage() {
   const { child, children, setCurrentChild, refreshChildren, removeChild } = useChild();
   const [showAdd, setShowAdd] = useState(false);
   const [newName, setNewName] = useState("");
+  const [avatar, setAvatar] = useState("👦");
   const [loading, setLoading] = useState(false);
   const [accountChildId, setAccountChildId] = useState<string | null>(null);
   const [accountUsername, setAccountUsername] = useState("");
@@ -86,7 +92,7 @@ export default function ChildrenPage() {
     const res = await fetch("/api/children", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newName.trim() }),
+      body: JSON.stringify({ name: newName.trim(), avatar }),
     });
     if (res.ok) {
       setNewName("");
@@ -110,8 +116,8 @@ export default function ChildrenPage() {
         {showAdd && (
           <Card>
             <CardContent className="pt-6">
-              <form onSubmit={handleAddChild} className="flex gap-3 items-end">
-                <div className="flex-1 space-y-2">
+              <form onSubmit={handleAddChild} className="space-y-4">
+                <div className="space-y-2">
                   <Label htmlFor="childName">孩子姓名</Label>
                   <Input
                     id="childName"
@@ -120,6 +126,24 @@ export default function ChildrenPage() {
                     placeholder="请输入孩子姓名"
                     required
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>选择头像</Label>
+                  <div className="flex gap-4">
+                    {AVATARS.map((a) => (
+                      <button
+                        key={a.key}
+                        type="button"
+                        className={`w-16 h-16 text-3xl rounded-full border-2 flex items-center justify-center
+                          ${avatar === a.key
+                            ? "border-orange-500 bg-orange-50"
+                            : "border-gray-200 hover:border-gray-300"}`}
+                        onClick={() => setAvatar(a.key)}
+                      >
+                        {a.key}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <Button type="submit" disabled={loading}>
                   {loading ? "添加中..." : "添加"}
