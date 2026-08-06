@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "@tarojs/components";
+import { View, Text, Input } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { api, ChildData } from "../../../services/api";
 import "./index.scss";
 
+const AVATARS = [
+  { key: "👦", label: "男孩" },
+  { key: "👧", label: "女孩" },
+];
+
 export default function ParentChildren() {
   const [children, setChildren] = useState<ChildData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [childName, setChildName] = useState("");
+  const [avatar, setAvatar] = useState("👦");
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     loadChildren();
@@ -23,6 +32,27 @@ export default function ParentChildren() {
       }
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleAdd() {
+    const name = childName.trim();
+    if (!name) {
+      Taro.showToast({ title: "请输入孩子姓名", icon: "none", duration: 2000 });
+      return;
+    }
+    setSaving(true);
+    try {
+      await api.createChild(name, avatar);
+      Taro.showToast({ title: "添加成功", icon: "success", duration: 1500 });
+      setChildName("");
+      setAvatar("👦");
+      setShowForm(false);
+      await loadChildren();
+    } catch {
+      Taro.showToast({ title: "添加失败", icon: "none", duration: 2000 });
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -46,7 +76,7 @@ export default function ParentChildren() {
 
       <Text className="parent-title">孩子管理</Text>
 
-      {children.length === 0 ? (
+      {children.length === 0 && !showForm ? (
         <View className="parent-empty">
           <Text className="parent-empty-text">还没有添加孩子</Text>
         </View>
@@ -65,15 +95,66 @@ export default function ParentChildren() {
         ))
       )}
 
-      {/* Add child */}
-      <View
-        className="parent-add-btn"
-        onClick={() => {
-          Taro.showToast({ title: "添加孩子功能即将上线", icon: "none", duration: 2000 });
-        }}
-      >
-        <Text className="parent-add-btn-text">+ 添加孩子</Text>
-      </View>
+      {/* Add child form */}
+      {showForm ? (
+        <View className="parent-add-form">
+          <Text className="parent-form-title">添加孩子</Text>
+
+          {/* Name input */}
+          <View className="parent-form-row">
+            <Text className="parent-form-label">姓名</Text>
+            <Input
+              className="parent-form-input"
+              type="text"
+              placeholder="请输入孩子姓名"
+              value={childName}
+              onInput={(e) => setChildName(e.detail.value)}
+            />
+          </View>
+
+          {/* Avatar picker */}
+          <View className="parent-form-row">
+            <Text className="parent-form-label">头像</Text>
+            <View className="parent-avatar-picker">
+              {AVATARS.map((a) => (
+                <View
+                  key={a.key}
+                  className={`parent-avatar-option ${
+                    avatar === a.key ? "parent-avatar-selected" : ""
+                  }`}
+                  onClick={() => setAvatar(a.key)}
+                >
+                  <Text className="parent-avatar-emoji">{a.key}</Text>
+                  <Text className="parent-avatar-label">{a.label}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          {/* Actions */}
+          <View className="parent-form-actions">
+            <View
+              className="parent-form-cancel"
+              onClick={() => {
+                setShowForm(false);
+                setChildName("");
+                setAvatar("👦");
+              }}
+            >
+              <Text className="parent-form-cancel-text">取消</Text>
+            </View>
+            <View className="parent-form-confirm" onClick={handleAdd}>
+              <Text className="parent-form-confirm-text">
+                {saving ? "添加中..." : "确认添加"}
+              </Text>
+            </View>
+          </View>
+        </View>
+      ) : (
+        <View className="parent-add-btn" onClick={() => setShowForm(true)}>
+          <Text className="parent-add-btn-text">+ 添加孩子</Text>
+        </View>
+      )}
     </View>
   );
 }

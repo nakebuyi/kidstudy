@@ -61,16 +61,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "无权操作" }, { status: 403 });
   }
 
-  const { name } = await req.json();
+  const { name, avatar: rawAvatar } = await req.json();
   if (!name || !name.trim()) {
     return NextResponse.json({ error: "孩子姓名不能为空" }, { status: 400 });
   }
+
+  const avatar = rawAvatar && ["👦", "👧"].includes(rawAvatar) ? rawAvatar : "👦";
 
   const child = await prisma.child.create({
     data: {
       parentId: session.user.id,
       name: name.trim(),
-      avatar: "👦",
+      avatar,
       pet: JSON.stringify({ type: "cat", name: "小咪", level: 1, mood: "normal" }),
     },
   });

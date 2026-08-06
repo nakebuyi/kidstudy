@@ -175,8 +175,8 @@ export const api = {
     return request({ method: "GET", path: `/api/children?id=${childId}` });
   },
 
-  createChild(name: string): Promise<ChildData> {
-    return request({ method: "POST", path: "/api/children", body: { name } });
+  createChild(name: string, avatar?: string): Promise<ChildData> {
+    return request({ method: "POST", path: "/api/children", body: { name, avatar } });
   },
 
   deleteChild(childId: string): Promise<void> {
