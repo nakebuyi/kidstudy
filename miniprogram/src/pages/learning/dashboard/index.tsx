@@ -126,6 +126,14 @@ export default function Dashboard() {
         </View>
       </View>
 
+      {/* Calendar entry */}
+      <View
+        className="dashboard-calendar-entry"
+        onClick={() => Taro.navigateTo({ url: "/pages/learning/calendar/index" })}
+      >
+        <Text className="dashboard-calendar-entry-text">📅 打卡日历 ›</Text>
+      </View>
+
       {/* Subject entries */}
       <View className="dashboard-subjects">
         {SUBJECTS.map((item) => (

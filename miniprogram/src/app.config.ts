@@ -8,6 +8,7 @@ export default defineAppConfig({
       name: "learning",
       pages: [
         "dashboard/index",
+        "calendar/index",
         "subject/index",
         "games/pet/index",
         "games/shop/index",

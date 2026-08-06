@@ -160,3 +160,19 @@
   font-size: 28px;
   color: #A0A0A0;
 }
+
+.dashboard-calendar-entry {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.dashboard-calendar-entry-text {
+  font-size: 28px;
+  color: #FF9800;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
