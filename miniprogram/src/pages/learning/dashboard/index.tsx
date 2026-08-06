@@ -3,6 +3,7 @@ import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { api, ChildData } from "../../../services/api";
 import { authStore } from "../../../store/auth";
+import { SubjectCard } from "../../../components/dashboard/SubjectCard";
 import "./index.scss";
 
 const SUBJECTS = [
@@ -128,19 +129,18 @@ export default function Dashboard() {
       {/* Subject entries */}
       <View className="dashboard-subjects">
         {SUBJECTS.map((item) => (
-          <View
+          <SubjectCard
             key={item.key}
-            className="dashboard-subject-card"
-            style={{ backgroundColor: item.bg }}
+            subject={item.key}
+            name={item.name}
+            emoji={item.emoji}
+            bg={item.bg}
             onClick={() => {
               Taro.navigateTo({
                 url: `/pages/learning/subject/index?subject=${item.key}`,
               });
             }}
-          >
-            <Text className="dashboard-subject-emoji">{item.emoji}</Text>
-            <Text className="dashboard-subject-name">{item.name}</Text>
-          </View>
+          />
         ))}
       </View>
     </View>
