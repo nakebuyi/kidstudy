@@ -1,5 +1,6 @@
 import { View, Text } from "@tarojs/components";
-import { ContentCard, QuizOptions } from "../../../../components/learning";
+import { ContentCard, QuizOptions, SpeakAudio } from "../../../../components/learning";
+import pinyinAudioMap from "../../../../data/pinyin-audio-map.json";
 import "./steps.scss";
 
 interface LiteracyItem {
@@ -25,6 +26,7 @@ export function LiteracyLearn({ item, onNext }: StepProps) {
         <View className="step-center">
           <Text className="step-char-big">{item.char}</Text>
           <Text className="step-pinyin">{item.pinyin}</Text>
+          <SpeakAudio text={item.pinyin} kind="pinyin" dir="zh" map={pinyinAudioMap} />
           <Text className="step-meta">
             部首：{item.radical} · 笔画：{item.strokes}
           </Text>

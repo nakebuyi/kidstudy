@@ -1,5 +1,6 @@
 import { View, Text } from "@tarojs/components";
-import { ContentCard, QuizOptions } from "../../../../components/learning";
+import { ContentCard, QuizOptions, SpeakAudio } from "../../../../components/learning";
+import englishAudioMap from "../../../../data/english-audio-map.json";
 import "./steps.scss";
 
 interface EnglishItem {
@@ -28,6 +29,7 @@ export function EnglishLearn({ item, onNext }: StepProps) {
           <View className="step-tag">
             <Text>{item.category}</Text>
           </View>
+          <SpeakAudio text={item.word} kind="word" map={englishAudioMap} />
         </View>
       </ContentCard>
 
@@ -36,6 +38,7 @@ export function EnglishLearn({ item, onNext }: StepProps) {
         {(item.sentences ?? []).map((s: string) => (
           <View key={s} className="step-sentence">
             <Text>{s}</Text>
+            <SpeakAudio text={s} kind="sentence" map={englishAudioMap} />
           </View>
         ))}
       </ContentCard>

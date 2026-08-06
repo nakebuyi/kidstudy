@@ -1,5 +1,6 @@
 import { View, Text } from "@tarojs/components";
-import { ContentCard, QuizOptions } from "../../../../components/learning";
+import { ContentCard, QuizOptions, SpeakAudio } from "../../../../components/learning";
+import pinyinAudioMap from "../../../../data/pinyin-audio-map.json";
 import "./steps.scss";
 
 const typeNames: Record<string, string> = {
@@ -25,6 +26,7 @@ export function PinyinLearn({ item, onNext }: StepProps) {
       <ContentCard>
         <View className="step-center">
           <Text className="step-pinyin-big">{item.pinyin}</Text>
+          <SpeakAudio text={item.pinyin} kind="pinyin" dir="zh" map={pinyinAudioMap} />
           <View className="step-tag step-tag-accent">
             <Text>{typeNames[item.type] ?? item.type}</Text>
           </View>
@@ -37,6 +39,7 @@ export function PinyinLearn({ item, onNext }: StepProps) {
           {(item.examples ?? []).map((ex: string) => (
             <View key={ex} className="step-example-item">
               <Text className="step-example-char">{ex}</Text>
+              <SpeakAudio text={ex} kind="char" dir="zh" map={pinyinAudioMap} />
             </View>
           ))}
         </View>

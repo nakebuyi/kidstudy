@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { View, Text } from "@tarojs/components";
-import { ContentCard, QuizOptions } from "../../../../components/learning";
+import { ContentCard, QuizOptions, SpeakAudio } from "../../../../components/learning";
+import poetryAudioMap from "../../../../data/poetry-audio-map.json";
 import "./steps.scss";
 
 interface PoetryItem {
@@ -36,6 +37,7 @@ export function PoetryLearn({ item, onNext }: StepProps) {
         <View className="step-poetry-content">
           <Text className="step-poetry-text">{item.content}</Text>
         </View>
+        <SpeakAudio text={item.content} kind="poetry" dir="zh" map={poetryAudioMap} />
       </ContentCard>
 
       <ContentCard>
