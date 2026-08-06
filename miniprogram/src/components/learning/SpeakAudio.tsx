@@ -25,12 +25,6 @@ export function SpeakAudio({
   const [speaking, setSpeaking] = useState(false);
   const audioRef = useRef<Taro.InnerAudioContext | null>(null);
 
-  if (!map) return null;
-  const slug = resolveSlug(map, kind, text);
-  if (!slug) return null;
-
-  const src = `https://kidstudy.zhangwenguang.com/audio/${dir}/${kind}/${slug}.mp3`;
-
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -39,6 +33,12 @@ export function SpeakAudio({
       }
     };
   }, []);
+
+  if (!map) return null;
+  const slug = resolveSlug(map, kind, text);
+  if (!slug) return null;
+
+  const src = `https://kidstudy.zhangwenguang.com/audio/${dir}/${kind}/${slug}.mp3`;
 
   const handlePlay = () => {
     if (speaking) return;
