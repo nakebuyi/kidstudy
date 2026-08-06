@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./SpeakAudio.scss";
@@ -30,6 +30,15 @@ export function SpeakAudio({
   if (!slug) return null;
 
   const src = `https://kidstudy.zhangwenguang.com/audio/${dir}/${kind}/${slug}.mp3`;
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.destroy();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const handlePlay = () => {
     if (speaking) return;
